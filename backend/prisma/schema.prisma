@@ -1,0 +1,153 @@
+generator client {
+  provider = "prisma-client"
+  output   = "../generated/prisma"
+}
+
+datasource db {
+  provider = "postgresql"
+}
+
+model User {
+  id                     String         @id @default(uuid())
+  name                   String
+  email                  String         @unique
+  emailVerified          Boolean
+  bio                    String?        @db.VarChar(150)
+  image                  String?
+  createdAt              DateTime
+  updatedAt              DateTime
+  sessions               Session[]
+  accounts               Account[]
+  posts                  Post[]
+  likes                  Like[]
+  followers              Follow[]       @relation("Following")
+  following              Follow[]       @relation("Followers")
+  recipientNotifications Notification[] @relation("NotificationRecipient")
+  sentNotifications      Notification[] @relation("NotificationSender")
+  snapAuthor             SavedSnap[] @relation("SnapAuthor")
+  savedBySnaps           SavedSnap[] @relation("SnapSavedUser")
+
+
+  @@map("user")
+}
+
+model Session {
+  id        String   @id @default(uuid())
+  expiresAt DateTime
+  token     String   @unique
+  createdAt DateTime
+  updatedAt DateTime
+  ipAddress String?
+  userAgent String?
+  userId    String
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@index([userId])
+  @@map("session")
+}
+
+model Account {
+  id                    String    @id @default(uuid())
+  accountId             String
+  providerId            String
+  userId                String
+  user                  User      @relation(fields: [userId], references: [id], onDelete: Cascade)
+  accessToken           String?
+  refreshToken          String?
+  idToken               String?
+  accessTokenExpiresAt  DateTime?
+  refreshTokenExpiresAt DateTime?
+  scope                 String?
+  password              String?
+  createdAt             DateTime
+  updatedAt             DateTime
+
+  @@index([userId])
+  @@map("account")
+}
+
+model Verification {
+  id         String    @id @default(uuid())
+  identifier String
+  value      String
+  expiresAt  DateTime
+  createdAt  DateTime?
+  updatedAt  DateTime?
+
+  @@index([identifier])
+  @@map("verification")
+}
+
+model Post {
+  id        String   @id @default(uuid())
+  image_url String   @db.Text
+  title     String   @db.Text
+  userId    String
+  likes     Like[]
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  saveSnap  SavedSnap[]
+  @@index([userId, updatedAt])
+  @@map("post")
+}
+
+model Like {
+  userId    String 
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  postId    String
+  post      Post     @relation(fields: [postId], references: [id], onDelete: Cascade)
+  createdAt DateTime @default(now())
+
+
+  @@unique([userId , postId])
+  @@id([userId, postId])
+  @@map("like")
+}
+
+model Follow {
+  followerId  String
+  follower    User     @relation("Followers", fields: [followerId], references: [id], onDelete: Cascade)
+  followingId String
+  following   User     @relation("Following", fields: [followingId], references: [id], onDelete: Cascade)
+  createdAt   DateTime @default(now())
+
+  @@id([followerId, followingId])
+  @@map("follow")
+}
+
+model Notification {
+  id          Int              @id @default(autoincrement())
+  type        NotificationType
+  read        Boolean          @default(false)
+  senderId    String?
+  sender      User?            @relation("NotificationSender", fields: [senderId], references: [id])
+  recipientId String
+  recipient   User             @relation("NotificationRecipient", fields: [recipientId], references: [id], onDelete: Cascade)
+  postId      String?
+  createdAt   DateTime         @default(now())
+
+  @@index([recipientId, read])
+  @@map("notification")
+}
+
+enum NotificationType {
+  LIKE
+  COMMENT
+  FOLLOW
+  MENTION
+}
+
+model SavedSnap {
+  id String @id @default(uuid())
+  authorId String
+  author    User @relation("SnapAuthor" ,fields: [authorId], references: [id], onDelete: Cascade)
+  postId String
+  post  Post? @relation(fields: [postId] , references: [id])
+  savedUserId String
+  savedUser User @relation("SnapSavedUser" ,fields: [savedUserId], references: [id], onDelete: Cascade)
+
+  @@index([savedUserId])
+  @@unique([postId , savedUserId])
+  @@map("saved_snap")
+}
