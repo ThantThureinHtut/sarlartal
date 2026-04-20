@@ -14,6 +14,7 @@ model User {
   emailVerified          Boolean
   bio                    String?        @db.VarChar(150)
   image                  String?
+  status                 UserStatus     @default(OFFLINE)
   createdAt              DateTime
   updatedAt              DateTime
   sessions               Session[]
@@ -24,11 +25,20 @@ model User {
   following              Follow[]       @relation("Followers")
   recipientNotifications Notification[] @relation("NotificationRecipient")
   sentNotifications      Notification[] @relation("NotificationSender")
-  snapAuthor             SavedSnap[] @relation("SnapAuthor")
-  savedBySnaps           SavedSnap[] @relation("SnapSavedUser")
-
+  snapAuthor             SavedSnap[]    @relation("SnapAuthor")
+  savedBySnaps           SavedSnap[]    @relation("SnapSavedUser")
 
   @@map("user")
+}
+
+enum UserStatus {
+  ONLINE
+  IDLE
+  DND
+  OFFLINE
+  AWAY
+  BUSY
+  SAD
 }
 
 model Session {
@@ -79,29 +89,30 @@ model Verification {
 }
 
 model Post {
-  id        String   @id @default(uuid())
-  image_url String   @db.Text
-  title     String   @db.Text
+  id        String      @id @default(uuid())
+  image_url String      @db.Text
+  title     String      @db.Text
   userId    String
+  likeCount Int         @default(0)
   likes     Like[]
-  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
+  user      User        @relation(fields: [userId], references: [id], onDelete: Cascade)
+  createdAt DateTime    @default(now())
+  updatedAt DateTime    @updatedAt
   saveSnap  SavedSnap[]
+
   @@index([userId, updatedAt])
   @@map("post")
 }
 
 model Like {
-  userId    String 
+  userId    String
   user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
   postId    String
   post      Post     @relation(fields: [postId], references: [id], onDelete: Cascade)
   createdAt DateTime @default(now())
 
-
-  @@unique([userId , postId])
   @@id([userId, postId])
+  @@unique([userId, postId])
   @@map("like")
 }
 
@@ -139,15 +150,15 @@ enum NotificationType {
 }
 
 model SavedSnap {
-  id String @id @default(uuid())
-  authorId String
-  author    User @relation("SnapAuthor" ,fields: [authorId], references: [id], onDelete: Cascade)
-  postId String
-  post  Post? @relation(fields: [postId] , references: [id])
+  id          String @id @default(uuid())
+  authorId    String
+  author      User   @relation("SnapAuthor", fields: [authorId], references: [id], onDelete: Cascade)
+  postId      String
+  post        Post?  @relation(fields: [postId], references: [id])
   savedUserId String
-  savedUser User @relation("SnapSavedUser" ,fields: [savedUserId], references: [id], onDelete: Cascade)
+  savedUser   User   @relation("SnapSavedUser", fields: [savedUserId], references: [id], onDelete: Cascade)
 
+  @@unique([postId, savedUserId])
   @@index([savedUserId])
-  @@unique([postId , savedUserId])
   @@map("saved_snap")
 }

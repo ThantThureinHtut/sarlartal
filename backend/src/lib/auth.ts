@@ -14,7 +14,19 @@ export const auth = betterAuth({
   // enable email + password login
   emailAndPassword: {
     enabled: true,
-    autoSignIn: true, // auto sign in after register
+    autoSignIn: true,
   },
- 
+
+  user: {
+    additionalFields: {
+      status: {
+        type: "string",
+        defaultValue: "OFFLINE",
+      },
+      bio: {
+        type: "string",
+        required: false,
+      },
+    },
+  },
 });
