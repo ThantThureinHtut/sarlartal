@@ -1,7 +1,7 @@
 import { createAuthClient } from "better-auth/react"
 
 export const authClient = createAuthClient({
-  baseURL: "http://localhost:3001"   // your Express URL
+  baseURL: process.env.API_URL || "http://localhost:3001",
 })
 
 // export individual functions for easy use

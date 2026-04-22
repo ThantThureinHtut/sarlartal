@@ -7,9 +7,6 @@ import Image from "next/image"
 import { Status, STATUSES } from "@/components/data/status"
 
 
-
-
-
 type Props = {
   name: string
   status: Status
@@ -27,7 +24,7 @@ export default function ProfileHeader({
 }: Props) {
   const [statusOpen, setStatusOpen] = useState(false)
   const current = STATUSES.find((s) => s.value == status)
-
+ 
   return (
     <div className="flex items-end gap-5 -mt-14 mb-10">
       {/* Avatar */}
@@ -88,7 +85,10 @@ export default function ProfileHeader({
                 {STATUSES.map((s) => (
                   <button
                     key={s.value}
-                    onClick={() => { onStatusChange(s.value); setStatusOpen(false) }}
+                    onClick={async () => {
+                      setStatusOpen(false);
+                      onStatusChange(s.value);
+                    }}
                     className={cn(
                       "flex w-full items-center gap-2.5 rounded-lg px-3 py-2.5 text-xs text-left transition-colors hover:bg-muted",
                       status === s.value && "bg-muted"

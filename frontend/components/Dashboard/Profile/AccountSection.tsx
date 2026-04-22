@@ -26,12 +26,12 @@ type Props = {
   onEmailChange: (v: string) => void;
 };
 
-const nameSchema  = z.string().min(5, "Name must be at least 5 characters")
-const emailSchema = z.string().email("Enter a valid email address")
-const pwSchema    = z.object({
+const nameSchema = z.string().min(5, "Name must be at least 5 characters");
+const emailSchema = z.string().email("Enter a valid email address");
+const pwSchema = z.object({
   oldPw: z.string().min(1, "Current password is required"),
   newPw: z.string().min(1, "New password is required"),
-})
+});
 
 function FieldError({ message }: { message: string }) {
   return (
@@ -63,36 +63,69 @@ export default function AccountSection({
 
   const [nameAndEmailError, setNameAndEmailError] = useState("");
   const [passwordError, setPasswordError] = useState("");
-  const [pwFieldErrors, setPwFieldErrors] = useState<{ oldPw?: string; newPw?: string }>({});
+  const [pwFieldErrors, setPwFieldErrors] = useState<{
+    oldPw?: string;
+    newPw?: string;
+  }>({});
 
   const [showOldPw, setShowOldPw] = useState(false);
   const [showNewPw, setShowNewPw] = useState(false);
   const [showConfirmPw, setShowConfirmPw] = useState(false);
 
-  function handleNameSave() {
-    const result = nameSchema.safeParse(draftName)
-    if (!result.success) { setNameAndEmailError(result.error.issues[0].message); return }
-    onNameChange(draftName.trim())
-    setNameOpen(false)
-  }
 
-  function handleEmailSave() {
-    const result = emailSchema.safeParse(draftEmail)
-    if (!result.success) { setNameAndEmailError(result.error.issues[0].message); return }
-    onEmailChange(draftEmail.trim())
-    setEmailOpen(false)
-  }
-
-  function handlePasswordSave() {
-    const result = pwSchema.safeParse({ oldPw, newPw })
+  const handleBioSave = async() => {
+    onBioChange(draftBio.trim());
+    await fetch(`${process.env.API_URL}/api/user/profile/bio/update`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      credentials: "include",
+      body: JSON.stringify({ bio: draftBio.trim() }),
+    });
+    setBioOpen(false);
+  };
+const  handleNameSave = async () =>  {
+    const result = nameSchema.safeParse(draftName);
     if (!result.success) {
-      const errs = result.error.flatten().fieldErrors
-      setPwFieldErrors({ oldPw: errs.oldPw?.[0], newPw: errs.newPw?.[0] })
-      return
+      setNameAndEmailError(result.error.issues[0].message);
+      return;
     }
-    setPwFieldErrors({})
-    if (newPw !== confirmPw) { setPasswordError("Passwords do not match"); return }
-    setPwOpen(false)
+    onNameChange(draftName.trim());
+    await fetch(`${process.env.API_URL}/api/user/profile/name/update`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      credentials: "include",
+      body: JSON.stringify({ name: draftName.trim() }),
+    });
+    setNameOpen(false);
+  }
+
+  const handleEmailSave =  () => {
+    const result = emailSchema.safeParse(draftEmail);
+    if (!result.success) {
+      setNameAndEmailError(result.error.issues[0].message);
+      return;
+    }
+    onEmailChange(draftEmail.trim());
+    setEmailOpen(false);
+  }
+
+  const handlePasswordSave = async () => {
+    const result = pwSchema.safeParse({ oldPw, newPw });
+    if (!result.success) {
+      const errs = result.error.flatten().fieldErrors;
+      setPwFieldErrors({ oldPw: errs.oldPw?.[0], newPw: errs.newPw?.[0] });
+      return;
+    }
+    setPwFieldErrors({});
+    if (newPw !== confirmPw) {
+      setPasswordError("Passwords do not match");
+      return;
+    }
+    setPwOpen(false);
   }
 
   const rows = [
@@ -101,25 +134,43 @@ export default function AccountSection({
       label: "Bio",
       value: bio || "No bio yet. Tell people about yourself!",
       muted: !bio,
-      onEdit: () => { setDraftBio(bio); setBioOpen(true) },
+      onEdit: () => {
+        setDraftBio(bio);
+        setBioOpen(true);
+      },
     },
     {
       icon: <User className="size-3.75" />,
       label: "Display Name",
       value: name,
-      onEdit: () => { setDraftName(name); setNameAndEmailError(""); setNameOpen(true) },
+      onEdit: () => {
+        setDraftName(name);
+        setNameAndEmailError("");
+        setNameOpen(true);
+      },
     },
     {
       icon: <Mail className="size-3.75" />,
       label: "Email",
       value: email,
-      onEdit: () => { setDraftEmail(email); setNameAndEmailError(""); setEmailOpen(true) },
+      onEdit: () => {
+        setDraftEmail(email);
+        setNameAndEmailError("");
+        setEmailOpen(true);
+      },
     },
     {
       icon: <Lock className="size-3.75" />,
       label: "Password",
       value: "••••••••",
-      onEdit: () => { setOldPw(""); setNewPw(""); setConfirmPw(""); setPasswordError(""); setPwFieldErrors({}); setPwOpen(true) },
+      onEdit: () => {
+        setOldPw("");
+        setNewPw("");
+        setConfirmPw("");
+        setPasswordError("");
+        setPwFieldErrors({});
+        setPwOpen(true);
+      },
     },
   ];
 
@@ -150,8 +201,14 @@ export default function AccountSection({
             </p>
           </div>
           <DialogFooter>
-            <DialogClose render={<Button variant="outline" />}>Cancel</DialogClose>
-            <Button onClick={() => { onBioChange(draftBio); setBioOpen(false) }}>Save</Button>
+            <DialogClose render={<Button variant="outline" />}>
+              Cancel
+            </DialogClose>
+            <Button
+              onClick={handleBioSave}
+            >
+              Save
+            </Button>
           </DialogFooter>
         </DialogContent>
       </Dialog>
@@ -159,7 +216,10 @@ export default function AccountSection({
       {/* Name */}
       <Dialog
         open={nameOpen}
-        onOpenChange={(open) => { setNameOpen(open); if (!open) setNameAndEmailError("") }}
+        onOpenChange={(open) => {
+          setNameOpen(open);
+          if (!open) setNameAndEmailError("");
+        }}
       >
         <DialogContent>
           <DialogHeader>
@@ -170,7 +230,10 @@ export default function AccountSection({
             <Input
               id="name-input"
               value={draftName}
-              onChange={(e) => { setDraftName(e.target.value); setNameAndEmailError("") }}
+              onChange={(e) => {
+                setDraftName(e.target.value);
+                setNameAndEmailError("");
+              }}
               placeholder="Your display name"
               maxLength={50}
               aria-invalid={!!nameAndEmailError}
@@ -178,7 +241,9 @@ export default function AccountSection({
             {nameAndEmailError && <FieldError message={nameAndEmailError} />}
           </div>
           <DialogFooter>
-            <DialogClose render={<Button variant="outline" />}>Cancel</DialogClose>
+            <DialogClose render={<Button variant="outline" />}>
+              Cancel
+            </DialogClose>
             <Button onClick={handleNameSave}>Save</Button>
           </DialogFooter>
         </DialogContent>
@@ -187,7 +252,10 @@ export default function AccountSection({
       {/* Email */}
       <Dialog
         open={emailOpen}
-        onOpenChange={(open) => { setEmailOpen(open); if (!open) setNameAndEmailError("") }}
+        onOpenChange={(open) => {
+          setEmailOpen(open);
+          if (!open) setNameAndEmailError("");
+        }}
       >
         <DialogContent>
           <DialogHeader>
@@ -199,14 +267,19 @@ export default function AccountSection({
               id="email-input"
               type="email"
               value={draftEmail}
-              onChange={(e) => { setDraftEmail(e.target.value); setNameAndEmailError("") }}
+              onChange={(e) => {
+                setDraftEmail(e.target.value);
+                setNameAndEmailError("");
+              }}
               placeholder="your@email.com"
               aria-invalid={!!nameAndEmailError}
             />
             {nameAndEmailError && <FieldError message={nameAndEmailError} />}
           </div>
           <DialogFooter>
-            <DialogClose render={<Button variant="outline" />}>Cancel</DialogClose>
+            <DialogClose render={<Button variant="outline" />}>
+              Cancel
+            </DialogClose>
             <Button onClick={handleEmailSave}>Save</Button>
           </DialogFooter>
         </DialogContent>
@@ -239,7 +312,10 @@ export default function AccountSection({
                   id="old-pw"
                   type={showOldPw ? "text" : "password"}
                   value={oldPw}
-                  onChange={(e) => { setOldPw(e.target.value); setPwFieldErrors((p) => ({ ...p, oldPw: undefined })) }}
+                  onChange={(e) => {
+                    setOldPw(e.target.value);
+                    setPwFieldErrors((p) => ({ ...p, oldPw: undefined }));
+                  }}
                   placeholder="••••••••"
                   className="pr-9"
                   aria-invalid={!!pwFieldErrors.oldPw}
@@ -250,10 +326,16 @@ export default function AccountSection({
                   className="absolute right-2.5 top-1/2 -translate-y-1/2 text-muted-foreground hover:text-foreground transition-colors"
                   aria-label={showOldPw ? "Hide password" : "Show password"}
                 >
-                  {showOldPw ? <EyeOff className="size-3.5" /> : <Eye className="size-3.5" />}
+                  {showOldPw ? (
+                    <EyeOff className="size-3.5" />
+                  ) : (
+                    <Eye className="size-3.5" />
+                  )}
                 </button>
               </div>
-              {pwFieldErrors.oldPw && <FieldError message={pwFieldErrors.oldPw} />}
+              {pwFieldErrors.oldPw && (
+                <FieldError message={pwFieldErrors.oldPw} />
+              )}
             </div>
 
             {/* New password */}
@@ -264,7 +346,11 @@ export default function AccountSection({
                   id="new-pw"
                   type={showNewPw ? "text" : "password"}
                   value={newPw}
-                  onChange={(e) => { setNewPw(e.target.value); setPwFieldErrors((p) => ({ ...p, newPw: undefined })); setPasswordError("") }}
+                  onChange={(e) => {
+                    setNewPw(e.target.value);
+                    setPwFieldErrors((p) => ({ ...p, newPw: undefined }));
+                    setPasswordError("");
+                  }}
                   placeholder="••••••••"
                   className="pr-9"
                   aria-invalid={!!pwFieldErrors.newPw}
@@ -275,10 +361,16 @@ export default function AccountSection({
                   className="absolute right-2.5 top-1/2 -translate-y-1/2 text-muted-foreground hover:text-foreground transition-colors"
                   aria-label={showNewPw ? "Hide password" : "Show password"}
                 >
-                  {showNewPw ? <EyeOff className="size-3.5" /> : <Eye className="size-3.5" />}
+                  {showNewPw ? (
+                    <EyeOff className="size-3.5" />
+                  ) : (
+                    <Eye className="size-3.5" />
+                  )}
                 </button>
               </div>
-              {pwFieldErrors.newPw && <FieldError message={pwFieldErrors.newPw} />}
+              {pwFieldErrors.newPw && (
+                <FieldError message={pwFieldErrors.newPw} />
+              )}
             </div>
 
             {/* Confirm password */}
@@ -289,7 +381,10 @@ export default function AccountSection({
                   id="confirm-pw"
                   type={showConfirmPw ? "text" : "password"}
                   value={confirmPw}
-                  onChange={(e) => { setConfirmPw(e.target.value); setPasswordError("") }}
+                  onChange={(e) => {
+                    setConfirmPw(e.target.value);
+                    setPasswordError("");
+                  }}
                   placeholder="••••••••"
                   className="pr-9"
                   aria-invalid={!!passwordError}
@@ -300,14 +395,20 @@ export default function AccountSection({
                   className="absolute right-2.5 top-1/2 -translate-y-1/2 text-muted-foreground hover:text-foreground transition-colors"
                   aria-label={showConfirmPw ? "Hide password" : "Show password"}
                 >
-                  {showConfirmPw ? <EyeOff className="size-3.5" /> : <Eye className="size-3.5" />}
+                  {showConfirmPw ? (
+                    <EyeOff className="size-3.5" />
+                  ) : (
+                    <Eye className="size-3.5" />
+                  )}
                 </button>
               </div>
               {passwordError && <FieldError message={passwordError} />}
             </div>
           </div>
           <DialogFooter>
-            <DialogClose render={<Button variant="outline" />}>Cancel</DialogClose>
+            <DialogClose render={<Button variant="outline" />}>
+              Cancel
+            </DialogClose>
             <Button onClick={handlePasswordSave}>Update Password</Button>
           </DialogFooter>
         </DialogContent>

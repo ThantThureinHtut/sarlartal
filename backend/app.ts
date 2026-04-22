@@ -24,7 +24,9 @@ app.use("/uploads", express.static("public/uploads"))  // serve static files fro
 app.use(express.json())
 app.use('/api' , apiMiddleware, apiRouter)
 // 4. Your protected routes go here (see Part 3)
-
+app.get('/health', (req, res) => {
+  res.json({ status: 'ok' })
+})
 app.listen(3001, () => {
   console.log("Express running on http://localhost:3001")
 })

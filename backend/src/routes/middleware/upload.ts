@@ -2,7 +2,7 @@ import multer from "multer"
 import path from "path"
 
 const storage = multer.diskStorage({
-  destination: "public/uploads",
+  destination: "public/uploads/snaps",
   filename: (req, file, cb) => {
     const unique = Date.now() + "-" + Math.round(Math.random() * 1e9)
     // cb is used to specify the filename for the uploaded file
@@ -13,3 +13,14 @@ const storage = multer.diskStorage({
 })
 
 export const upload = multer({ storage })
+
+
+// Store the Profile Avatar in a separate folder
+const avatarStorage = multer.diskStorage({
+  destination: "public/uploads/avatars",
+  filename: (req, file, cb) => {
+    const unique = Date.now() + "-" + Math.round(Math.random() * 1e9)
+    cb(null, unique + path.extname(file.originalname))  
+  }
+});
+export const avatarUpload = multer({ storage: avatarStorage })

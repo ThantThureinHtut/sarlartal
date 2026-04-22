@@ -14,6 +14,7 @@ model User {
   emailVerified          Boolean
   bio                    String?        @db.VarChar(150)
   image                  String?
+  cover_image            String?
   status                 UserStatus     @default(OFFLINE)
   createdAt              DateTime
   updatedAt              DateTime

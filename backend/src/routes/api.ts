@@ -4,48 +4,33 @@ import { prisma } from "../../prisma/lib/prisma";
 import express from "express";
 import z from "zod";
 import { upload } from "./middleware/upload";
+import snapRouter from "./user/snap_route";
+import profileRouter from "./user/profile_route";
 const apiRouter = express.Router();
 
-apiRouter.get("/snaps", async (req: Request, res: Response) => {
+apiRouter.use("/user/profile", profileRouter);
+apiRouter.use("/snaps", snapRouter);
+apiRouter.get("/get-user", async (req: Request, res: Response) => {
   try {
-    const snaps = await prisma.post.findMany({
-      include: {
-        user: {
-          select: { name: true, image: true , status: true },
-        },
-        likes: true,
-      },
-    });
-
-    res.json(snaps);
-  } catch (error) {
-    console.error("Error fetching snaps:", error);
-    res.status(500).json({ error: "Internal Server Error" });
-  }
-});
-
-apiRouter.post("/snaps/create", upload.single("image"), async (req: Request, res: Response) => {
-  
-  try {
-    const { title } = req.body;
-    const image = req.file?.path;
     if (req.user?.id !== undefined) {
-      await prisma.post.create({
-        data: {
-          title: title,
-          image_url: image || "https://placehold.co/600x750",
-          userId: req?.user?.id, // Assuming req.user is set by the auth middleware
+      const user = await prisma.user.findUnique({
+        where: { id: req.user.id },
+        select: {
+          id: true,
+          likes: true,
+          savedBySnaps: true,
+          createdAt: true,
+          updatedAt: true,
         },
       });
-      res.status(201).json({ message: "Snap created successfully" });
+      res.status(200).json(user);
       return;
     }
     res.status(401).json({ error: "Unauthorized" });
   } catch (error) {
-    console.error("Error creating snap:", error);
+    console.error("Error fetching user profile:", error);
     res.status(500).json({ error: "Internal Server Error" });
   }
 });
-
 
 export default apiRouter;

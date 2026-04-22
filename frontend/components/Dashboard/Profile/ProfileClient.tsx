@@ -1,5 +1,4 @@
 "use client";
-
 import { useState, useRef } from "react";
 import { Camera } from "lucide-react";
 import ProfileHeader from "./ProfileHeader";
@@ -9,17 +8,30 @@ import { Button } from "@/components/ui/button";
 import Link from "next/link";
 
 type Status = "ONLINE" | "IDLE" | "DND" | "OFFLINE" | "BUSY" | "SAD";
-
-export default function ProfileClient({ user }: { user: any }) {
+type Props = {
+  id: string;
+  name: string;
+  email: string;
+  bio?: string;
+  status?: Status;
+  image?: string | null;
+  cover_image?: string;
+  emailVerified?: boolean;
+  createdAt: Date;
+  updatedAt: Date;
+}
+export default function ProfileClient({ user }: { user?: Props }) {
   const [name, setName] = useState(user?.name || "John Doe");
   const [bio, setBio] = useState(user?.bio || "");
   const [email, setEmail] = useState(user?.email || "codermyanmarjack@gmail.com");
   const [status, setStatus] = useState<Status>(user?.status || "ONLINE");
-  const [avatarSrc, setAvatarSrc] = useState(user?.avatar || "");
-  const [coverSrc, setCoverSrc] = useState(user?.cover || "");
+  const [avatarSrc, setAvatarSrc] = useState(user?.image || "");
+  const [coverSrc, setCoverSrc] = useState(user?.cover_image || "");
 
   const avatarRef = useRef<HTMLInputElement>(null);
   const coverRef = useRef<HTMLInputElement>(null);
+
+  
 
   function handleAvatarChange(e: React.ChangeEvent<HTMLInputElement>) {
     const file = e.target.files?.[0];
@@ -30,6 +42,20 @@ export default function ProfileClient({ user }: { user: any }) {
     const file = e.target.files?.[0];
     if (file) setCoverSrc(URL.createObjectURL(file));
   }
+
+  const onStatusChange = async (s: Status) => {
+    await fetch(`${process.env.API_URL}/api/user/profile/status/update`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      credentials: "include",
+      body: JSON.stringify({ status: s }),
+    });
+    setStatus(s);
+  };
+
+
 
   return (
     <div className="min-h-screen bg-background">
@@ -83,7 +109,7 @@ export default function ProfileClient({ user }: { user: any }) {
         <ProfileHeader
           name={name}
           status={status}
-          onStatusChange={setStatus}
+          onStatusChange={onStatusChange}
           avatarSrc={avatarSrc}
           onAvatarClick={() => avatarRef.current?.click()}
         />

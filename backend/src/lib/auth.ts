@@ -27,6 +27,11 @@ export const auth = betterAuth({
         type: "string",
         required: false,
       },
+      cover_image: {
+        type: "string",
+        required: false,
+      },
     },
+    
   },
 });

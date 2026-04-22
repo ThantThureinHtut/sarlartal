@@ -8,3 +8,4 @@ export const STATUSES: { value: Status; label: string; dot: string; pill: string
   { value: "BUSY",    label: "Busy",             dot: "bg-orange-500", pill: "bg-orange-500/10 text-orange-600 dark:text-orange-400" },
   { value: "SAD",     label: "Sad Mode",         dot: "bg-blue-400",   pill: "bg-blue-400/1<Paste> text-blue-6<Paste> dark:text-blue-4<Paste>"       },
 ]
+

@@ -3,34 +3,40 @@ import Image from "next/image";
 import { Suspense } from "react";
 import CardBoxFooter from "@/components/Dashboard/CardBox/CardBoxFooter";
 import { MoreHorizontal } from "lucide-react";
-
+import { formatDistance } from "date-fns";
 import { cn } from "@/lib/utils";
 import { STATUSES } from "@/components/data/status";
+import { getUser } from "@/app/(action)/serveraction";
 
 type Props = {
   id: string;
   image_url: string;
   likeCount: number;
   title: string;
-  user : {
-    name:string;
-    image:string;
-    status:string;
-   };
-   createdAt: string;
-   userId: string;
-}
+  user: {
+    name: string;
+    image: string;
+    status: string;
+  };
+  createdAt: string;
+  userId: string;
+};
 
 // { name, status, createdAt, image, image_url, likeCount }: Props
-export default function CardBox({ snap }: { snap: Props }) {
-  const { id, createdAt, image_url, likeCount , user , userId , title} = snap;
+export default async function CardBox({ snap }: { snap: Props }) {
+  const { id, createdAt, image_url, likeCount, user, userId, title } = snap;
   const currentStatus = STATUSES.find((s) => s.value === user.status)!;
+  const current_user = await getUser();
   return (
     <div className="mx-auto w-full max-w-md sm:max-w-lg ">
       <div className="relative overflow-hidden rounded-3xl aspect-4/5 bg-black shadow-md shadow-black/40 group">
         {/* Full-bleed image — object-contain so landscape images letterbox with black bars */}
         <Image
-          src={image_url.startsWith("http") ? image_url : `${process.env.API_URL}/${image_url.replace(/^public\//, "")}`}
+          src={
+            image_url.startsWith("http")
+              ? image_url
+              : `${process.env.API_URL}${image_url.startsWith("/") ? "" : "/"}${image_url}`
+          }
           alt="post image"
           fill
           unoptimized
@@ -70,7 +76,7 @@ export default function CardBox({ snap }: { snap: Props }) {
               <span
                 className={cn(
                   "absolute bottom-0.5 -right-0.5 size-2.5 rounded-full ring-[3px] ring-background shadow-sm",
-                  currentStatus.dot
+                  currentStatus.dot,
                 )}
               />
             </div>
@@ -79,7 +85,11 @@ export default function CardBox({ snap }: { snap: Props }) {
               <p className="text-sm font-semibold text-white leading-tight drop-shadow">
                 {user.name}
               </p>
-              <p className="text-xs text-white/70 drop-shadow">2 minutes ago</p>
+              <p className="text-xs text-white/70 drop-shadow">
+                {formatDistance(new Date(createdAt), new Date(), {
+                  addSuffix: true,
+                })}
+              </p>
             </div>
           </div>
 
@@ -101,7 +111,12 @@ export default function CardBox({ snap }: { snap: Props }) {
         {/* Footer: like + bookmark — sits below caption bar */}
         <div className="absolute inset-x-0 bottom-0 px-4 py-3">
           <Suspense fallback={null}>
-            <CardBoxFooter likeCount={likeCount} />
+            <CardBoxFooter
+              likeCount={likeCount}
+              postId={id}
+              userId={userId}
+              current_user={current_user}
+            />
           </Suspense>
         </div>
       </div>

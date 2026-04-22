@@ -72,7 +72,7 @@ export default function SnapCreateBar() {
     closeCamera();
   };
 
-  const sendSnap = () => {
+  const sendSnap = async () => {
     const formData = new FormData();
 
     if (photo) {
@@ -86,8 +86,7 @@ export default function SnapCreateBar() {
     }
 
     formData.append("title", caption);
-  
-    fetch(`${process.env.API_URL}/api/snaps/create`, {
+    await fetch(`${process.env.API_URL}/api/snaps/create`, {
       method: "POST",
       body: formData,
       credentials: "include", // Include cookies for authentication if needed
