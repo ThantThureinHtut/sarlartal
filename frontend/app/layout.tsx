@@ -7,9 +7,10 @@ import type { Metadata } from 'next';
 const notoSansHeading = Noto_Sans({
   subsets: ["latin"],
   variable: "--font-heading",
+  display: "swap",
 });
 
-const roboto = Roboto({ subsets: ["latin"], variable: "--font-sans" });
+const roboto = Roboto({ subsets: ["latin"], variable: "--font-sans" , display: "swap"});
 
 export const metadata: Metadata = {
   title: 'SarLarTal',

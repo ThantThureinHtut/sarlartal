@@ -19,6 +19,7 @@ import MessageAndNotification from "./MessageAndNotification";
 const chewy = Chewy({
   weight: "400",
   subsets: ["latin"],
+  display: "swap"
 });
 
 const navLinks = [
@@ -107,7 +108,7 @@ export default function DashboardNavbar() {
             <SunMediumIcon className="size-5 dark:hidden" />
             <MoonIcon className="size-5 hidden dark:block" />
           </button>
-          <p className="h-4 border-r"></p>
+          <p className="h-4 border-r" aria-hidden="true"></p>
 
           <button
             onClick={() => setIsOpen(!isOpen)}
@@ -188,7 +189,7 @@ export default function DashboardNavbar() {
                     )}
                   >
                     <span className="size-1.5 rounded-full bg-primary/60" />
-                    <h1 className="">Profile</h1>
+                    <span className="text-sm font-medium">Profile</span>
                   </div>
                 </AccordionTrigger>
                 <AccordionContent>

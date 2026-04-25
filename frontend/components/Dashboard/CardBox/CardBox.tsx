@@ -6,7 +6,7 @@ import { MoreHorizontal } from "lucide-react";
 import { formatDistance } from "date-fns";
 import { cn } from "@/lib/utils";
 import { STATUSES } from "@/components/data/status";
-import { getUser } from "@/app/(action)/serveraction";
+
 
 type Props = {
   id: string;
@@ -21,26 +21,46 @@ type Props = {
   createdAt: string;
   userId: string;
 };
+type Like = {
+  userId: string;
+  postId: string;
+  createdAt: Date;
+};
+type SavedSnap = {
+  id: string;
+  authorId: string;
+  savedUserId: string;
+  postId: string;
+  createdAt: Date;
+};
+type CurrentUser = {
+  id: string;
+  likes: Like[];
+  savedBySnaps: SavedSnap[];
+};
 
-// { name, status, createdAt, image, image_url, likeCount }: Props
-export default async function CardBox({ snap }: { snap: Props }) {
+export default async function CardBox({
+  snap,
+  current_user,
+  priority = false,
+}: {
+  snap: Props;
+  current_user: CurrentUser;
+  priority?: boolean;
+}) {
   const { id, createdAt, image_url, likeCount, user, userId, title } = snap;
   const currentStatus = STATUSES.find((s) => s.value === user.status)!;
-  const current_user = await getUser();
+
   return (
     <div className="mx-auto w-full max-w-md sm:max-w-lg ">
       <div className="relative overflow-hidden rounded-3xl aspect-4/5 bg-black shadow-md shadow-black/40 group">
-        {/* Full-bleed image — object-contain so landscape images letterbox with black bars */}
         <Image
-          src={
-            image_url.startsWith("http")
-              ? image_url
-              : `${process.env.API_URL}${image_url.startsWith("/") ? "" : "/"}${image_url}`
-          }
-          alt="post image"
+          src={image_url}
+          alt={title || `Snap by ${user.name}`}
           fill
-          unoptimized
+          priority={priority}
           loading="eager"
+          sizes="(max-width: 640px) 100vw, 480px"
           className="object-contain transition-transform duration-500 group-hover:scale-[1.02]"
         />
 
@@ -67,7 +87,7 @@ export default async function CardBox({ snap }: { snap: Props }) {
           <div className="flex items-center gap-4">
             <div className="relative ">
               <Avatar className="size-10 ring-2 ring-white/30 ring-offset-1 ring-offset-transparent shadow-lg">
-                <AvatarImage src={user.image} />
+                <AvatarImage src={user.image} alt={user.name} />
                 <AvatarFallback className="bg-white/20 text-white backdrop-blur-sm">
                   CN
                 </AvatarFallback>
@@ -102,22 +122,22 @@ export default async function CardBox({ snap }: { snap: Props }) {
         </div>
 
         {/* Caption bar */}
-        <div className="absolute inset-x-0 bottom-20 px-4 py-2.5 bg-black/40 backdrop-blur-md">
-          <p className="text-xs sm:text-sm text-white/90 leading-snug text-center">
-            {title}
-          </p>
-        </div>
+        {title.trim() && (
+          <div className="absolute inset-x-0 bottom-20 px-4 py-2.5 bg-black/40 backdrop-blur-md">
+            <p className="text-xs sm:text-sm text-white/90 leading-snug text-center">
+              {title}
+            </p>
+          </div>
+        )}
 
         {/* Footer: like + bookmark — sits below caption bar */}
         <div className="absolute inset-x-0 bottom-0 px-4 py-3">
-          <Suspense fallback={null}>
             <CardBoxFooter
               likeCount={likeCount}
               postId={id}
               userId={userId}
               current_user={current_user}
             />
-          </Suspense>
         </div>
       </div>
     </div>

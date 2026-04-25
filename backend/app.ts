@@ -22,7 +22,7 @@ app.all("/api/auth/{*any}", toNodeHandler(auth))
 // if i use with "/uploads" , the url show /uploads/photo.png and it work fine
 app.use("/uploads", express.static("public/uploads"))  // serve static files from "public/uploads" directory
 app.use(express.json())
-app.use('/api' , apiMiddleware, apiRouter)
+app.use('/api', apiRouter)
 // 4. Your protected routes go here (see Part 3)
 app.get('/health', (req, res) => {
   res.json({ status: 'ok' })

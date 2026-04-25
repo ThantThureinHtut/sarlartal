@@ -1,6 +1,7 @@
 "use client";
 import React, { useState } from "react";
 import { BookmarkIcon, HeartIcon } from "lucide-react";
+import { bookmarkSnap, likeSnap } from "@/app/(action)/serveraction";
 type Like = {
   userId: string;
   postId: string;
@@ -37,29 +38,16 @@ export default function CardBoxFooter({
     return current_user.savedBySnaps.some((snap) => snap.postId === postId);
   });
   const [currentLikeCount, setCurrentLikeCount] = useState(likeCount);
+  
   const handleLike = async () => {
     setCurrentLikeCount((prev) => prev + (isLiked ? -1 : 1));
-    await fetch(`${process.env.API_URL}/api/snaps/like`, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      credentials: "include",
-      body: JSON.stringify({ snapId: postId }),
-    });
+    await likeSnap(postId);
   };
 
 
   // Saved snap handler
   const handleBookmark = async () => {
-    await fetch(`${process.env.API_URL}/api/snaps/bookmark`, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      credentials: "include",
-      body: JSON.stringify({ snapId: postId, userId: userId }),
-    });
+    await bookmarkSnap(postId, userId);
   };
 
   return (

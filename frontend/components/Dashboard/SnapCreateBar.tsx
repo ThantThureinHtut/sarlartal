@@ -3,6 +3,7 @@
 import React, { useEffect, useRef, useState } from "react";
 import { Camera, X, RefreshCcw, ArrowRight, ImageIcon } from "lucide-react";
 import Image from "next/image";
+import { sendSnap } from "@/app/(action)/serveraction";
 
 export default function SnapCreateBar() {
   const [preview, setPreview] = useState<boolean>(false);
@@ -72,9 +73,8 @@ export default function SnapCreateBar() {
     closeCamera();
   };
 
-  const sendSnap = async () => {
+  const handleSendSnap = async () => {
     const formData = new FormData();
-
     if (photo) {
       // Convert base64 data URL from camera to a Blob
       const [header, data] = photo.split(",");
@@ -84,21 +84,19 @@ export default function SnapCreateBar() {
     } else if (fileObject) {
       formData.append("image", fileObject);
     }
-
     formData.append("title", caption);
-    await fetch(`${process.env.API_URL}/api/snaps/create`, {
-      method: "POST",
-      body: formData,
-      credentials: "include", // Include cookies for authentication if needed
-    }).then((response) => {
-      if (response.ok) {
-        // Handle successful response
-        console.log("Snap sent successfully");
-        handleCancel(); // Reset the preview and states after sending
-      } else {
-        // Handle error response
-        console.error("Error sending snap:", response.statusText);
+
+    
+    await sendSnap(formData).then((res) => {
+      if (res.success) {
+        setPreview(false);
+        setFileImage(null);
+        setFileObject(null);
+        setPhoto(null);
+        setCaption("");
       }
+    }).catch((err) => {
+      console.error("Error sending snap:", err);
     });
   };
   const flipCamera = () => {
@@ -135,7 +133,7 @@ export default function SnapCreateBar() {
               <X className="size-5" />
             </button>
 
-            <span className="text-xs font-semibold tracking-widest uppercase text-white/50">
+            <span className="text-xs font-semibold tracking-widest uppercase text-white/75">
               Camera
             </span>
 
@@ -255,12 +253,14 @@ export default function SnapCreateBar() {
 
           <div className="relative z-10 flex flex-col bg-black/45 backdrop-blur-md">
             <div className="flex items-center gap-3 px-4 py-3 border-b border-white/10">
+              <label htmlFor="snap-caption" className="sr-only">Caption</label>
               <input
                 type="text"
+                id="snap-caption"
                 placeholder="Add a caption…"
                 name="caption"
                 onChange={(e) => setCaption(e.target.value)}
-                className="flex-1 bg-transparent text-sm text-white placeholder:text-white/35 outline-none"
+                className="flex-1 bg-transparent text-sm text-white placeholder:text-white/55 outline-none"
               />
             </div>
             <div className="flex items-center justify-between px-4 py-3">
@@ -273,7 +273,7 @@ export default function SnapCreateBar() {
               </button>
               <button
                 aria-label="Send snap"
-                onClick={() => sendSnap()}
+                onClick={() => handleSendSnap()}
                 className="flex items-center gap-2 pl-5 pr-4 py-2.5 rounded-full bg-primary text-primary-foreground text-sm font-semibold shadow-lg shadow-primary/30 hover:scale-105 active:scale-95 transition-transform duration-150"
               >
                 Send

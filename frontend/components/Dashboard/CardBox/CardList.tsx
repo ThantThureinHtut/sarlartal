@@ -1,5 +1,6 @@
-import { getSnaps } from "@/app/(action)/serveraction";
+import { getSnaps, getUser } from "@/app/(action)/serveraction";
 import CardBox from "@/components/Dashboard/CardBox/CardBox";
+import { cacheLife, cacheTag } from "next/cache";
 type Likes = {
   userId: string;
   postId: string;
@@ -20,7 +21,7 @@ type Props = {
    userId: string;
 }
 export default async function CardList() {
-  const snaps = await getSnaps();
+  const [snaps, current_user] = await Promise.all([getSnaps(), getUser()]);
   return (
     <>
       {!Array.isArray(snaps) ? (
@@ -31,8 +32,8 @@ export default async function CardList() {
         </div>
       ) : (
         <div className="flex flex-col items-center justify-center gap-5 m-4 ">
-          {snaps.map((snap: Props) => (
-            <CardBox key={snap.id} snap={snap} />
+          {snaps.map((snap: Props, index: number) => (
+            <CardBox key={snap.id} snap={snap} current_user={current_user} priority={index === 0} />
           ))}
         </div>
       )}

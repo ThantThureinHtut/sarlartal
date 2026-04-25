@@ -1,6 +1,7 @@
 import express, { Request, Response } from "express";
 import { upload } from "../middleware/upload";
 import { prisma } from "../../../prisma/lib/prisma";
+import { apiMiddleware } from "../middleware/apimiddleware";
 const snapRouter = express.Router();
 
 snapRouter.get("/", async (req: Request, res: Response) => {
@@ -21,7 +22,7 @@ snapRouter.get("/", async (req: Request, res: Response) => {
 
 snapRouter.post(
   "/create",
-  upload.single("image"),
+  upload.single("image"),apiMiddleware,
   async (req: Request, res: Response) => {
     try {
       const { title } = req.body;
@@ -46,7 +47,7 @@ snapRouter.post(
   },
 );
 
-snapRouter.post("/like", async (req: Request, res: Response) => {
+snapRouter.post("/like", apiMiddleware, async (req: Request, res: Response) => {
   try {
     const { snapId } = req.body;
     console.log("Liking snap with ID:", snapId);
@@ -112,7 +113,7 @@ snapRouter.post("/like", async (req: Request, res: Response) => {
   }
 });
 
-snapRouter.post("/bookmark", async (req: Request, res: Response) => {
+snapRouter.post("/bookmark", apiMiddleware, async (req: Request, res: Response) => {
   try {
     const { snapId , userId } = req.body;
     if (req?.user?.id !== undefined) {

@@ -6,11 +6,12 @@ import z from "zod";
 import { upload } from "./middleware/upload";
 import snapRouter from "./user/snap_route";
 import profileRouter from "./user/profile_route";
+import { apiMiddleware } from "./middleware/apimiddleware";
 const apiRouter = express.Router();
 
-apiRouter.use("/user/profile", profileRouter);
+apiRouter.use("/user/profile", apiMiddleware ,profileRouter);
 apiRouter.use("/snaps", snapRouter);
-apiRouter.get("/get-user", async (req: Request, res: Response) => {
+apiRouter.get("/get-user", apiMiddleware, async (req: Request, res: Response) => {
   try {
     if (req.user?.id !== undefined) {
       const user = await prisma.user.findUnique({

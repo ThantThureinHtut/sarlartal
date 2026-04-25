@@ -8,7 +8,7 @@ export default function MessageAndNotification() {
     const [notificationCount , setNotificationCount] = useState<number>(0);
   return (
     <div className="flex items-center  gap-2">
-      <Link href="/messenger">
+      <Link href="/messenger" aria-label="Messenger">
         <div className="relative flex items-center justify-center size-9 rounded-lg text-muted-foreground transition-colors  hover:text-foreground bg-accent">
           <MessageCircleIcon className="size-5" />
           {messageCount > 0 && (
@@ -18,7 +18,7 @@ export default function MessageAndNotification() {
           )}
         </div>
       </Link>
-      <Link href="/notifications">
+      <Link href="/notifications" aria-label="Notifications">
         <div className="relative flex items-center justify-center size-9 rounded-lg text-muted-foreground transition-colors  hover:text-foreground bg-accent">
           <BellIcon className="size-5" />
           {notificationCount > 0 && (
