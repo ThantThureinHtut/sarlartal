@@ -2,6 +2,7 @@ import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import Image from "next/image";
 import { Suspense } from "react";
 import CardBoxFooter from "@/components/Dashboard/CardBox/CardBoxFooter";
+import FollowButton from "@/components/Dashboard/CardBox/FollowButton";
 import { MoreHorizontal } from "lucide-react";
 import { formatDistance } from "date-fns";
 import { cn } from "@/lib/utils";
@@ -33,10 +34,16 @@ type SavedSnap = {
   postId: string;
   createdAt: Date;
 };
+type Follow = {
+  followerId: string;
+  followingId: string;
+  createdAt: Date;
+};
 type CurrentUser = {
   id: string;
   likes: Like[];
   savedBySnaps: SavedSnap[];
+  following: Follow[];
 };
 
 export default async function CardBox({
@@ -113,12 +120,22 @@ export default async function CardBox({
             </div>
           </div>
 
-          <button
-            aria-label="More options"
-            className="flex size-9 items-center justify-center rounded-full bg-white/10 text-white backdrop-blur-md border border-white/20 hover:bg-white/20 transition-colors"
-          >
-            <MoreHorizontal className="size-4" />
-          </button>
+          <div className="flex items-center gap-2">
+            {userId !== current_user.id && (
+              <FollowButton
+                targetUserId={userId}
+                initialIsFollowing={current_user.following.some(
+                  (f) => f.followingId === userId,
+                )}
+              />
+            )}
+            <button
+              aria-label="More options"
+              className="flex size-9 items-center justify-center rounded-full bg-white/10 text-white backdrop-blur-md border border-white/20 hover:bg-white/20 transition-colors"
+            >
+              <MoreHorizontal className="size-4" />
+            </button>
+          </div>
         </div>
 
         {/* Caption bar */}

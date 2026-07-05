@@ -47,7 +47,7 @@ export default function CardBoxFooter({
 
   // Saved snap handler
   const handleBookmark = async () => {
-    await bookmarkSnap(postId, userId);
+    await bookmarkSnap(postId);
   };
 
   return (

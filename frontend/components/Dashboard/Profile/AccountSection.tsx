@@ -103,13 +103,21 @@ const  handleNameSave = async () =>  {
     setNameOpen(false);
   }
 
-  const handleEmailSave =  () => {
+  const handleEmailSave = async () => {
     const result = emailSchema.safeParse(draftEmail);
     if (!result.success) {
       setNameAndEmailError(result.error.issues[0].message);
       return;
     }
     onEmailChange(draftEmail.trim());
+    await fetch(`${process.env.NEXT_PUBLIC_API_URL || "http://localhost:3001"}/api/user/profile/email/update`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      credentials: "include",
+      body: JSON.stringify({ email: draftEmail.trim() }),
+    });
     setEmailOpen(false);
   }
 

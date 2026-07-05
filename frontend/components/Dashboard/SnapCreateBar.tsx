@@ -14,6 +14,7 @@ export default function SnapCreateBar() {
   const [photo, setPhoto] = useState<string | null>(null);
   const [facingMode, setFacingMode] = useState<"user" | "environment">("user");
   const [videoReady, setVideoReady] = useState(false);
+  const [error, setError] = useState<string | null>(null);
   const inputRef = useRef<HTMLInputElement>(null);
   const videoRef = useRef<HTMLVideoElement>(null);
   const canvasRef = useRef<HTMLCanvasElement>(null);
@@ -74,6 +75,7 @@ export default function SnapCreateBar() {
   };
 
   const handleSendSnap = async () => {
+    setError(null);
     const formData = new FormData();
     if (photo) {
       // Convert base64 data URL from camera to a Blob
@@ -94,9 +96,12 @@ export default function SnapCreateBar() {
         setFileObject(null);
         setPhoto(null);
         setCaption("");
+      } else {
+        setError(res.error ?? "Failed to send snap. Please try again.");
       }
     }).catch((err) => {
       console.error("Error sending snap:", err);
+      setError("Something went wrong. Please try again.");
     });
   };
   const flipCamera = () => {
@@ -113,6 +118,7 @@ export default function SnapCreateBar() {
     setFileObject(null);
     setPhoto(null);
     setCaption("");
+    setError(null);
     setCameraOpen(true);
     startCamera();
     if (inputRef.current) inputRef.current.value = "";
@@ -263,6 +269,11 @@ export default function SnapCreateBar() {
                 className="flex-1 bg-transparent text-sm text-white placeholder:text-white/55 outline-none"
               />
             </div>
+            {error && (
+              <p role="alert" className="px-4 pb-2 text-sm text-red-400">
+                {error}
+              </p>
+            )}
             <div className="flex items-center justify-between px-4 py-3">
               <button
                 onClick={handleCancel}

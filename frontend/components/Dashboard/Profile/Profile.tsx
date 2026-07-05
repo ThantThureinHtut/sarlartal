@@ -1,16 +1,14 @@
-
-import { getSession } from "@/lib/auth-client";
+import { getUser } from "@/app/(action)/serveraction";
 import ProfileClient from "./ProfileClient";
 import ProfileSkeleton from "./ProfileSkeleton";
 import { Suspense } from "react";
-import { headers } from "next/headers";
 
 export default async function Profile() {
-  const session = await getSession({ fetchOptions: { headers: await headers() } });
+  const user = await getUser();
   return (
     <div>
       <Suspense fallback={<ProfileSkeleton />}>
-        <ProfileClient user={session?.data?.user} />
+        <ProfileClient user={user?.id ? user : undefined} />
       </Suspense>
     </div>
   );

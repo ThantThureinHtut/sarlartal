@@ -2,15 +2,15 @@ services:
   db:
     image: postgres:16-alpine
     environment:
-      POSTGRES_USER: postgres
-      POSTGRES_PASSWORD: secret
-      POSTGRES_DB: sar_lar_tal
+      POSTGRES_USER: ${POSTGRES_USER}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
+      POSTGRES_DB: ${POSTGRES_DB}
     ports:
       - "5432:5432"
     volumes:
       - postgres_data:/var/lib/postgresql/data
     healthcheck:
-      test: ["CMD-SHELL", "pg_isready -U postgres -d sar_lar_tal"]
+      test: ["CMD-SHELL", "pg_isready -U ${POSTGRES_USER} -d ${POSTGRES_DB}"]
       interval: 5s
       timeout: 5s
       retries: 5
@@ -21,10 +21,10 @@ services:
     ports:
       - "3001:3001"
     environment:
-      DATABASE_URL: postgresql://postgres:secret@db:5432/sar_lar_tal
-      FRONTEND_URL: http://localhost:3000
-      BETTER_AUTH_SECRET: ceUuSpRkiPf0GgtRkoE64o8J828mVe0j9n2g5on6Bs0=
-      BETTER_AUTH_URL: http://localhost:3001
+      DATABASE_URL: ${DATABASE_URL}
+      FRONTEND_URL: ${FRONTEND_URL}
+      BETTER_AUTH_SECRET: ${BETTER_AUTH_SECRET}
+      BETTER_AUTH_URL: ${BETTER_AUTH_URL}
     volumes:
       - ./backend:/app/backend
       - backend_node_modules:/app/backend/node_modules
@@ -40,13 +40,13 @@ services:
       - "3000:3000"
     environment:
       # server-side only (Server Actions, next.config.ts rewrites/images) — internal Docker DNS
-      API_URL: http://backend:3001
+      API_URL: ${API_URL}
       # browser-facing (auth client + 2 profile components) — must stay host-reachable
-      NEXT_PUBLIC_API_URL: http://localhost:3001
-      volumes:
-        - ./frontend:/app/frontend
-        - frontend_node_modules:/app/frontend/node_modules
-      depends_on:
+      NEXT_PUBLIC_API_URL: ${NEXT_PUBLIC_API_URL}
+    volumes:
+      - ./frontend:/app/frontend
+      - frontend_node_modules:/app/frontend/node_modules
+    depends_on:
       - backend
 
 volumes:

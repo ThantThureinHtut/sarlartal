@@ -1,10 +1,9 @@
 "use client";
 import { useState, useRef } from "react";
-import { Camera } from "lucide-react";
+import { ArrowLeft, Camera } from "lucide-react";
 import ProfileHeader from "./ProfileHeader";
 import AccountSection from "./AccountSection";
 import Image from "next/image";
-import { Button } from "@/components/ui/button";
 import Link from "next/link";
 
 type Status = "ONLINE" | "IDLE" | "DND" | "OFFLINE" | "BUSY" | "SAD";
@@ -60,12 +59,15 @@ export default function ProfileClient({ user }: { user?: Props }) {
   return (
     <div className="min-h-screen bg-background">
       {/* Cover */}
-      <div className="relative h-44 sm:h-56 overflow-hidden">
+      <div className="relative h-44 sm:h-60 overflow-hidden">
         {coverSrc ? (
           <Image
             src={coverSrc}
             alt="Cover"
-            className="w-full h-full object-cover"
+            fill
+            sizes="100vw"
+            priority
+            className="object-cover"
           />
         ) : (
           <>
@@ -80,17 +82,19 @@ export default function ProfileClient({ user }: { user?: Props }) {
             />
           </>
         )}
-        <Link href="/dashboard">
-          <Button
-            variant="outline"
-            className="absolute top-3 left-4 flex items-center gap-1.5 rounded-lg  px-3 py-1.5 text-xs font-medium "
-          >
-            Back to home
-          </Button>
+        {/* Bottom fade so the avatar/name always read cleanly over any cover photo */}
+        <div className="absolute inset-x-0 bottom-0 h-16 bg-linear-to-t from-background to-transparent" />
+
+        <Link
+          href="/dashboard"
+          className="absolute top-3 left-4 flex items-center gap-1.5 rounded-full bg-black/30 backdrop-blur-md border border-white/20 px-3 py-1.5 text-xs font-medium text-white hover:bg-black/45 transition-all duration-200"
+        >
+          <ArrowLeft className="size-3.5" />
+          Back to home
         </Link>
         <button
           onClick={() => coverRef.current?.click()}
-          className="absolute bottom-3 right-4 flex items-center gap-1.5 rounded-lg bg-background/75 backdrop-blur-md px-3 py-1.5 text-xs font-medium border border-border/50 shadow-sm hover:bg-background/90 transition-all duration-200"
+          className="absolute bottom-3 right-4 flex items-center gap-1.5 rounded-full bg-black/30 backdrop-blur-md border border-white/20 px-3 py-1.5 text-xs font-medium text-white hover:bg-black/45 transition-all duration-200"
         >
           <Camera className="size-3.5" />
           Edit Cover

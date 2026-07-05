@@ -1,6 +1,6 @@
 {
   "scripts": {
-    "dev": "tsx app.ts",
+    "dev": "tsx watch app.ts",
     "build": "tsc",
     "start": "node dist/src/app.js"
   },

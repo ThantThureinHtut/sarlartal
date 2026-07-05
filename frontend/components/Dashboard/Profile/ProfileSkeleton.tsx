@@ -2,7 +2,7 @@ export default function ProfileSkeleton() {
   return (
     <div className="min-h-screen bg-background animate-pulse">
       {/* Cover */}
-      <div className="relative h-44 sm:h-56 bg-muted overflow-hidden">
+      <div className="relative h-44 sm:h-60 bg-muted overflow-hidden">
         <div className="absolute inset-0 bg-linear-to-br from-muted-foreground/10 via-muted-foreground/5 to-background" />
       </div>
 

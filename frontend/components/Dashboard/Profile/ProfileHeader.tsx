@@ -29,9 +29,9 @@ export default function ProfileHeader({
     <div className="flex items-end gap-5 -mt-14 mb-10">
       {/* Avatar */}
       <div className="relative shrink-0">
-        <div className="size-28 rounded-full ring-4 ring-background bg-muted overflow-hidden flex items-center justify-center shadow-xl">
+        <div className="relative size-28 rounded-full ring-4 ring-background bg-muted overflow-hidden flex items-center justify-center shadow-xl">
           {avatarSrc ? (
-            <Image src={avatarSrc} alt="Avatar" className="w-full h-full object-cover" />
+            <Image src={avatarSrc} alt="Avatar" fill sizes="112px" className="object-cover" />
           ) : (
             <span className="text-4xl font-bold text-muted-foreground select-none">
               {name.charAt(0).toUpperCase()}

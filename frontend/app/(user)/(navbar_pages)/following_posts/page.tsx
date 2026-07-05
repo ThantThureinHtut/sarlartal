@@ -1,9 +1,14 @@
-import React from 'react'
+import CardBoxSkeleton from "@/components/Dashboard/CardBox/CardBoxSkeleton";
+import FollowingCardList from "@/components/Dashboard/CardBox/FollowingCardList";
 
-export default function page() {
+import { Suspense } from "react";
+
+export default function FollowingPostsPage() {
   return (
     <div>
-      <h1>Following</h1>
+      <Suspense fallback={<CardBoxSkeleton />}>
+        <FollowingCardList />
+      </Suspense>
     </div>
-  )
+  );
 }

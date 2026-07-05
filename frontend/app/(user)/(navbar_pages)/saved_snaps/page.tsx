@@ -1,9 +1,14 @@
-import React from 'react'
+import CardBoxSkeleton from "@/components/Dashboard/CardBox/CardBoxSkeleton";
+import SavedCardList from "@/components/Dashboard/CardBox/SavedCardList";
 
-export default function page() {
+import { Suspense } from "react";
+
+export default function SavedSnapsPage() {
   return (
     <div>
-        <h1>Liked Snaps</h1>
+      <Suspense fallback={<CardBoxSkeleton />}>
+        <SavedCardList />
+      </Suspense>
     </div>
-  )
+  );
 }

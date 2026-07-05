@@ -1,6 +1,6 @@
 "use server";
 
-import { cacheLife, cacheTag, revalidateTag } from "next/cache";
+import { cacheLife, cacheTag, refresh, revalidateTag, updateTag } from "next/cache";
 import { headers } from "next/headers";
 
 
@@ -48,18 +48,76 @@ export async function getUser() {
   }
 }
 
+export async function getFollowingPosts() {
+  const cookie = await getCookie();
+  try {
+    const res = await fetch(`${process.env.API_URL}/api/snaps/following`, {
+      headers: { cookie },
+      method: "GET",
+      cache: "no-store",
+    });
+    if (!res.ok) return { status: res.status, error: "Failed to fetch following posts" };
+    return await res.json();
+  } catch (error) {
+    return {
+      status: 500,
+      error: "Failed to fetch following posts",
+      details: error instanceof Error ? error.message : String(error),
+    };
+  }
+}
+
+export async function getSavedSnaps() {
+  const cookie = await getCookie();
+  try {
+    const res = await fetch(`${process.env.API_URL}/api/snaps/saved`, {
+      headers: { cookie },
+      method: "GET",
+      cache: "no-store",
+    });
+    if (!res.ok) return { status: res.status, error: "Failed to fetch saved snaps" };
+    return await res.json();
+  } catch (error) {
+    return {
+      status: 500,
+      error: "Failed to fetch saved snaps",
+      details: error instanceof Error ? error.message : String(error),
+    };
+  }
+}
+
+export async function followUser(followingId: string) {
+  const cookie = await getCookie();
+  try {
+    await fetch(`${process.env.API_URL}/api/follow/toggle`, {
+      method: "POST",
+      headers: { "Content-Type": "application/json", cookie },
+      body: JSON.stringify({ followingId }),
+    });
+    return { success: true }
+  } catch (error) {
+    return { success: false , error: error instanceof Error ? error.message : String(error) }
+  }
+}
+
 export async function sendSnap(formData: FormData) {
   const cookie = await getCookie();
   try {
-    await fetch(`${process.env.API_URL}/api/snaps/create`, {
+    const res = await fetch(`${process.env.API_URL}/api/snaps/create`, {
       method: "POST",
     //   can't use the headers() function here because it have application/json content type by default and it will override the multipart/form-data content type which is required for file upload
-    
+
       headers: { cookie },
       body: formData,
     });
 
-    revalidateTag("snaps" , "max"); // Revalidate snaps cache after creating a new snap
+    if (!res.ok) {
+      const data = await res.json().catch(() => null);
+      return { success: false, error: data?.error ?? "Failed to create snap" };
+    }
+
+    updateTag("snaps"); // Revalidate snaps cache after creating a new snap
+    refresh(); // Force the client router to refetch the dashboard's RSC payload
     return { success: true }
   } catch (error) {
     return { success: false , error: error instanceof Error ? error.message : String(error) }
@@ -83,13 +141,13 @@ export async function likeSnap(snapId: string) {
   }
 }
 
-export async function bookmarkSnap(snapId: string , userId: string) {
+export async function bookmarkSnap(snapId: string) {
   const cookie = await getCookie();
   try {
     await fetch(`${process.env.API_URL}/api/snaps/bookmark`, {
       method: "POST",
       headers: { "Content-Type": "application/json", cookie },
-      body: JSON.stringify({ snapId, userId  }),
+      body: JSON.stringify({ snapId }),
     });
     revalidateTag("snaps" , "max"); // Revalidate snaps cache after bookmarking a snap
     return { success: true }
