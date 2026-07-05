@@ -44,7 +44,7 @@ export default function ProfileClient({ user }: { user?: Props }) {
   }
 
   const onStatusChange = async (s: Status) => {
-    await fetch(`${process.env.API_URL}/api/user/profile/status/update`, {
+    await fetch(`${process.env.NEXT_PUBLIC_API_URL || "http://localhost:3001"}/api/user/profile/status/update`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",

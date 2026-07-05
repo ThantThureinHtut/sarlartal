@@ -7,18 +7,15 @@ const nextConfig: NextConfig = {
     return [
       {
         source: "/uploads/:path*",
-        destination: "http://localhost:3001/uploads/:path*",
+        destination: `${process.env.API_URL || "http://localhost:3001"}/uploads/:path*`,
       },
     ];
   },
   images: {
     remotePatterns: [
       new URL("https://placehold.co/**"),
-      new URL(`http://localhost:3001/**`),
+      new URL(`${process.env.API_URL || "http://localhost:3001"}/**`),
     ],
-  },
-  env: {
-    API_URL: "http://localhost:3001",
   },
 };
 

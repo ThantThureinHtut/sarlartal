@@ -1,0 +1,56 @@
+services:
+  db:
+    image: postgres:16-alpine
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: secret
+      POSTGRES_DB: sar_lar_tal
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U postgres -d sar_lar_tal"]
+      interval: 5s
+      timeout: 5s
+      retries: 5
+
+  backend:
+    build:
+      context: ./backend
+    ports:
+      - "3001:3001"
+    environment:
+      DATABASE_URL: postgresql://postgres:secret@db:5432/sar_lar_tal
+      FRONTEND_URL: http://localhost:3000
+      BETTER_AUTH_SECRET: ceUuSpRkiPf0GgtRkoE64o8J828mVe0j9n2g5on6Bs0=
+      BETTER_AUTH_URL: http://localhost:3001
+    volumes:
+      - ./backend:/app/backend
+      - backend_node_modules:/app/backend/node_modules
+      - backend_generated:/app/backend/generated
+    depends_on:
+      db:
+        condition: service_healthy
+
+  frontend:
+    build:
+      context: ./frontend
+    ports:
+      - "3000:3000"
+    environment:
+      # server-side only (Server Actions, next.config.ts rewrites/images) — internal Docker DNS
+      API_URL: http://backend:3001
+      # browser-facing (auth client + 2 profile components) — must stay host-reachable
+      NEXT_PUBLIC_API_URL: http://localhost:3001
+      volumes:
+        - ./frontend:/app/frontend
+        - frontend_node_modules:/app/frontend/node_modules
+      depends_on:
+      - backend
+
+volumes:
+  postgres_data:
+  backend_node_modules:
+  backend_generated:
+  frontend_node_modules:

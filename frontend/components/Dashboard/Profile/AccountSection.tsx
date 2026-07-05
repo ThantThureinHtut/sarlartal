@@ -75,7 +75,7 @@ export default function AccountSection({
 
   const handleBioSave = async() => {
     onBioChange(draftBio.trim());
-    await fetch(`${process.env.API_URL}/api/user/profile/bio/update`, {
+    await fetch(`${process.env.NEXT_PUBLIC_API_URL || "http://localhost:3001"}/api/user/profile/bio/update`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -92,7 +92,7 @@ const  handleNameSave = async () =>  {
       return;
     }
     onNameChange(draftName.trim());
-    await fetch(`${process.env.API_URL}/api/user/profile/name/update`, {
+    await fetch(`${process.env.NEXT_PUBLIC_API_URL || "http://localhost:3001"}/api/user/profile/name/update`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
