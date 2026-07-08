@@ -1,6 +1,7 @@
 import { getSnaps, getUser } from "@/app/(action)/serveraction";
 import CardBox from "@/components/Dashboard/CardBox/CardBox";
 import { cacheLife, cacheTag } from "next/cache";
+import { CameraIcon } from "lucide-react";
 type Likes = {
   userId: string;
   postId: string;
@@ -25,13 +26,17 @@ export default async function CardList() {
   return (
     <>
       {!Array.isArray(snaps) ? (
-        <div className="flex flex-col items-center justify-center gap-5 m-4 ">
-          <p className="text-gray-500">
-            No snaps found. Create your first snap!
+        <div className="flex flex-col items-center justify-center gap-3 rounded-2xl border border-dashed border-border py-16 px-6 text-center">
+          <div className="flex size-12 items-center justify-center rounded-full bg-muted ring-1 ring-border">
+            <CameraIcon className="size-5 text-muted-foreground" />
+          </div>
+          <p className="text-sm font-medium text-foreground">No snaps found</p>
+          <p className="max-w-xs text-sm text-muted-foreground">
+            Create your first snap to see it here.
           </p>
         </div>
       ) : (
-        <div className="flex flex-col items-center justify-center gap-5 m-4 ">
+        <div className="flex flex-col items-center gap-6">
           {snaps.map((snap: Props, index: number) => (
             <CardBox key={snap.id} snap={snap} current_user={current_user} priority={index === 0} />
           ))}

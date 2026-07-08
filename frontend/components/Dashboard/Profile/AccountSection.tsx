@@ -2,11 +2,10 @@
 
 import z from "zod";
 import { useState } from "react";
-import { FileText, User, Mail, Lock, Eye, EyeOff } from "lucide-react";
+import { User, Mail, Lock, Eye, EyeOff } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import { Textarea } from "@/components/ui/textarea";
 import {
   Dialog,
   DialogContent,
@@ -19,10 +18,8 @@ import InfoRow from "./InfoRow";
 
 type Props = {
   name: string;
-  bio: string;
   email: string;
   onNameChange: (v: string) => void;
-  onBioChange: (v: string) => void;
   onEmailChange: (v: string) => void;
 };
 
@@ -43,18 +40,14 @@ function FieldError({ message }: { message: string }) {
 
 export default function AccountSection({
   name,
-  bio,
   email,
   onNameChange,
-  onBioChange,
   onEmailChange,
 }: Props) {
-  const [bioOpen, setBioOpen] = useState(false);
   const [nameOpen, setNameOpen] = useState(false);
   const [emailOpen, setEmailOpen] = useState(false);
   const [pwOpen, setPwOpen] = useState(false);
 
-  const [draftBio, setDraftBio] = useState("");
   const [draftName, setDraftName] = useState("");
   const [draftEmail, setDraftEmail] = useState("");
   const [oldPw, setOldPw] = useState("");
@@ -72,27 +65,14 @@ export default function AccountSection({
   const [showNewPw, setShowNewPw] = useState(false);
   const [showConfirmPw, setShowConfirmPw] = useState(false);
 
-
-  const handleBioSave = async() => {
-    onBioChange(draftBio.trim());
-    await fetch(`${process.env.NEXT_PUBLIC_API_URL || "http://localhost:3001"}/api/user/profile/bio/update`, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      credentials: "include",
-      body: JSON.stringify({ bio: draftBio.trim() }),
-    });
-    setBioOpen(false);
-  };
-const  handleNameSave = async () =>  {
+  const handleNameSave = async () => {
     const result = nameSchema.safeParse(draftName);
     if (!result.success) {
       setNameAndEmailError(result.error.issues[0].message);
       return;
     }
-    onNameChange(draftName.trim());
-    await fetch(`${process.env.NEXT_PUBLIC_API_URL || "http://localhost:3001"}/api/user/profile/name/update`, {
+
+    const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL || "http://localhost:3001"}/api/user/profile/name/update`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -100,6 +80,13 @@ const  handleNameSave = async () =>  {
       credentials: "include",
       body: JSON.stringify({ name: draftName.trim() }),
     });
+
+    if (!res.ok) {
+      setNameAndEmailError("Failed to save name. Please try again.");
+      return;
+    }
+
+    onNameChange(draftName.trim());
     setNameOpen(false);
   }
 
@@ -109,8 +96,8 @@ const  handleNameSave = async () =>  {
       setNameAndEmailError(result.error.issues[0].message);
       return;
     }
-    onEmailChange(draftEmail.trim());
-    await fetch(`${process.env.NEXT_PUBLIC_API_URL || "http://localhost:3001"}/api/user/profile/email/update`, {
+
+    const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL || "http://localhost:3001"}/api/user/profile/email/update`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -118,6 +105,13 @@ const  handleNameSave = async () =>  {
       credentials: "include",
       body: JSON.stringify({ email: draftEmail.trim() }),
     });
+
+    if (!res.ok) {
+      setNameAndEmailError("Failed to save email. Please try again.");
+      return;
+    }
+
+    onEmailChange(draftEmail.trim());
     setEmailOpen(false);
   }
 
@@ -137,16 +131,6 @@ const  handleNameSave = async () =>  {
   }
 
   const rows = [
-    {
-      icon: <FileText className="size-3.75" />,
-      label: "Bio",
-      value: bio || "No bio yet. Tell people about yourself!",
-      muted: !bio,
-      onEdit: () => {
-        setDraftBio(bio);
-        setBioOpen(true);
-      },
-    },
     {
       icon: <User className="size-3.75" />,
       label: "Display Name",
@@ -187,39 +171,6 @@ const  handleNameSave = async () =>  {
       {rows.map((row) => (
         <InfoRow key={row.label} {...row} />
       ))}
-
-      {/* Bio */}
-      <Dialog open={bioOpen} onOpenChange={setBioOpen}>
-        <DialogContent>
-          <DialogHeader>
-            <DialogTitle>Edit Bio</DialogTitle>
-          </DialogHeader>
-          <div className="grid gap-2">
-            <Label htmlFor="bio-input">Bio</Label>
-            <Textarea
-              id="bio-input"
-              value={draftBio}
-              onChange={(e) => setDraftBio(e.target.value)}
-              placeholder="Tell people a bit about yourself..."
-              maxLength={300}
-              className="min-h-24 resize-none"
-            />
-            <p className="text-xs text-muted-foreground text-right">
-              {draftBio.length}/300
-            </p>
-          </div>
-          <DialogFooter>
-            <DialogClose render={<Button variant="outline" />}>
-              Cancel
-            </DialogClose>
-            <Button
-              onClick={handleBioSave}
-            >
-              Save
-            </Button>
-          </DialogFooter>
-        </DialogContent>
-      </Dialog>
 
       {/* Name */}
       <Dialog

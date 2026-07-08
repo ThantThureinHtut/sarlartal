@@ -40,49 +40,55 @@ export default function CardBoxFooter({
   const [currentLikeCount, setCurrentLikeCount] = useState(likeCount);
   
   const handleLike = async () => {
-    setCurrentLikeCount((prev) => prev + (isLiked ? -1 : 1));
-    await likeSnap(postId);
-  };
+    const wasLiked = isLiked;
+    setLiked(!wasLiked);
+    setCurrentLikeCount((prev) => prev + (wasLiked ? -1 : 1));
 
+    const result = await likeSnap(postId);
+    if (!result.success) {
+      setLiked(wasLiked);
+      setCurrentLikeCount((prev) => prev + (wasLiked ? 1 : -1));
+    }
+  };
 
   // Saved snap handler
   const handleBookmark = async () => {
-    await bookmarkSnap(postId);
+    const wasSaved = isSaved;
+    setSaved(!wasSaved);
+
+    const result = await bookmarkSnap(postId);
+    if (!result.success) {
+      setSaved(wasSaved);
+    }
   };
 
   return (
     <div className="flex items-center justify-between w-full">
       {/* Like button */}
       <button
-        onClick={() => {
-          setLiked((prev) => !prev);
-          handleLike();
-        }}
+        onClick={handleLike}
         aria-label={isLiked ? "Unlike" : "Like"}
-        className="flex items-center gap-2 px-3 py-2 rounded-full bg-white/10 backdrop-blur-md border border-white/20 hover:bg-white/20 transition-all duration-200 active:scale-90"
+        className="flex items-center gap-2 rounded-full px-3 py-1.5 text-muted-foreground transition-all duration-200 hover:bg-muted active:scale-90"
       >
         <HeartIcon
           className={`size-5 transition-all duration-200 ${
-            isLiked ? "fill-red-500 text-red-400 scale-110" : "text-white"
+            isLiked ? "fill-destructive text-destructive scale-110" : ""
           }`}
         />
-        <span className="text-xs font-medium text-white">
+        <span className="text-xs font-medium">
           {currentLikeCount}
         </span>
       </button>
 
       {/* Bookmark button */}
       <button
-        onClick={() => {
-          setSaved((prev) => !prev);
-          handleBookmark();
-        }}
+        onClick={handleBookmark}
         aria-label={isSaved ? "Unsave" : "Save"}
-        className="flex size-10 items-center justify-center rounded-full bg-white/10 backdrop-blur-md border border-white/20 hover:bg-white/20 transition-all duration-200 active:scale-90"
+        className="flex size-9 items-center justify-center rounded-full text-muted-foreground transition-all duration-200 hover:bg-muted active:scale-90"
       >
         <BookmarkIcon
           className={`size-5 transition-all duration-200 ${
-            isSaved ? "fill-yellow-400 text-yellow-300 scale-110" : "text-white"
+            isSaved ? "fill-primary text-primary scale-110" : ""
           }`}
         />
       </button>

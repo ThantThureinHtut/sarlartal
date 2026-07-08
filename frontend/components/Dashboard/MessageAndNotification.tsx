@@ -9,20 +9,20 @@ export default function MessageAndNotification() {
   return (
     <div className="flex items-center  gap-2">
       <Link href="/messenger" aria-label="Messenger">
-        <div className="relative flex items-center justify-center size-9 rounded-lg text-muted-foreground transition-colors  hover:text-foreground bg-accent">
+        <div className="relative flex items-center justify-center size-9 rounded-lg text-muted-foreground ring-1 ring-foreground/5 transition-colors duration-200 hover:text-foreground hover:bg-accent/80 bg-accent">
           <MessageCircleIcon className="size-5" />
           {messageCount > 0 && (
-            <Badge className="absolute -top-0.5 -right-1 min-w-4 h-4 px-1 text-[10px] flex items-center justify-center">
+            <Badge className="absolute -top-0.5 -right-1 min-w-4 h-4 px-1 text-[10px] flex items-center justify-center ring-2 ring-background">
               {messageCount > 99 ? "99+" : messageCount}
             </Badge>
           )}
         </div>
       </Link>
       <Link href="/notifications" aria-label="Notifications">
-        <div className="relative flex items-center justify-center size-9 rounded-lg text-muted-foreground transition-colors  hover:text-foreground bg-accent">
+        <div className="relative flex items-center justify-center size-9 rounded-lg text-muted-foreground ring-1 ring-foreground/5 transition-colors duration-200 hover:text-foreground hover:bg-accent/80 bg-accent">
           <BellIcon className="size-5" />
           {notificationCount > 0 && (
-            <Badge className="absolute -top-0.5 -right-1 min-w-4 h-4 px-1 text-[10px] flex items-center justify-center">
+            <Badge className="absolute -top-0.5 -right-1 min-w-4 h-4 px-1 text-[10px] flex items-center justify-center ring-2 ring-background">
               {notificationCount > 99 ? "99+" : notificationCount}
             </Badge>
           )}

@@ -1,6 +1,5 @@
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import Image from "next/image";
-import { Suspense } from "react";
 import CardBoxFooter from "@/components/Dashboard/CardBox/CardBoxFooter";
 import FollowButton from "@/components/Dashboard/CardBox/FollowButton";
 import { MoreHorizontal } from "lucide-react";
@@ -59,60 +58,32 @@ export default async function CardBox({
   const currentStatus = STATUSES.find((s) => s.value === user.status)!;
 
   return (
-    <div className="mx-auto w-full max-w-md sm:max-w-lg ">
-      <div className="relative overflow-hidden rounded-3xl aspect-4/5 bg-black shadow-md shadow-black/40 group">
-        <Image
-          src={image_url}
-          alt={title || `Snap by ${user.name}`}
-          fill
-          priority={priority}
-          loading="eager"
-          sizes="(max-width: 640px) 100vw, 480px"
-          className="object-contain transition-transform duration-500 group-hover:scale-[1.02]"
-        />
-
-        {/* Top gradient — smooth eased fade */}
-        <div
-          className="absolute inset-x-0 top-0 h-40 pointer-events-none"
-          style={{
-            background:
-              "linear-gradient(to bottom, rgba(0,0,0,0.45) 0%, rgba(0,0,0,0.28) 30%, rgba(0,0,0,0.12) 60%, rgba(0,0,0,0) 100%)",
-          }}
-        />
-
-        {/* Bottom gradient — keeps footer area readable */}
-        <div
-          className="absolute inset-x-0 bottom-0 h-20 pointer-events-none"
-          style={{
-            background:
-              "linear-gradient(to top, rgba(0,0,0,0.45) 0%, rgba(0,0,0,0.2) 50%, rgba(0,0,0,0) 100%)",
-          }}
-        />
-
-        {/* Header: avatar + name + more button */}
-        <div className="absolute inset-x-0 top-0 flex items-center justify-between px-4 pt-4">
-          <div className="flex items-center gap-4">
-            <div className="relative ">
-              <Avatar className="size-10 ring-2 ring-white/30 ring-offset-1 ring-offset-transparent shadow-lg">
+    <div className="mx-auto w-full max-w-md sm:max-w-lg">
+      <div className="overflow-hidden rounded-3xl bg-card ring-1 ring-border shadow-sm">
+        {/* Header: avatar + name + more button — off the photo */}
+        <div className="flex items-center justify-between gap-3 px-4 py-3">
+          <div className="flex items-center gap-3 min-w-0">
+            <div className="relative shrink-0">
+              <Avatar className="size-10 ring-2 ring-background shadow-sm">
                 <AvatarImage src={user.image} alt={user.name} />
-                <AvatarFallback className="bg-white/20 text-white backdrop-blur-sm">
+                <AvatarFallback className="bg-muted text-muted-foreground">
                   CN
                 </AvatarFallback>
               </Avatar>
               {/* Status dot */}
               <span
                 className={cn(
-                  "absolute bottom-0.5 -right-0.5 size-2.5 rounded-full ring-[3px] ring-background shadow-sm",
+                  "absolute bottom-0 -right-0.5 size-2.5 rounded-full ring-2 ring-card",
                   currentStatus.dot,
                 )}
               />
             </div>
 
-            <div>
-              <p className="text-sm font-semibold text-white leading-tight drop-shadow">
+            <div className="min-w-0">
+              <p className="text-sm font-semibold text-foreground leading-tight truncate">
                 {user.name}
               </p>
-              <p className="text-xs text-white/70 drop-shadow">
+              <p className="text-xs text-muted-foreground">
                 {formatDistance(new Date(createdAt), new Date(), {
                   addSuffix: true,
                 })}
@@ -120,7 +91,7 @@ export default async function CardBox({
             </div>
           </div>
 
-          <div className="flex items-center gap-2">
+          <div className="flex items-center gap-1.5 shrink-0">
             {userId !== current_user.id && (
               <FollowButton
                 targetUserId={userId}
@@ -131,30 +102,40 @@ export default async function CardBox({
             )}
             <button
               aria-label="More options"
-              className="flex size-9 items-center justify-center rounded-full bg-white/10 text-white backdrop-blur-md border border-white/20 hover:bg-white/20 transition-colors"
+              className="flex size-8 items-center justify-center rounded-full text-muted-foreground transition-colors duration-200 hover:bg-muted hover:text-foreground"
             >
               <MoreHorizontal className="size-4" />
             </button>
           </div>
         </div>
 
-        {/* Caption bar */}
+        {/* Photo — contained within the card, rounded by the card's own overflow-hidden */}
+        <div className="relative aspect-4/5 bg-muted">
+          <Image
+            src={image_url}
+            alt={title || `Snap by ${user.name}`}
+            fill
+            preload={priority}
+            sizes="(max-width: 640px) 100vw, 480px"
+            className="object-cover transition-transform duration-500 hover:scale-[1.02]"
+          />
+        </div>
+
+        {/* Caption — plain text below the photo */}
         {title.trim() && (
-          <div className="absolute inset-x-0 bottom-20 px-4 py-2.5 bg-black/40 backdrop-blur-md">
-            <p className="text-xs sm:text-sm text-white/90 leading-snug text-center">
-              {title}
-            </p>
-          </div>
+          <p className="px-4 pt-3 text-sm text-foreground leading-snug">
+            {title}
+          </p>
         )}
 
-        {/* Footer: like + bookmark — sits below caption bar */}
-        <div className="absolute inset-x-0 bottom-0 px-4 py-3">
-            <CardBoxFooter
-              likeCount={likeCount}
-              postId={id}
-              userId={userId}
-              current_user={current_user}
-            />
+        {/* Footer: like + bookmark */}
+        <div className="px-4 py-3">
+          <CardBoxFooter
+            likeCount={likeCount}
+            postId={id}
+            userId={userId}
+            current_user={current_user}
+          />
         </div>
       </div>
     </div>

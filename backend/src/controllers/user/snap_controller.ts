@@ -3,9 +3,7 @@ import { z } from "zod";
 import { Prisma } from "../../../generated/prisma/client";
 import * as snapService from "../../services/user/snap_service";
 
-const createSnapSchema = z.object({
-  title: z.string().min(1, "title is required"),
-});
+
 
 const likeSnapSchema = z.object({
   snapId: z.string().min(1, "snapId is required"),
@@ -55,14 +53,11 @@ export async function getSavedSnaps(req: Request, res: Response) {
 
 export async function createSnap(req: Request, res: Response) {
   try {
-    const parsed = createSnapSchema.safeParse(req.body);
-    if (!parsed.success) {
-      res.status(400).json({ error: parsed.error.issues[0]?.message ?? "Invalid request body" });
-      return;
-    }
+    
+    
     const image = req.file ? `/uploads/snaps/${req.file.filename}` : null;
     if (req.user?.id !== undefined) {
-      await snapService.createSnap(parsed.data.title, image, req.user.id);
+      await snapService.createSnap(req.body.title, image, req.user.id);
       res.status(201).json({ message: "Snap created successfully" });
       return;
     }

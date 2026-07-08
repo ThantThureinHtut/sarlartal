@@ -1,6 +1,5 @@
 "use client";
 
-import { Chewy } from "next/font/google";
 import { SunMediumIcon, MoonIcon } from "lucide-react";
 import { cn } from "@/lib/utils";
 import Link from "next/link";
@@ -16,11 +15,7 @@ import {
   AccordionTrigger,
 } from "@/components/ui/accordion";
 import MessageAndNotification from "./MessageAndNotification";
-const chewy = Chewy({
-  weight: "400",
-  subsets: ["latin"],
-  display: "swap"
-});
+import Logo from "@/components/Logo";
 
 const navLinks = [
   { label: "Home", href: "/dashboard" },
@@ -44,13 +39,11 @@ export default function DashboardNavbar() {
     },
   ];
   return (
-    <header className="sticky top-0 z-50 w-full border-b border-border/50 bg-background/80 backdrop-blur-md">
+    <header className="sticky top-0 z-50 w-full border-b border-border/60 bg-background/85 backdrop-blur-md shadow-sm shadow-black/[0.02]">
       <div className="mx-auto flex h-16  items-center justify-between px-4 sm:px-6">
         {/* Logo */}
-        <Link href="/" className="flex items-center gap-2">
-          <h1 className={`font-bold text-3xl text-lime-500 ${chewy.className}`}>
-            SarLarTal
-          </h1>
+        <Link href="/" className="transition-transform duration-200 hover:scale-[1.03]">
+          <Logo size="sm" />
         </Link>
 
         {/* Desktop nav — unchanged from original */}
@@ -59,7 +52,7 @@ export default function DashboardNavbar() {
             <li key={link.label}>
               <Link
                 href={link.href}
-                className="text-sm font-medium text-muted-foreground hover:text-foreground"
+                className="text-sm font-medium text-muted-foreground transition-colors duration-200 hover:text-foreground"
               >
                 {link.label}
               </Link>
@@ -72,7 +65,7 @@ export default function DashboardNavbar() {
                 onClick={() =>
                   setTheme(resolvedTheme === "dark" ? "light" : "dark")
                 }
-                className="flex size-9 items-center justify-center rounded-lg text-muted-foreground transition-colors hover:bg-muted hover:text-foreground"
+                className="flex size-9 items-center justify-center rounded-lg text-muted-foreground ring-1 ring-transparent transition-colors duration-200 hover:bg-muted hover:text-foreground hover:ring-border"
                 aria-label="Toggle theme"
                 suppressHydrationWarning
               >
@@ -86,7 +79,7 @@ export default function DashboardNavbar() {
             <div className="flex gap-2">
               <Suspense
                 fallback={
-                  <div className="w-8 h-8 rounded-full bg-muted animate-pulse" />
+                  <div className="size-8 rounded-full bg-muted ring-1 ring-border animate-pulse" />
                 }
               >
                 <ProfileDropDown profileDropdownItems={profileDropdownItems} />
@@ -102,7 +95,7 @@ export default function DashboardNavbar() {
             onClick={() =>
               setTheme(resolvedTheme === "dark" ? "light" : "dark")
             }
-            className="flex size-9 items-center justify-center rounded-lg text-muted-foreground transition-colors hover:bg-muted hover:text-foreground"
+            className="flex size-9 items-center justify-center rounded-lg text-muted-foreground ring-1 ring-transparent transition-colors duration-200 hover:bg-muted hover:text-foreground hover:ring-border"
             aria-label="Toggle theme"
           >
             <SunMediumIcon className="size-5 dark:hidden" />
@@ -112,7 +105,7 @@ export default function DashboardNavbar() {
 
           <button
             onClick={() => setIsOpen(!isOpen)}
-            className="flex size-9 items-center justify-center rounded-lg text-muted-foreground transition-colors hover:bg-muted hover:text-foreground"
+            className="flex size-9 items-center justify-center rounded-lg text-muted-foreground ring-1 ring-transparent transition-colors duration-200 hover:bg-muted hover:text-foreground hover:ring-border"
             aria-label={isOpen ? "Close menu" : "Open menu"}
             aria-expanded={isOpen}
           >
@@ -148,7 +141,7 @@ export default function DashboardNavbar() {
           isOpen ? "max-h-96 opacity-100" : "max-h-0 opacity-0",
         )}
       >
-        <div className="border-t border-border/50 bg-background/95 px-4 pb-4 pt-2">
+        <div className="border-t border-border/60 bg-background shadow-sm px-4 pb-4 pt-2">
           {/* Nav links with stagger */}
           <nav className="flex flex-col gap-1 mb-3">
             {navLinks.map((link, i) => (

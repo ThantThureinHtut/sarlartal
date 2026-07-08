@@ -5,6 +5,7 @@ import { Camera, Check, ChevronDown } from "lucide-react"
 import { cn } from "@/lib/utils"
 import Image from "next/image"
 import { Status, STATUSES } from "@/components/data/status"
+import ProfileStats from "./ProfileStats"
 
 
 type Props = {
@@ -13,6 +14,9 @@ type Props = {
   onStatusChange: (s: Status) => void
   avatarSrc: string
   onAvatarClick: () => void
+  postsCount: number
+  followersCount: number
+  followingCount: number
 }
 
 export default function ProfileHeader({
@@ -21,17 +25,28 @@ export default function ProfileHeader({
   onStatusChange,
   avatarSrc,
   onAvatarClick,
+  postsCount,
+  followersCount,
+  followingCount,
 }: Props) {
   const [statusOpen, setStatusOpen] = useState(false)
   const current = STATUSES.find((s) => s.value == status)
  
   return (
-    <div className="flex items-end gap-5 -mt-14 mb-10">
+    <div className="flex flex-col gap-5 mb-8">
+    <div className="flex items-end gap-5 -mt-14">
       {/* Avatar */}
       <div className="relative shrink-0">
         <div className="relative size-28 rounded-full ring-4 ring-background bg-muted overflow-hidden flex items-center justify-center shadow-xl">
           {avatarSrc ? (
-            <Image src={avatarSrc} alt="Avatar" fill sizes="112px" className="object-cover" />
+            <Image
+              src={avatarSrc}
+              alt="Avatar"
+              fill
+              sizes="112px"
+              unoptimized={avatarSrc.startsWith("blob:")}
+              className="object-cover"
+            />
           ) : (
             <span className="text-4xl font-bold text-muted-foreground select-none">
               {name.charAt(0).toUpperCase()}
@@ -81,7 +96,7 @@ export default function ProfileHeader({
           {statusOpen && (
             <>
               <div className="fixed inset-0 z-40" onClick={() => setStatusOpen(false)} />
-              <div className="absolute top-9 left-0 z-50 w-48 rounded-xl border border-border bg-popover/95 backdrop-blur-sm p-1 shadow-xl">
+              <div className="absolute top-9 left-0 z-50 w-48 rounded-xl border border-border bg-popover ring-1 ring-border/60 p-1 shadow-lg">
                 {STATUSES.map((s) => (
                   <button
                     key={s.value}
@@ -108,6 +123,13 @@ export default function ProfileHeader({
           )}
         </div>
       </div>
+    </div>
+
+      <ProfileStats
+        postsCount={postsCount}
+        followersCount={followersCount}
+        followingCount={followingCount}
+      />
     </div>
   )
 }

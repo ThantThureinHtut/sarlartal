@@ -1,8 +1,8 @@
 import Link from "next/link";
-import { Chewy } from "next/font/google";
 import { Mail } from "lucide-react";
 import { Suspense } from "react";
 import { connection } from "next/server";
+import Logo from "@/components/Logo";
 
 async function CurrentYear() {
   await connection();
@@ -54,8 +54,6 @@ function GithubIcon({ className }: { className?: string }) {
   );
 }
 
-const chewy = Chewy({ weight: "400", subsets: ["latin"] });
-
 const sections = [
   {
     title: "Product",
@@ -90,11 +88,7 @@ export default function Footer() {
         <div className="grid gap-10 md:grid-cols-2 lg:grid-cols-5">
           <div className="lg:col-span-2">
             <Link href="/" className="inline-flex items-center gap-2">
-              <h1
-                className={`text-3xl font-bold text-lime-500 ${chewy.className}`}
-              >
-                SarLarTal
-              </h1>
+              <Logo size="sm" />
             </Link>
             <p className="mt-3 max-w-sm text-sm text-muted-foreground">
               Share your moments. Snap a photo, react to friends, chat in

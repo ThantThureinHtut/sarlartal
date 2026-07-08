@@ -4,14 +4,12 @@ import { Button } from "@/components/ui/button";
 import { Field, FieldGroup, FieldLabel, FieldSet } from "@/components/ui/field";
 import { Input } from "@/components/ui/input";
 import AuthIllustration from "@/components/illustrations/AuthIllustration";
-import { Chewy } from "next/font/google";
 import Link from "next/link";
 import { useState } from "react";
 import { useRouter } from "next/navigation";
 import { signUp } from "@/lib/auth-client";
 import { Eye, EyeOff } from "lucide-react";
-
-const chewy = Chewy({ weight: "400", subsets: ["latin"] });
+import Logo from "@/components/Logo";
 
 const formRulebook = z
   .object({
@@ -87,9 +85,7 @@ export default function SignUpPage() {
       {/* Left panel — branding */}
       <div className="relative hidden lg:flex flex-col justify-between overflow-hidden bg-foreground p-10 text-background animate-in fade-in slide-in-from-left duration-700 fill-mode-both">
         <Link href="/" className="relative z-10">
-          <h1 className={`text-3xl text-lime-400 ${chewy.className}`}>
-            SarLarTal
-          </h1>
+          <Logo size="lg" inverted />
         </Link>
 
         <div className="relative z-10 flex flex-1 items-center justify-center py-8">
@@ -109,12 +105,11 @@ export default function SignUpPage() {
       <div className="flex flex-col items-center justify-center px-6 py-12 animate-in fade-in slide-in-from-right duration-700 fill-mode-both">
         <div className="w-full max-w-sm space-y-8">
           {/* Mobile logo */}
-          <Link href="/">
-            <h1
-              className={`text-3xl text-lime-500 text-center lg:hidden animate-in fade-in slide-in-from-bottom-4 duration-500 fill-mode-both ${chewy.className}`}
-            >
-              SarLarTal
-            </h1>
+          <Link
+            href="/"
+            className="flex justify-center lg:hidden animate-in fade-in slide-in-from-bottom-4 duration-500 fill-mode-both"
+          >
+            <Logo size="lg" />
           </Link>
 
           {/* Heading */}

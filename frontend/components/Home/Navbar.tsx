@@ -1,16 +1,12 @@
 "use client";
 
-import { Chewy } from "next/font/google";
 import { SunMediumIcon, MoonIcon } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
 import Link from "next/link";
 import { useTheme } from "next-themes";
 import { useState } from "react";
-const chewy = Chewy({
-  weight: "400",
-  subsets: ["latin"],
-});
+import Logo from "@/components/Logo";
 
 const navLinks = [
   { label: "Home", href: "/" },
@@ -25,10 +21,8 @@ export default function Navbar() {
     <header className="sticky top-0 z-50 w-full border-b border-border/50 bg-background/80 backdrop-blur-md">
       <div className="mx-auto flex h-16  items-center justify-between px-4 sm:px-6">
         {/* Logo */}
-        <Link href="/" className="flex items-center gap-2">
-          <h1 className={`font-bold text-3xl text-lime-500 ${chewy.className}`}>
-            SarLarTal
-          </h1>
+        <Link href="/">
+          <Logo size="sm" />
         </Link>
 
         {/* Desktop nav — unchanged from original */}

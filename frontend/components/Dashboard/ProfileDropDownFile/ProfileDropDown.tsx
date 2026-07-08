@@ -21,18 +21,21 @@ export default function ProfileDropDown({ profileDropdownItems }: { profileDropd
   return (
     <div>
       <DropdownMenu>
-        <DropdownMenuTrigger aria-label="Open profile menu">
+        <DropdownMenuTrigger
+          aria-label="Open profile menu"
+          className="rounded-full ring-2 ring-border/60 transition-all duration-200 hover:ring-primary/40"
+        >
           <Avatar>
             <AvatarImage src="https://github.com/shadcn.png" alt="Profile avatar" />
             <AvatarFallback>CN</AvatarFallback>
           </Avatar>
         </DropdownMenuTrigger>
-        <DropdownMenuContent>
+        <DropdownMenuContent className="ring-1 ring-border/60 shadow-lg">
           <DropdownMenuGroup>
             <DropdownMenuLabel>My Account</DropdownMenuLabel>
             {profileDropdownItems.slice(0, -1).map((item) => (
               <DropdownMenuItem key={item.label} className="p-0">
-                <Link href={item.href} className="w-full px-2 py-1.5 hover:bg-accent/10">
+                <Link href={item.href} className="w-full px-2 py-1.5 rounded-md transition-colors duration-150 hover:bg-accent/60">
                   {item.label}
                 </Link>
               </DropdownMenuItem>
@@ -43,7 +46,7 @@ export default function ProfileDropDown({ profileDropdownItems }: { profileDropd
             {profileDropdownItems.slice(-1).map((item) => (
               <DropdownMenuItem
                 key={item.label}
-                className="hover:bg-destructive/10 focus:bg-destructive/10 text-destructive"
+                className="transition-colors duration-150 hover:bg-destructive/10 focus:bg-destructive/10 text-destructive"
                 onClick={item.onClick}
               >
                 {item.label}

@@ -15,7 +15,6 @@ export async function getSnaps() {
   try {
     const res = await fetch(`${process.env.API_URL}/api/snaps`, {
       method: "GET",
-      cache: "no-store",
     });
 
     if (!res.ok) return { status: res.status, error: "Failed to fetch snaps" };
@@ -30,10 +29,9 @@ export async function getSnaps() {
 }
 
 export async function getUser() {
-  const cookie = await getCookie();
   try {
     const res = await fetch(`${process.env.API_URL}/api/get-user`, {
-      headers: {cookie},
+      headers: await headers(),
       method: "GET",
       cache: "no-store",
     });
@@ -49,10 +47,9 @@ export async function getUser() {
 }
 
 export async function getFollowingPosts() {
-  const cookie = await getCookie();
   try {
     const res = await fetch(`${process.env.API_URL}/api/snaps/following`, {
-      headers: { cookie },
+      headers: await headers(),
       method: "GET",
       cache: "no-store",
     });
@@ -68,10 +65,9 @@ export async function getFollowingPosts() {
 }
 
 export async function getSavedSnaps() {
-  const cookie = await getCookie();
   try {
     const res = await fetch(`${process.env.API_URL}/api/snaps/saved`, {
-      headers: { cookie },
+      headers: await headers(),
       method: "GET",
       cache: "no-store",
     });
@@ -89,11 +85,17 @@ export async function getSavedSnaps() {
 export async function followUser(followingId: string) {
   const cookie = await getCookie();
   try {
-    await fetch(`${process.env.API_URL}/api/follow/toggle`, {
+    const res = await fetch(`${process.env.API_URL}/api/follow/toggle`, {
       method: "POST",
       headers: { "Content-Type": "application/json", cookie },
       body: JSON.stringify({ followingId }),
     });
+
+    if (!res.ok) {
+      const data = await res.json().catch(() => null);
+      return { success: false, error: data?.error ?? "Failed to update follow status" };
+    }
+
     return { success: true }
   } catch (error) {
     return { success: false , error: error instanceof Error ? error.message : String(error) }
@@ -128,15 +130,20 @@ export async function sendSnap(formData: FormData) {
 export async function likeSnap(snapId: string) {
   const cookie = await getCookie();
   try {
-    await fetch(`${process.env.API_URL}/api/snaps/like`, {
+    const res = await fetch(`${process.env.API_URL}/api/snaps/like`, {
       method: "POST",
       headers: { "Content-Type": "application/json", cookie },
       body: JSON.stringify({ snapId }),
     });
+
+    if (!res.ok) {
+      const data = await res.json().catch(() => null);
+      return { success: false, error: data?.error ?? "Failed to like snap" };
+    }
+
     revalidateTag("snaps" , "max"); // Revalidate snaps cache after liking a snap
     return { success: true }
   } catch (error) {
-
     return { success: false , error: error instanceof Error ? error.message : String(error) }
   }
 }
@@ -144,11 +151,17 @@ export async function likeSnap(snapId: string) {
 export async function bookmarkSnap(snapId: string) {
   const cookie = await getCookie();
   try {
-    await fetch(`${process.env.API_URL}/api/snaps/bookmark`, {
+    const res = await fetch(`${process.env.API_URL}/api/snaps/bookmark`, {
       method: "POST",
       headers: { "Content-Type": "application/json", cookie },
       body: JSON.stringify({ snapId }),
     });
+
+    if (!res.ok) {
+      const data = await res.json().catch(() => null);
+      return { success: false, error: data?.error ?? "Failed to bookmark snap" };
+    }
+
     revalidateTag("snaps" , "max"); // Revalidate snaps cache after bookmarking a snap
     return { success: true }
   } catch (error) {

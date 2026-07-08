@@ -17,6 +17,12 @@ export async function getUserProfile(userId: string) {
       following: true,
       createdAt: true,
       updatedAt: true,
+      _count: {
+        select: {
+          posts: true,
+          followers: true,
+        },
+      },
     },
   });
 }

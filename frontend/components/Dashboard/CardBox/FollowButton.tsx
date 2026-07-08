@@ -13,8 +13,13 @@ export default function FollowButton({
   const [isFollowing, setIsFollowing] = useState(initialIsFollowing);
 
   const handleClick = async () => {
-    setIsFollowing((prev) => !prev);
-    await followUser(targetUserId);
+    const wasFollowing = isFollowing;
+    setIsFollowing(!wasFollowing);
+
+    const result = await followUser(targetUserId);
+    if (!result.success) {
+      setIsFollowing(wasFollowing);
+    }
   };
 
   return (
@@ -22,10 +27,10 @@ export default function FollowButton({
       onClick={handleClick}
       aria-label={isFollowing ? "Unfollow" : "Follow"}
       className={cn(
-        "px-3 py-1.5 rounded-full text-xs font-medium border backdrop-blur-md transition-all duration-200 active:scale-90",
+        "px-3 py-1.5 rounded-full text-xs font-medium transition-all duration-200 active:scale-90",
         isFollowing
-          ? "bg-white/10 border-white/20 text-white hover:bg-white/20"
-          : "bg-white border-white text-black hover:bg-white/90",
+          ? "bg-muted text-foreground ring-1 ring-border hover:bg-muted/70"
+          : "bg-primary text-primary-foreground hover:bg-primary/90",
       )}
     >
       {isFollowing ? "Following" : "Follow"}

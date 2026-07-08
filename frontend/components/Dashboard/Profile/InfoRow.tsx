@@ -14,7 +14,7 @@ type Props = {
 
 export default function InfoRow({ icon, label, value, muted = false, onEdit }: Props) {
   return (
-    <div className="group flex items-start justify-between gap-4 rounded-xl border border-border bg-card px-5 py-4 transition-all duration-200 hover:border-border/80 hover:shadow-sm">
+    <div className="group flex items-start justify-between gap-4 rounded-xl border border-border bg-card px-5 py-4 shadow-sm ring-1 ring-transparent transition-all duration-200 hover:border-border/80 hover:ring-black/5 hover:shadow-md dark:hover:ring-white/5">
       <div className="flex items-start gap-3.5 min-w-0">
         <div className="mt-0.5 flex size-8 shrink-0 items-center justify-center rounded-lg bg-primary/10 text-primary">
           {icon}

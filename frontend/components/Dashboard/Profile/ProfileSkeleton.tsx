@@ -9,7 +9,7 @@ export default function ProfileSkeleton() {
       {/* Main */}
       <div className="relative z-10 max-w-2xl mx-auto px-4 sm:px-6">
         {/* Avatar + name area — mirrors ProfileHeader */}
-        <div className="flex items-end gap-4 -mt-14 mb-6">
+        <div className="flex items-end gap-4 -mt-14 mb-5">
           {/* Avatar */}
           <div className="size-28 rounded-full bg-muted border-4 border-background shrink-0" />
 
@@ -21,15 +21,25 @@ export default function ProfileSkeleton() {
           </div>
         </div>
 
+        {/* Stats row — mirrors ProfileStats */}
+        <div className="flex items-center gap-4 rounded-2xl border border-border px-5 py-4 mb-5">
+          <div className="h-8 flex-1 rounded-md bg-muted" />
+          <div className="h-8 flex-1 rounded-md bg-muted" />
+          <div className="h-8 flex-1 rounded-md bg-muted" />
+        </div>
+
+        {/* Bio block — mirrors ProfileBio */}
+        <div className="h-14 rounded-2xl border border-dashed border-border mb-6" />
+
         {/* Section divider */}
         <div className="flex items-center gap-3 mb-4">
-          <div className="h-3 w-16 rounded bg-muted shrink-0" />
+          <div className="h-3 w-28 rounded bg-muted shrink-0" />
           <div className="h-px flex-1 bg-border" />
         </div>
 
         {/* Account rows */}
         <div className="space-y-2.5 pb-16">
-          {["Bio", "Display Name", "Email", "Password"].map((label) => (
+          {["Display Name", "Email", "Password"].map((label) => (
             <div
               key={label}
               className="flex items-center justify-between rounded-xl border border-border px-4 py-3"
