@@ -6,25 +6,32 @@ import { cn } from "@/lib/utils"
 import Image from "next/image"
 import { Status, STATUSES } from "@/components/data/status"
 import ProfileStats from "./ProfileStats"
+import FollowButton from "../CardBox/FollowButton";
 
 
 type Props = {
+  userId: string
   name: string
   status: Status
-  onStatusChange: (s: Status) => void
+  onStatusChange?: (s: Status) => void
   avatarSrc: string
-  onAvatarClick: () => void
+  onAvatarClick?: () => void
+  isSelf?: boolean
+  isFollowing?: boolean
   postsCount: number
   followersCount: number
   followingCount: number
 }
 
 export default function ProfileHeader({
+  userId,
   name,
   status,
   onStatusChange,
   avatarSrc,
   onAvatarClick,
+  isSelf = false,
+  isFollowing = false,
   postsCount,
   followersCount,
   followingCount,
@@ -60,15 +67,17 @@ export default function ProfileHeader({
           current?.dot
         )} />
 
-        {/* Camera overlay */}
-        <button
-          onClick={onAvatarClick}
-          className="absolute inset-0 flex flex-col items-center justify-center gap-1 rounded-full bg-black/50 opacity-0 hover:opacity-100 transition-opacity duration-200"
-          aria-label="Change avatar"
-        >
-          <Camera className="size-5 text-white" />
-          <span className="text-[10px] text-white/90 font-medium">Change</span>
-        </button>
+        {/* Camera overlay — edit mode only */}
+        {onAvatarClick && (
+          <button
+            onClick={onAvatarClick}
+            className="absolute inset-0 flex flex-col items-center justify-center gap-1 rounded-full bg-black/50 opacity-0 hover:opacity-100 transition-opacity duration-200"
+            aria-label="Change avatar"
+          >
+            <Camera className="size-5 text-white" />
+            <span className="text-[10px] text-white/90 font-medium">Change</span>
+          </button>
+        )}
       </div>
 
       {/* Name + status */}
@@ -77,52 +86,67 @@ export default function ProfileHeader({
           {name}
         </h1>
 
-        <div className="relative">
-          <button
-            onClick={() => setStatusOpen(!statusOpen)}
+        {onStatusChange ? (
+          <div className="relative">
+            <button
+              onClick={() => setStatusOpen(!statusOpen)}
+              className={cn(
+                "inline-flex items-center gap-1.5 rounded-full px-2.5 py-1 text-xs font-semibold border border-transparent transition-all duration-200 hover:opacity-75",
+                current?.pill
+              )}
+            >
+              <span className={cn("size-1.5 rounded-full shrink-0", current?.dot)} />
+              {current?.label}
+              <ChevronDown className={cn(
+                "size-3 transition-transform duration-200",
+                statusOpen && "rotate-180"
+              )} />
+            </button>
+
+            {statusOpen && (
+              <>
+                <div className="fixed inset-0 z-40" onClick={() => setStatusOpen(false)} />
+                <div className="absolute top-9 left-0 z-50 w-48 rounded-xl border border-border bg-popover ring-1 ring-border/60 p-1 shadow-lg">
+                  {STATUSES.map((s) => (
+                    <button
+                      key={s.value}
+                      onClick={async () => {
+                        setStatusOpen(false);
+                        onStatusChange(s.value);
+                      }}
+                      className={cn(
+                        "flex w-full items-center gap-2.5 rounded-lg px-3 py-2.5 text-xs text-left transition-colors hover:bg-muted",
+                        status === s.value && "bg-muted"
+                      )}
+                    >
+                      <span className={cn("size-2.5 rounded-full shrink-0", s.dot)} />
+                      <span className={status === s.value ? "font-semibold" : "font-medium"}>
+                        {s.label}
+                      </span>
+                      {status === s.value && (
+                        <Check className="size-3 ml-auto text-primary" />
+                      )}
+                    </button>
+                  ))}
+                </div>
+              </>
+            )}
+          </div>
+        ) : (
+          <span
             className={cn(
-              "inline-flex items-center gap-1.5 rounded-full px-2.5 py-1 text-xs font-semibold border border-transparent transition-all duration-200 hover:opacity-75",
+              "inline-flex w-fit items-center gap-1.5 rounded-full px-2.5 py-1 text-xs font-semibold",
               current?.pill
             )}
           >
             <span className={cn("size-1.5 rounded-full shrink-0", current?.dot)} />
             {current?.label}
-            <ChevronDown className={cn(
-              "size-3 transition-transform duration-200",
-              statusOpen && "rotate-180"
-            )} />
-          </button>
-
-          {statusOpen && (
-            <>
-              <div className="fixed inset-0 z-40" onClick={() => setStatusOpen(false)} />
-              <div className="absolute top-9 left-0 z-50 w-48 rounded-xl border border-border bg-popover ring-1 ring-border/60 p-1 shadow-lg">
-                {STATUSES.map((s) => (
-                  <button
-                    key={s.value}
-                    onClick={async () => {
-                      setStatusOpen(false);
-                      onStatusChange(s.value);
-                    }}
-                    className={cn(
-                      "flex w-full items-center gap-2.5 rounded-lg px-3 py-2.5 text-xs text-left transition-colors hover:bg-muted",
-                      status === s.value && "bg-muted"
-                    )}
-                  >
-                    <span className={cn("size-2.5 rounded-full shrink-0", s.dot)} />
-                    <span className={status === s.value ? "font-semibold" : "font-medium"}>
-                      {s.label}
-                    </span>
-                    {status === s.value && (
-                      <Check className="size-3 ml-auto text-primary" />
-                    )}
-                  </button>
-                ))}
-              </div>
-            </>
-          )}
-        </div>
+          </span>
+        )}
       </div>
+      {!isSelf && (
+          <FollowButton targetUserId={userId} initialIsFollowing={isFollowing} />
+        )}
     </div>
 
       <ProfileStats

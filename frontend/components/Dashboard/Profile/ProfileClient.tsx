@@ -158,11 +158,13 @@ export default function ProfileClient({ user }: { user?: Props }) {
       {/* Main */}
       <div className="relative z-10 max-w-2xl mx-auto px-4 sm:px-6">
         <ProfileHeader
+          userId={user?.id || ""}
           name={name}
           status={status}
           onStatusChange={onStatusChange}
           avatarSrc={avatarSrc}
           onAvatarClick={() => avatarRef.current?.click()}
+          isSelf
           postsCount={postsCount}
           followersCount={followersCount}
           followingCount={followingCount}

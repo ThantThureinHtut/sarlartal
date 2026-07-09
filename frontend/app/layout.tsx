@@ -2,6 +2,7 @@ import "./globals.css";
 import { Roboto, Noto_Sans } from "next/font/google";
 import { cn } from "@/lib/utils";
 import { ThemeProvider } from "@/components/theme-provider";
+import { FollowStateProvider } from "@/components/follow-state-provider";
 import type { Metadata } from 'next';
 
 const notoSansHeading = Noto_Sans({
@@ -39,7 +40,7 @@ export default function RootLayout({
           enableSystem
           disableTransitionOnChange
         >
-          {children}
+          <FollowStateProvider>{children}</FollowStateProvider>
         </ThemeProvider>
       </body>
     </html>

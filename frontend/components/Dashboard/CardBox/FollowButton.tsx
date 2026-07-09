@@ -1,7 +1,8 @@
 "use client";
-import React, { useState } from "react";
+import React from "react";
 import { followUser } from "@/app/(action)/serveraction";
 import { cn } from "@/lib/utils";
+import { useFollowState } from "@/components/follow-state-provider";
 
 export default function FollowButton({
   targetUserId,
@@ -10,8 +11,8 @@ export default function FollowButton({
   targetUserId: string;
   initialIsFollowing: boolean;
 }) {
-  const [isFollowing, setIsFollowing] = useState(initialIsFollowing);
-
+   const [isFollowing, setIsFollowing] = useFollowState(targetUserId, initialIsFollowing);
+  
   const handleClick = async () => {
     const wasFollowing = isFollowing;
     setIsFollowing(!wasFollowing);
@@ -20,8 +21,9 @@ export default function FollowButton({
     if (!result.success) {
       setIsFollowing(wasFollowing);
     }
+   
   };
-
+  
   return (
     <button
       onClick={handleClick}

@@ -1,5 +1,6 @@
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import Image from "next/image";
+import Link from "next/link";
 import CardBoxFooter from "@/components/Dashboard/CardBox/CardBoxFooter";
 import FollowButton from "@/components/Dashboard/CardBox/FollowButton";
 import { MoreHorizontal } from "lucide-react";
@@ -62,7 +63,10 @@ export default async function CardBox({
       <div className="overflow-hidden rounded-3xl bg-card ring-1 ring-border shadow-sm">
         {/* Header: avatar + name + more button — off the photo */}
         <div className="flex items-center justify-between gap-3 px-4 py-3">
-          <div className="flex items-center gap-3 min-w-0">
+          <Link
+            href={userId === current_user.id ? "/profile" : `/profile/${userId}`}
+            className="flex items-center gap-3 min-w-0"
+          >
             <div className="relative shrink-0">
               <Avatar className="size-10 ring-2 ring-background shadow-sm">
                 <AvatarImage src={user.image} alt={user.name} />
@@ -89,7 +93,7 @@ export default async function CardBox({
                 })}
               </p>
             </div>
-          </div>
+          </Link>
 
           <div className="flex items-center gap-1.5 shrink-0">
             {userId !== current_user.id && (
@@ -110,14 +114,14 @@ export default async function CardBox({
         </div>
 
         {/* Photo — contained within the card, rounded by the card's own overflow-hidden */}
-        <div className="relative aspect-4/5 bg-muted">
+        <div className="relative aspect-4/5 bg-black">
           <Image
             src={image_url}
             alt={title || `Snap by ${user.name}`}
             fill
             preload={priority}
             sizes="(max-width: 640px) 100vw, 480px"
-            className="object-cover transition-transform duration-500 hover:scale-[1.02]"
+            className="object-contain transition-transform duration-500 hover:scale-[1.02]"
           />
         </div>
 

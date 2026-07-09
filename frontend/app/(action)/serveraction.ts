@@ -46,6 +46,24 @@ export async function getUser() {
   }
 }
 
+export async function getUserProfile(userId: string) {
+  try {
+    const res = await fetch(`${process.env.API_URL}/api/user/${userId}`, {
+      headers: await headers(),
+      method: "GET",
+      cache: "no-store",
+    });
+    if (!res.ok) return { status: res.status, error: "Failed to fetch user profile" };
+    return await res.json();
+  } catch (error) {
+    return {
+      status: 500,
+      error: "Failed to fetch user profile",
+      details: error instanceof Error ? error.message : String(error),
+    };
+  }
+}
+
 export async function getFollowingPosts() {
   try {
     const res = await fetch(`${process.env.API_URL}/api/snaps/following`, {
@@ -96,6 +114,7 @@ export async function followUser(followingId: string) {
       return { success: false, error: data?.error ?? "Failed to update follow status" };
     }
 
+    refresh(); // Force the client router to refetch RSC payloads (e.g. the target user's profile page) after a follow/unfollow
     return { success: true }
   } catch (error) {
     return { success: false , error: error instanceof Error ? error.message : String(error) }

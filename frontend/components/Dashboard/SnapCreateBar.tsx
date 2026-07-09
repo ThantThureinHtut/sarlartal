@@ -167,10 +167,10 @@ export default function SnapCreateBar({ user }: Props) {
           {/* Video feed */}
           <div className="flex flex-1 items-center justify-center px-4 py-2 min-h-0">
             <canvas ref={canvasRef} style={{ display: "none" }} />
-            <div className="relative w-full max-w-sm sm:max-w-md h-full max-h-full">
+            <div className="relative w-full max-w-sm sm:max-w-md aspect-4/5 max-h-full overflow-hidden rounded-4xl bg-black shadow-2xl">
               {/* Skeleton shown while camera is initialising */}
               {!videoReady && (
-                <div className="absolute inset-0 rounded-4xl bg-white/10 overflow-hidden">
+                <div className="absolute inset-0 bg-white/10 overflow-hidden">
                   <div className="absolute inset-0 -translate-x-full animate-[shimmer_1.4s_infinite] bg-linear-to-r from-transparent via-white/15 to-transparent" />
                 </div>
               )}
@@ -179,7 +179,7 @@ export default function SnapCreateBar({ user }: Props) {
                 autoPlay
                 playsInline
                 onCanPlay={() => setVideoReady(true)}
-                className="w-full h-full object-cover rounded-4xl shadow-2xl transition-opacity duration-300"
+                className="w-full h-full object-contain transition-opacity duration-300"
                 style={{
                   transform: facingMode === "user" ? "scaleX(-1)" : "none",
                   opacity: videoReady ? 1 : 0,
@@ -281,14 +281,14 @@ export default function SnapCreateBar({ user }: Props) {
               </div>
 
               {/* Photo — contained within the card, same as CardBox */}
-              <div className="relative aspect-4/5 bg-muted">
+              <div className="relative aspect-4/5 bg-black">
                 {photo && (
                   <Image
                     src={photo}
                     alt="captured"
                     fill
                     unoptimized
-                    className="object-cover"
+                    className="object-contain"
                   />
                 )}
                 {fileImage && (
@@ -297,7 +297,7 @@ export default function SnapCreateBar({ user }: Props) {
                     alt="preview"
                     fill
                     unoptimized
-                    className="object-cover"
+                    className="object-contain"
                   />
                 )}
               </div>

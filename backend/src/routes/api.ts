@@ -11,5 +11,6 @@ apiRouter.use("/user/profile", apiMiddleware ,profileRouter);
 apiRouter.use("/snaps", snapRouter);
 apiRouter.use("/follow", followRouter);
 apiRouter.get("/get-user", apiMiddleware, userController.getUser);
+apiRouter.get("/user/:userId", apiMiddleware, userController.getPublicProfile);
 
 export default apiRouter;
