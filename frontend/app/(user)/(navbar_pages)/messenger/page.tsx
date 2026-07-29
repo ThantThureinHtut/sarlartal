@@ -1,11 +1,14 @@
-import { Suspense } from "react";
 import MessengerShell from "@/components/Dashboard/Messenger/MessengerShell";
-import { MOCK_CONVERSATIONS, CURRENT_USER_ID } from "@/components/data/mock-conversations";
+import { getConversations, getUser } from "@/app/(action)/serveraction";
 
-export default function MessengerPage() {
+export default async function MessengerPage() {
+  const [conversations , user] = await Promise.all([getConversations(), getUser()]);
+  const conversationsData = Array.isArray(conversations) ? conversations : [];
   return (
-    <Suspense fallback={null}>
-      <MessengerShell conversations={MOCK_CONVERSATIONS} currentUserId={CURRENT_USER_ID} />
-    </Suspense>
+    <>
+      {(Array.isArray(conversationsData) && user?.id) && (
+        <MessengerShell conversations={conversationsData  } currentUserId={user.id} />
+      )}
+    </>
   );
 }

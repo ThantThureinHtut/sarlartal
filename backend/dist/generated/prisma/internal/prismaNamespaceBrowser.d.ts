@@ -35,6 +35,8 @@ export declare const ModelName: {
     readonly Follow: "Follow";
     readonly Notification: "Notification";
     readonly SavedSnap: "SavedSnap";
+    readonly Conversation: "Conversation";
+    readonly Message: "Message";
 };
 export type ModelName = (typeof ModelName)[keyof typeof ModelName];
 export declare const TransactionIsolationLevel: {
@@ -51,6 +53,8 @@ export declare const UserScalarFieldEnum: {
     readonly emailVerified: "emailVerified";
     readonly bio: "bio";
     readonly image: "image";
+    readonly cover_image: "cover_image";
+    readonly status: "status";
     readonly createdAt: "createdAt";
     readonly updatedAt: "updatedAt";
 };
@@ -96,6 +100,7 @@ export declare const PostScalarFieldEnum: {
     readonly image_url: "image_url";
     readonly title: "title";
     readonly userId: "userId";
+    readonly likeCount: "likeCount";
     readonly createdAt: "createdAt";
     readonly updatedAt: "updatedAt";
 };
@@ -110,7 +115,6 @@ export declare const FollowScalarFieldEnum: {
     readonly followerId: "followerId";
     readonly followingId: "followingId";
     readonly createdAt: "createdAt";
-    readonly userId: "userId";
 };
 export type FollowScalarFieldEnum = (typeof FollowScalarFieldEnum)[keyof typeof FollowScalarFieldEnum];
 export declare const NotificationScalarFieldEnum: {
@@ -121,7 +125,6 @@ export declare const NotificationScalarFieldEnum: {
     readonly recipientId: "recipientId";
     readonly postId: "postId";
     readonly createdAt: "createdAt";
-    readonly userId: "userId";
 };
 export type NotificationScalarFieldEnum = (typeof NotificationScalarFieldEnum)[keyof typeof NotificationScalarFieldEnum];
 export declare const SavedSnapScalarFieldEnum: {
@@ -131,6 +134,24 @@ export declare const SavedSnapScalarFieldEnum: {
     readonly savedUserId: "savedUserId";
 };
 export type SavedSnapScalarFieldEnum = (typeof SavedSnapScalarFieldEnum)[keyof typeof SavedSnapScalarFieldEnum];
+export declare const ConversationScalarFieldEnum: {
+    readonly id: "id";
+    readonly user1Id: "user1Id";
+    readonly user2Id: "user2Id";
+    readonly createdAt: "createdAt";
+    readonly updatedAt: "updatedAt";
+};
+export type ConversationScalarFieldEnum = (typeof ConversationScalarFieldEnum)[keyof typeof ConversationScalarFieldEnum];
+export declare const MessageScalarFieldEnum: {
+    readonly id: "id";
+    readonly conversationId: "conversationId";
+    readonly senderId: "senderId";
+    readonly receiverId: "receiverId";
+    readonly content: "content";
+    readonly read: "read";
+    readonly createdAt: "createdAt";
+};
+export type MessageScalarFieldEnum = (typeof MessageScalarFieldEnum)[keyof typeof MessageScalarFieldEnum];
 export declare const SortOrder: {
     readonly asc: "asc";
     readonly desc: "desc";

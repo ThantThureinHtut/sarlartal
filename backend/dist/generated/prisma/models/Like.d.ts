@@ -142,7 +142,7 @@ export type LikeWhereUniqueInput = Prisma.AtLeast<{
     createdAt?: Prisma.DateTimeFilter<"Like"> | Date | string;
     user?: Prisma.XOR<Prisma.UserScalarRelationFilter, Prisma.UserWhereInput>;
     post?: Prisma.XOR<Prisma.PostScalarRelationFilter, Prisma.PostWhereInput>;
-}, "userId_postId">;
+}, "userId_postId" | "userId_postId">;
 export type LikeOrderByWithAggregationInput = {
     userId?: Prisma.SortOrder;
     postId?: Prisma.SortOrder;

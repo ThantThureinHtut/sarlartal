@@ -7,14 +7,23 @@ import type * as Prisma from "../internal/prismaNamespace";
 export type PostModel = runtime.Types.Result.DefaultSelection<Prisma.$PostPayload>;
 export type AggregatePost = {
     _count: PostCountAggregateOutputType | null;
+    _avg: PostAvgAggregateOutputType | null;
+    _sum: PostSumAggregateOutputType | null;
     _min: PostMinAggregateOutputType | null;
     _max: PostMaxAggregateOutputType | null;
+};
+export type PostAvgAggregateOutputType = {
+    likeCount: number | null;
+};
+export type PostSumAggregateOutputType = {
+    likeCount: number | null;
 };
 export type PostMinAggregateOutputType = {
     id: string | null;
     image_url: string | null;
     title: string | null;
     userId: string | null;
+    likeCount: number | null;
     createdAt: Date | null;
     updatedAt: Date | null;
 };
@@ -23,6 +32,7 @@ export type PostMaxAggregateOutputType = {
     image_url: string | null;
     title: string | null;
     userId: string | null;
+    likeCount: number | null;
     createdAt: Date | null;
     updatedAt: Date | null;
 };
@@ -31,15 +41,23 @@ export type PostCountAggregateOutputType = {
     image_url: number;
     title: number;
     userId: number;
+    likeCount: number;
     createdAt: number;
     updatedAt: number;
     _all: number;
+};
+export type PostAvgAggregateInputType = {
+    likeCount?: true;
+};
+export type PostSumAggregateInputType = {
+    likeCount?: true;
 };
 export type PostMinAggregateInputType = {
     id?: true;
     image_url?: true;
     title?: true;
     userId?: true;
+    likeCount?: true;
     createdAt?: true;
     updatedAt?: true;
 };
@@ -48,6 +66,7 @@ export type PostMaxAggregateInputType = {
     image_url?: true;
     title?: true;
     userId?: true;
+    likeCount?: true;
     createdAt?: true;
     updatedAt?: true;
 };
@@ -56,6 +75,7 @@ export type PostCountAggregateInputType = {
     image_url?: true;
     title?: true;
     userId?: true;
+    likeCount?: true;
     createdAt?: true;
     updatedAt?: true;
     _all?: true;
@@ -98,6 +118,18 @@ export type PostAggregateArgs<ExtArgs extends runtime.Types.Extensions.InternalA
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
      *
+     * Select which fields to average
+    **/
+    _avg?: PostAvgAggregateInputType;
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     *
+     * Select which fields to sum
+    **/
+    _sum?: PostSumAggregateInputType;
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     *
      * Select which fields to find the minimum value
     **/
     _min?: PostMinAggregateInputType;
@@ -119,6 +151,8 @@ export type PostGroupByArgs<ExtArgs extends runtime.Types.Extensions.InternalArg
     take?: number;
     skip?: number;
     _count?: PostCountAggregateInputType | true;
+    _avg?: PostAvgAggregateInputType;
+    _sum?: PostSumAggregateInputType;
     _min?: PostMinAggregateInputType;
     _max?: PostMaxAggregateInputType;
 };
@@ -127,9 +161,12 @@ export type PostGroupByOutputType = {
     image_url: string;
     title: string;
     userId: string;
+    likeCount: number;
     createdAt: Date;
     updatedAt: Date;
     _count: PostCountAggregateOutputType | null;
+    _avg: PostAvgAggregateOutputType | null;
+    _sum: PostSumAggregateOutputType | null;
     _min: PostMinAggregateOutputType | null;
     _max: PostMaxAggregateOutputType | null;
 };
@@ -144,6 +181,7 @@ export type PostWhereInput = {
     image_url?: Prisma.StringFilter<"Post"> | string;
     title?: Prisma.StringFilter<"Post"> | string;
     userId?: Prisma.StringFilter<"Post"> | string;
+    likeCount?: Prisma.IntFilter<"Post"> | number;
     createdAt?: Prisma.DateTimeFilter<"Post"> | Date | string;
     updatedAt?: Prisma.DateTimeFilter<"Post"> | Date | string;
     likes?: Prisma.LikeListRelationFilter;
@@ -155,6 +193,7 @@ export type PostOrderByWithRelationInput = {
     image_url?: Prisma.SortOrder;
     title?: Prisma.SortOrder;
     userId?: Prisma.SortOrder;
+    likeCount?: Prisma.SortOrder;
     createdAt?: Prisma.SortOrder;
     updatedAt?: Prisma.SortOrder;
     likes?: Prisma.LikeOrderByRelationAggregateInput;
@@ -169,6 +208,7 @@ export type PostWhereUniqueInput = Prisma.AtLeast<{
     image_url?: Prisma.StringFilter<"Post"> | string;
     title?: Prisma.StringFilter<"Post"> | string;
     userId?: Prisma.StringFilter<"Post"> | string;
+    likeCount?: Prisma.IntFilter<"Post"> | number;
     createdAt?: Prisma.DateTimeFilter<"Post"> | Date | string;
     updatedAt?: Prisma.DateTimeFilter<"Post"> | Date | string;
     likes?: Prisma.LikeListRelationFilter;
@@ -180,11 +220,14 @@ export type PostOrderByWithAggregationInput = {
     image_url?: Prisma.SortOrder;
     title?: Prisma.SortOrder;
     userId?: Prisma.SortOrder;
+    likeCount?: Prisma.SortOrder;
     createdAt?: Prisma.SortOrder;
     updatedAt?: Prisma.SortOrder;
     _count?: Prisma.PostCountOrderByAggregateInput;
+    _avg?: Prisma.PostAvgOrderByAggregateInput;
     _max?: Prisma.PostMaxOrderByAggregateInput;
     _min?: Prisma.PostMinOrderByAggregateInput;
+    _sum?: Prisma.PostSumOrderByAggregateInput;
 };
 export type PostScalarWhereWithAggregatesInput = {
     AND?: Prisma.PostScalarWhereWithAggregatesInput | Prisma.PostScalarWhereWithAggregatesInput[];
@@ -194,13 +237,15 @@ export type PostScalarWhereWithAggregatesInput = {
     image_url?: Prisma.StringWithAggregatesFilter<"Post"> | string;
     title?: Prisma.StringWithAggregatesFilter<"Post"> | string;
     userId?: Prisma.StringWithAggregatesFilter<"Post"> | string;
+    likeCount?: Prisma.IntWithAggregatesFilter<"Post"> | number;
     createdAt?: Prisma.DateTimeWithAggregatesFilter<"Post"> | Date | string;
     updatedAt?: Prisma.DateTimeWithAggregatesFilter<"Post"> | Date | string;
 };
 export type PostCreateInput = {
-    id: string;
+    id?: string;
     image_url: string;
     title: string;
+    likeCount?: number;
     createdAt?: Date | string;
     updatedAt?: Date | string;
     likes?: Prisma.LikeCreateNestedManyWithoutPostInput;
@@ -208,10 +253,11 @@ export type PostCreateInput = {
     saveSnap?: Prisma.SavedSnapCreateNestedManyWithoutPostInput;
 };
 export type PostUncheckedCreateInput = {
-    id: string;
+    id?: string;
     image_url: string;
     title: string;
     userId: string;
+    likeCount?: number;
     createdAt?: Date | string;
     updatedAt?: Date | string;
     likes?: Prisma.LikeUncheckedCreateNestedManyWithoutPostInput;
@@ -221,6 +267,7 @@ export type PostUpdateInput = {
     id?: Prisma.StringFieldUpdateOperationsInput | string;
     image_url?: Prisma.StringFieldUpdateOperationsInput | string;
     title?: Prisma.StringFieldUpdateOperationsInput | string;
+    likeCount?: Prisma.IntFieldUpdateOperationsInput | number;
     createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
     updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
     likes?: Prisma.LikeUpdateManyWithoutPostNestedInput;
@@ -232,16 +279,18 @@ export type PostUncheckedUpdateInput = {
     image_url?: Prisma.StringFieldUpdateOperationsInput | string;
     title?: Prisma.StringFieldUpdateOperationsInput | string;
     userId?: Prisma.StringFieldUpdateOperationsInput | string;
+    likeCount?: Prisma.IntFieldUpdateOperationsInput | number;
     createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
     updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
     likes?: Prisma.LikeUncheckedUpdateManyWithoutPostNestedInput;
     saveSnap?: Prisma.SavedSnapUncheckedUpdateManyWithoutPostNestedInput;
 };
 export type PostCreateManyInput = {
-    id: string;
+    id?: string;
     image_url: string;
     title: string;
     userId: string;
+    likeCount?: number;
     createdAt?: Date | string;
     updatedAt?: Date | string;
 };
@@ -249,6 +298,7 @@ export type PostUpdateManyMutationInput = {
     id?: Prisma.StringFieldUpdateOperationsInput | string;
     image_url?: Prisma.StringFieldUpdateOperationsInput | string;
     title?: Prisma.StringFieldUpdateOperationsInput | string;
+    likeCount?: Prisma.IntFieldUpdateOperationsInput | number;
     createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
     updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
 };
@@ -257,6 +307,7 @@ export type PostUncheckedUpdateManyInput = {
     image_url?: Prisma.StringFieldUpdateOperationsInput | string;
     title?: Prisma.StringFieldUpdateOperationsInput | string;
     userId?: Prisma.StringFieldUpdateOperationsInput | string;
+    likeCount?: Prisma.IntFieldUpdateOperationsInput | number;
     createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
     updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
 };
@@ -273,14 +324,19 @@ export type PostCountOrderByAggregateInput = {
     image_url?: Prisma.SortOrder;
     title?: Prisma.SortOrder;
     userId?: Prisma.SortOrder;
+    likeCount?: Prisma.SortOrder;
     createdAt?: Prisma.SortOrder;
     updatedAt?: Prisma.SortOrder;
+};
+export type PostAvgOrderByAggregateInput = {
+    likeCount?: Prisma.SortOrder;
 };
 export type PostMaxOrderByAggregateInput = {
     id?: Prisma.SortOrder;
     image_url?: Prisma.SortOrder;
     title?: Prisma.SortOrder;
     userId?: Prisma.SortOrder;
+    likeCount?: Prisma.SortOrder;
     createdAt?: Prisma.SortOrder;
     updatedAt?: Prisma.SortOrder;
 };
@@ -289,8 +345,12 @@ export type PostMinOrderByAggregateInput = {
     image_url?: Prisma.SortOrder;
     title?: Prisma.SortOrder;
     userId?: Prisma.SortOrder;
+    likeCount?: Prisma.SortOrder;
     createdAt?: Prisma.SortOrder;
     updatedAt?: Prisma.SortOrder;
+};
+export type PostSumOrderByAggregateInput = {
+    likeCount?: Prisma.SortOrder;
 };
 export type PostScalarRelationFilter = {
     is?: Prisma.PostWhereInput;
@@ -338,6 +398,13 @@ export type PostUncheckedUpdateManyWithoutUserNestedInput = {
     updateMany?: Prisma.PostUpdateManyWithWhereWithoutUserInput | Prisma.PostUpdateManyWithWhereWithoutUserInput[];
     deleteMany?: Prisma.PostScalarWhereInput | Prisma.PostScalarWhereInput[];
 };
+export type IntFieldUpdateOperationsInput = {
+    set?: number;
+    increment?: number;
+    decrement?: number;
+    multiply?: number;
+    divide?: number;
+};
 export type PostCreateNestedOneWithoutLikesInput = {
     create?: Prisma.XOR<Prisma.PostCreateWithoutLikesInput, Prisma.PostUncheckedCreateWithoutLikesInput>;
     connectOrCreate?: Prisma.PostCreateOrConnectWithoutLikesInput;
@@ -365,18 +432,20 @@ export type PostUpdateOneWithoutSaveSnapNestedInput = {
     update?: Prisma.XOR<Prisma.XOR<Prisma.PostUpdateToOneWithWhereWithoutSaveSnapInput, Prisma.PostUpdateWithoutSaveSnapInput>, Prisma.PostUncheckedUpdateWithoutSaveSnapInput>;
 };
 export type PostCreateWithoutUserInput = {
-    id: string;
+    id?: string;
     image_url: string;
     title: string;
+    likeCount?: number;
     createdAt?: Date | string;
     updatedAt?: Date | string;
     likes?: Prisma.LikeCreateNestedManyWithoutPostInput;
     saveSnap?: Prisma.SavedSnapCreateNestedManyWithoutPostInput;
 };
 export type PostUncheckedCreateWithoutUserInput = {
-    id: string;
+    id?: string;
     image_url: string;
     title: string;
+    likeCount?: number;
     createdAt?: Date | string;
     updatedAt?: Date | string;
     likes?: Prisma.LikeUncheckedCreateNestedManyWithoutPostInput;
@@ -411,23 +480,26 @@ export type PostScalarWhereInput = {
     image_url?: Prisma.StringFilter<"Post"> | string;
     title?: Prisma.StringFilter<"Post"> | string;
     userId?: Prisma.StringFilter<"Post"> | string;
+    likeCount?: Prisma.IntFilter<"Post"> | number;
     createdAt?: Prisma.DateTimeFilter<"Post"> | Date | string;
     updatedAt?: Prisma.DateTimeFilter<"Post"> | Date | string;
 };
 export type PostCreateWithoutLikesInput = {
-    id: string;
+    id?: string;
     image_url: string;
     title: string;
+    likeCount?: number;
     createdAt?: Date | string;
     updatedAt?: Date | string;
     user: Prisma.UserCreateNestedOneWithoutPostsInput;
     saveSnap?: Prisma.SavedSnapCreateNestedManyWithoutPostInput;
 };
 export type PostUncheckedCreateWithoutLikesInput = {
-    id: string;
+    id?: string;
     image_url: string;
     title: string;
     userId: string;
+    likeCount?: number;
     createdAt?: Date | string;
     updatedAt?: Date | string;
     saveSnap?: Prisma.SavedSnapUncheckedCreateNestedManyWithoutPostInput;
@@ -449,6 +521,7 @@ export type PostUpdateWithoutLikesInput = {
     id?: Prisma.StringFieldUpdateOperationsInput | string;
     image_url?: Prisma.StringFieldUpdateOperationsInput | string;
     title?: Prisma.StringFieldUpdateOperationsInput | string;
+    likeCount?: Prisma.IntFieldUpdateOperationsInput | number;
     createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
     updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
     user?: Prisma.UserUpdateOneRequiredWithoutPostsNestedInput;
@@ -459,24 +532,27 @@ export type PostUncheckedUpdateWithoutLikesInput = {
     image_url?: Prisma.StringFieldUpdateOperationsInput | string;
     title?: Prisma.StringFieldUpdateOperationsInput | string;
     userId?: Prisma.StringFieldUpdateOperationsInput | string;
+    likeCount?: Prisma.IntFieldUpdateOperationsInput | number;
     createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
     updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
     saveSnap?: Prisma.SavedSnapUncheckedUpdateManyWithoutPostNestedInput;
 };
 export type PostCreateWithoutSaveSnapInput = {
-    id: string;
+    id?: string;
     image_url: string;
     title: string;
+    likeCount?: number;
     createdAt?: Date | string;
     updatedAt?: Date | string;
     likes?: Prisma.LikeCreateNestedManyWithoutPostInput;
     user: Prisma.UserCreateNestedOneWithoutPostsInput;
 };
 export type PostUncheckedCreateWithoutSaveSnapInput = {
-    id: string;
+    id?: string;
     image_url: string;
     title: string;
     userId: string;
+    likeCount?: number;
     createdAt?: Date | string;
     updatedAt?: Date | string;
     likes?: Prisma.LikeUncheckedCreateNestedManyWithoutPostInput;
@@ -498,6 +574,7 @@ export type PostUpdateWithoutSaveSnapInput = {
     id?: Prisma.StringFieldUpdateOperationsInput | string;
     image_url?: Prisma.StringFieldUpdateOperationsInput | string;
     title?: Prisma.StringFieldUpdateOperationsInput | string;
+    likeCount?: Prisma.IntFieldUpdateOperationsInput | number;
     createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
     updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
     likes?: Prisma.LikeUpdateManyWithoutPostNestedInput;
@@ -508,14 +585,16 @@ export type PostUncheckedUpdateWithoutSaveSnapInput = {
     image_url?: Prisma.StringFieldUpdateOperationsInput | string;
     title?: Prisma.StringFieldUpdateOperationsInput | string;
     userId?: Prisma.StringFieldUpdateOperationsInput | string;
+    likeCount?: Prisma.IntFieldUpdateOperationsInput | number;
     createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
     updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
     likes?: Prisma.LikeUncheckedUpdateManyWithoutPostNestedInput;
 };
 export type PostCreateManyUserInput = {
-    id: string;
+    id?: string;
     image_url: string;
     title: string;
+    likeCount?: number;
     createdAt?: Date | string;
     updatedAt?: Date | string;
 };
@@ -523,6 +602,7 @@ export type PostUpdateWithoutUserInput = {
     id?: Prisma.StringFieldUpdateOperationsInput | string;
     image_url?: Prisma.StringFieldUpdateOperationsInput | string;
     title?: Prisma.StringFieldUpdateOperationsInput | string;
+    likeCount?: Prisma.IntFieldUpdateOperationsInput | number;
     createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
     updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
     likes?: Prisma.LikeUpdateManyWithoutPostNestedInput;
@@ -532,6 +612,7 @@ export type PostUncheckedUpdateWithoutUserInput = {
     id?: Prisma.StringFieldUpdateOperationsInput | string;
     image_url?: Prisma.StringFieldUpdateOperationsInput | string;
     title?: Prisma.StringFieldUpdateOperationsInput | string;
+    likeCount?: Prisma.IntFieldUpdateOperationsInput | number;
     createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
     updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
     likes?: Prisma.LikeUncheckedUpdateManyWithoutPostNestedInput;
@@ -541,6 +622,7 @@ export type PostUncheckedUpdateManyWithoutUserInput = {
     id?: Prisma.StringFieldUpdateOperationsInput | string;
     image_url?: Prisma.StringFieldUpdateOperationsInput | string;
     title?: Prisma.StringFieldUpdateOperationsInput | string;
+    likeCount?: Prisma.IntFieldUpdateOperationsInput | number;
     createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
     updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
 };
@@ -581,6 +663,7 @@ export type PostSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = r
     image_url?: boolean;
     title?: boolean;
     userId?: boolean;
+    likeCount?: boolean;
     createdAt?: boolean;
     updatedAt?: boolean;
     likes?: boolean | Prisma.Post$likesArgs<ExtArgs>;
@@ -593,6 +676,7 @@ export type PostSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Extensio
     image_url?: boolean;
     title?: boolean;
     userId?: boolean;
+    likeCount?: boolean;
     createdAt?: boolean;
     updatedAt?: boolean;
     user?: boolean | Prisma.UserDefaultArgs<ExtArgs>;
@@ -602,6 +686,7 @@ export type PostSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensio
     image_url?: boolean;
     title?: boolean;
     userId?: boolean;
+    likeCount?: boolean;
     createdAt?: boolean;
     updatedAt?: boolean;
     user?: boolean | Prisma.UserDefaultArgs<ExtArgs>;
@@ -611,10 +696,11 @@ export type PostSelectScalar = {
     image_url?: boolean;
     title?: boolean;
     userId?: boolean;
+    likeCount?: boolean;
     createdAt?: boolean;
     updatedAt?: boolean;
 };
-export type PostOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "image_url" | "title" | "userId" | "createdAt" | "updatedAt", ExtArgs["result"]["post"]>;
+export type PostOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "image_url" | "title" | "userId" | "likeCount" | "createdAt" | "updatedAt", ExtArgs["result"]["post"]>;
 export type PostInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
     likes?: boolean | Prisma.Post$likesArgs<ExtArgs>;
     user?: boolean | Prisma.UserDefaultArgs<ExtArgs>;
@@ -639,6 +725,7 @@ export type $PostPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs =
         image_url: string;
         title: string;
         userId: string;
+        likeCount: number;
         createdAt: Date;
         updatedAt: Date;
     }, ExtArgs["result"]["post"]>;
@@ -1002,6 +1089,7 @@ export interface PostFieldRefs {
     readonly image_url: Prisma.FieldRef<"Post", 'String'>;
     readonly title: Prisma.FieldRef<"Post", 'String'>;
     readonly userId: Prisma.FieldRef<"Post", 'String'>;
+    readonly likeCount: Prisma.FieldRef<"Post", 'Int'>;
     readonly createdAt: Prisma.FieldRef<"Post", 'DateTime'>;
     readonly updatedAt: Prisma.FieldRef<"Post", 'DateTime'>;
 }

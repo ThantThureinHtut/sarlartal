@@ -7,25 +7,17 @@ import type * as Prisma from "../internal/prismaNamespace";
 export type SavedSnapModel = runtime.Types.Result.DefaultSelection<Prisma.$SavedSnapPayload>;
 export type AggregateSavedSnap = {
     _count: SavedSnapCountAggregateOutputType | null;
-    _avg: SavedSnapAvgAggregateOutputType | null;
-    _sum: SavedSnapSumAggregateOutputType | null;
     _min: SavedSnapMinAggregateOutputType | null;
     _max: SavedSnapMaxAggregateOutputType | null;
 };
-export type SavedSnapAvgAggregateOutputType = {
-    id: number | null;
-};
-export type SavedSnapSumAggregateOutputType = {
-    id: number | null;
-};
 export type SavedSnapMinAggregateOutputType = {
-    id: number | null;
+    id: string | null;
     authorId: string | null;
     postId: string | null;
     savedUserId: string | null;
 };
 export type SavedSnapMaxAggregateOutputType = {
-    id: number | null;
+    id: string | null;
     authorId: string | null;
     postId: string | null;
     savedUserId: string | null;
@@ -36,12 +28,6 @@ export type SavedSnapCountAggregateOutputType = {
     postId: number;
     savedUserId: number;
     _all: number;
-};
-export type SavedSnapAvgAggregateInputType = {
-    id?: true;
-};
-export type SavedSnapSumAggregateInputType = {
-    id?: true;
 };
 export type SavedSnapMinAggregateInputType = {
     id?: true;
@@ -100,18 +86,6 @@ export type SavedSnapAggregateArgs<ExtArgs extends runtime.Types.Extensions.Inte
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
      *
-     * Select which fields to average
-    **/
-    _avg?: SavedSnapAvgAggregateInputType;
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
-     *
-     * Select which fields to sum
-    **/
-    _sum?: SavedSnapSumAggregateInputType;
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
-     *
      * Select which fields to find the minimum value
     **/
     _min?: SavedSnapMinAggregateInputType;
@@ -133,19 +107,15 @@ export type SavedSnapGroupByArgs<ExtArgs extends runtime.Types.Extensions.Intern
     take?: number;
     skip?: number;
     _count?: SavedSnapCountAggregateInputType | true;
-    _avg?: SavedSnapAvgAggregateInputType;
-    _sum?: SavedSnapSumAggregateInputType;
     _min?: SavedSnapMinAggregateInputType;
     _max?: SavedSnapMaxAggregateInputType;
 };
 export type SavedSnapGroupByOutputType = {
-    id: number;
+    id: string;
     authorId: string;
     postId: string;
     savedUserId: string;
     _count: SavedSnapCountAggregateOutputType | null;
-    _avg: SavedSnapAvgAggregateOutputType | null;
-    _sum: SavedSnapSumAggregateOutputType | null;
     _min: SavedSnapMinAggregateOutputType | null;
     _max: SavedSnapMaxAggregateOutputType | null;
 };
@@ -156,13 +126,13 @@ export type SavedSnapWhereInput = {
     AND?: Prisma.SavedSnapWhereInput | Prisma.SavedSnapWhereInput[];
     OR?: Prisma.SavedSnapWhereInput[];
     NOT?: Prisma.SavedSnapWhereInput | Prisma.SavedSnapWhereInput[];
-    id?: Prisma.IntFilter<"SavedSnap"> | number;
+    id?: Prisma.StringFilter<"SavedSnap"> | string;
     authorId?: Prisma.StringFilter<"SavedSnap"> | string;
     postId?: Prisma.StringFilter<"SavedSnap"> | string;
     savedUserId?: Prisma.StringFilter<"SavedSnap"> | string;
     author?: Prisma.XOR<Prisma.UserScalarRelationFilter, Prisma.UserWhereInput>;
     post?: Prisma.XOR<Prisma.PostNullableScalarRelationFilter, Prisma.PostWhereInput> | null;
-    user?: Prisma.XOR<Prisma.UserScalarRelationFilter, Prisma.UserWhereInput>;
+    savedUser?: Prisma.XOR<Prisma.UserScalarRelationFilter, Prisma.UserWhereInput>;
 };
 export type SavedSnapOrderByWithRelationInput = {
     id?: Prisma.SortOrder;
@@ -171,10 +141,11 @@ export type SavedSnapOrderByWithRelationInput = {
     savedUserId?: Prisma.SortOrder;
     author?: Prisma.UserOrderByWithRelationInput;
     post?: Prisma.PostOrderByWithRelationInput;
-    user?: Prisma.UserOrderByWithRelationInput;
+    savedUser?: Prisma.UserOrderByWithRelationInput;
 };
 export type SavedSnapWhereUniqueInput = Prisma.AtLeast<{
-    id?: number;
+    id?: string;
+    postId_savedUserId?: Prisma.SavedSnapPostIdSavedUserIdCompoundUniqueInput;
     AND?: Prisma.SavedSnapWhereInput | Prisma.SavedSnapWhereInput[];
     OR?: Prisma.SavedSnapWhereInput[];
     NOT?: Prisma.SavedSnapWhereInput | Prisma.SavedSnapWhereInput[];
@@ -183,59 +154,61 @@ export type SavedSnapWhereUniqueInput = Prisma.AtLeast<{
     savedUserId?: Prisma.StringFilter<"SavedSnap"> | string;
     author?: Prisma.XOR<Prisma.UserScalarRelationFilter, Prisma.UserWhereInput>;
     post?: Prisma.XOR<Prisma.PostNullableScalarRelationFilter, Prisma.PostWhereInput> | null;
-    user?: Prisma.XOR<Prisma.UserScalarRelationFilter, Prisma.UserWhereInput>;
-}, "id">;
+    savedUser?: Prisma.XOR<Prisma.UserScalarRelationFilter, Prisma.UserWhereInput>;
+}, "id" | "postId_savedUserId">;
 export type SavedSnapOrderByWithAggregationInput = {
     id?: Prisma.SortOrder;
     authorId?: Prisma.SortOrder;
     postId?: Prisma.SortOrder;
     savedUserId?: Prisma.SortOrder;
     _count?: Prisma.SavedSnapCountOrderByAggregateInput;
-    _avg?: Prisma.SavedSnapAvgOrderByAggregateInput;
     _max?: Prisma.SavedSnapMaxOrderByAggregateInput;
     _min?: Prisma.SavedSnapMinOrderByAggregateInput;
-    _sum?: Prisma.SavedSnapSumOrderByAggregateInput;
 };
 export type SavedSnapScalarWhereWithAggregatesInput = {
     AND?: Prisma.SavedSnapScalarWhereWithAggregatesInput | Prisma.SavedSnapScalarWhereWithAggregatesInput[];
     OR?: Prisma.SavedSnapScalarWhereWithAggregatesInput[];
     NOT?: Prisma.SavedSnapScalarWhereWithAggregatesInput | Prisma.SavedSnapScalarWhereWithAggregatesInput[];
-    id?: Prisma.IntWithAggregatesFilter<"SavedSnap"> | number;
+    id?: Prisma.StringWithAggregatesFilter<"SavedSnap"> | string;
     authorId?: Prisma.StringWithAggregatesFilter<"SavedSnap"> | string;
     postId?: Prisma.StringWithAggregatesFilter<"SavedSnap"> | string;
     savedUserId?: Prisma.StringWithAggregatesFilter<"SavedSnap"> | string;
 };
 export type SavedSnapCreateInput = {
+    id?: string;
     author: Prisma.UserCreateNestedOneWithoutSnapAuthorInput;
     post?: Prisma.PostCreateNestedOneWithoutSaveSnapInput;
-    user: Prisma.UserCreateNestedOneWithoutSavedBySnapsInput;
+    savedUser: Prisma.UserCreateNestedOneWithoutSavedBySnapsInput;
 };
 export type SavedSnapUncheckedCreateInput = {
-    id?: number;
+    id?: string;
     authorId: string;
     postId: string;
     savedUserId: string;
 };
 export type SavedSnapUpdateInput = {
+    id?: Prisma.StringFieldUpdateOperationsInput | string;
     author?: Prisma.UserUpdateOneRequiredWithoutSnapAuthorNestedInput;
     post?: Prisma.PostUpdateOneWithoutSaveSnapNestedInput;
-    user?: Prisma.UserUpdateOneRequiredWithoutSavedBySnapsNestedInput;
+    savedUser?: Prisma.UserUpdateOneRequiredWithoutSavedBySnapsNestedInput;
 };
 export type SavedSnapUncheckedUpdateInput = {
-    id?: Prisma.IntFieldUpdateOperationsInput | number;
+    id?: Prisma.StringFieldUpdateOperationsInput | string;
     authorId?: Prisma.StringFieldUpdateOperationsInput | string;
     postId?: Prisma.StringFieldUpdateOperationsInput | string;
     savedUserId?: Prisma.StringFieldUpdateOperationsInput | string;
 };
 export type SavedSnapCreateManyInput = {
-    id?: number;
+    id?: string;
     authorId: string;
     postId: string;
     savedUserId: string;
 };
-export type SavedSnapUpdateManyMutationInput = {};
+export type SavedSnapUpdateManyMutationInput = {
+    id?: Prisma.StringFieldUpdateOperationsInput | string;
+};
 export type SavedSnapUncheckedUpdateManyInput = {
-    id?: Prisma.IntFieldUpdateOperationsInput | number;
+    id?: Prisma.StringFieldUpdateOperationsInput | string;
     authorId?: Prisma.StringFieldUpdateOperationsInput | string;
     postId?: Prisma.StringFieldUpdateOperationsInput | string;
     savedUserId?: Prisma.StringFieldUpdateOperationsInput | string;
@@ -248,14 +221,15 @@ export type SavedSnapListRelationFilter = {
 export type SavedSnapOrderByRelationAggregateInput = {
     _count?: Prisma.SortOrder;
 };
+export type SavedSnapPostIdSavedUserIdCompoundUniqueInput = {
+    postId: string;
+    savedUserId: string;
+};
 export type SavedSnapCountOrderByAggregateInput = {
     id?: Prisma.SortOrder;
     authorId?: Prisma.SortOrder;
     postId?: Prisma.SortOrder;
     savedUserId?: Prisma.SortOrder;
-};
-export type SavedSnapAvgOrderByAggregateInput = {
-    id?: Prisma.SortOrder;
 };
 export type SavedSnapMaxOrderByAggregateInput = {
     id?: Prisma.SortOrder;
@@ -269,19 +243,16 @@ export type SavedSnapMinOrderByAggregateInput = {
     postId?: Prisma.SortOrder;
     savedUserId?: Prisma.SortOrder;
 };
-export type SavedSnapSumOrderByAggregateInput = {
-    id?: Prisma.SortOrder;
-};
 export type SavedSnapCreateNestedManyWithoutAuthorInput = {
     create?: Prisma.XOR<Prisma.SavedSnapCreateWithoutAuthorInput, Prisma.SavedSnapUncheckedCreateWithoutAuthorInput> | Prisma.SavedSnapCreateWithoutAuthorInput[] | Prisma.SavedSnapUncheckedCreateWithoutAuthorInput[];
     connectOrCreate?: Prisma.SavedSnapCreateOrConnectWithoutAuthorInput | Prisma.SavedSnapCreateOrConnectWithoutAuthorInput[];
     createMany?: Prisma.SavedSnapCreateManyAuthorInputEnvelope;
     connect?: Prisma.SavedSnapWhereUniqueInput | Prisma.SavedSnapWhereUniqueInput[];
 };
-export type SavedSnapCreateNestedManyWithoutUserInput = {
-    create?: Prisma.XOR<Prisma.SavedSnapCreateWithoutUserInput, Prisma.SavedSnapUncheckedCreateWithoutUserInput> | Prisma.SavedSnapCreateWithoutUserInput[] | Prisma.SavedSnapUncheckedCreateWithoutUserInput[];
-    connectOrCreate?: Prisma.SavedSnapCreateOrConnectWithoutUserInput | Prisma.SavedSnapCreateOrConnectWithoutUserInput[];
-    createMany?: Prisma.SavedSnapCreateManyUserInputEnvelope;
+export type SavedSnapCreateNestedManyWithoutSavedUserInput = {
+    create?: Prisma.XOR<Prisma.SavedSnapCreateWithoutSavedUserInput, Prisma.SavedSnapUncheckedCreateWithoutSavedUserInput> | Prisma.SavedSnapCreateWithoutSavedUserInput[] | Prisma.SavedSnapUncheckedCreateWithoutSavedUserInput[];
+    connectOrCreate?: Prisma.SavedSnapCreateOrConnectWithoutSavedUserInput | Prisma.SavedSnapCreateOrConnectWithoutSavedUserInput[];
+    createMany?: Prisma.SavedSnapCreateManySavedUserInputEnvelope;
     connect?: Prisma.SavedSnapWhereUniqueInput | Prisma.SavedSnapWhereUniqueInput[];
 };
 export type SavedSnapUncheckedCreateNestedManyWithoutAuthorInput = {
@@ -290,10 +261,10 @@ export type SavedSnapUncheckedCreateNestedManyWithoutAuthorInput = {
     createMany?: Prisma.SavedSnapCreateManyAuthorInputEnvelope;
     connect?: Prisma.SavedSnapWhereUniqueInput | Prisma.SavedSnapWhereUniqueInput[];
 };
-export type SavedSnapUncheckedCreateNestedManyWithoutUserInput = {
-    create?: Prisma.XOR<Prisma.SavedSnapCreateWithoutUserInput, Prisma.SavedSnapUncheckedCreateWithoutUserInput> | Prisma.SavedSnapCreateWithoutUserInput[] | Prisma.SavedSnapUncheckedCreateWithoutUserInput[];
-    connectOrCreate?: Prisma.SavedSnapCreateOrConnectWithoutUserInput | Prisma.SavedSnapCreateOrConnectWithoutUserInput[];
-    createMany?: Prisma.SavedSnapCreateManyUserInputEnvelope;
+export type SavedSnapUncheckedCreateNestedManyWithoutSavedUserInput = {
+    create?: Prisma.XOR<Prisma.SavedSnapCreateWithoutSavedUserInput, Prisma.SavedSnapUncheckedCreateWithoutSavedUserInput> | Prisma.SavedSnapCreateWithoutSavedUserInput[] | Prisma.SavedSnapUncheckedCreateWithoutSavedUserInput[];
+    connectOrCreate?: Prisma.SavedSnapCreateOrConnectWithoutSavedUserInput | Prisma.SavedSnapCreateOrConnectWithoutSavedUserInput[];
+    createMany?: Prisma.SavedSnapCreateManySavedUserInputEnvelope;
     connect?: Prisma.SavedSnapWhereUniqueInput | Prisma.SavedSnapWhereUniqueInput[];
 };
 export type SavedSnapUpdateManyWithoutAuthorNestedInput = {
@@ -309,17 +280,17 @@ export type SavedSnapUpdateManyWithoutAuthorNestedInput = {
     updateMany?: Prisma.SavedSnapUpdateManyWithWhereWithoutAuthorInput | Prisma.SavedSnapUpdateManyWithWhereWithoutAuthorInput[];
     deleteMany?: Prisma.SavedSnapScalarWhereInput | Prisma.SavedSnapScalarWhereInput[];
 };
-export type SavedSnapUpdateManyWithoutUserNestedInput = {
-    create?: Prisma.XOR<Prisma.SavedSnapCreateWithoutUserInput, Prisma.SavedSnapUncheckedCreateWithoutUserInput> | Prisma.SavedSnapCreateWithoutUserInput[] | Prisma.SavedSnapUncheckedCreateWithoutUserInput[];
-    connectOrCreate?: Prisma.SavedSnapCreateOrConnectWithoutUserInput | Prisma.SavedSnapCreateOrConnectWithoutUserInput[];
-    upsert?: Prisma.SavedSnapUpsertWithWhereUniqueWithoutUserInput | Prisma.SavedSnapUpsertWithWhereUniqueWithoutUserInput[];
-    createMany?: Prisma.SavedSnapCreateManyUserInputEnvelope;
+export type SavedSnapUpdateManyWithoutSavedUserNestedInput = {
+    create?: Prisma.XOR<Prisma.SavedSnapCreateWithoutSavedUserInput, Prisma.SavedSnapUncheckedCreateWithoutSavedUserInput> | Prisma.SavedSnapCreateWithoutSavedUserInput[] | Prisma.SavedSnapUncheckedCreateWithoutSavedUserInput[];
+    connectOrCreate?: Prisma.SavedSnapCreateOrConnectWithoutSavedUserInput | Prisma.SavedSnapCreateOrConnectWithoutSavedUserInput[];
+    upsert?: Prisma.SavedSnapUpsertWithWhereUniqueWithoutSavedUserInput | Prisma.SavedSnapUpsertWithWhereUniqueWithoutSavedUserInput[];
+    createMany?: Prisma.SavedSnapCreateManySavedUserInputEnvelope;
     set?: Prisma.SavedSnapWhereUniqueInput | Prisma.SavedSnapWhereUniqueInput[];
     disconnect?: Prisma.SavedSnapWhereUniqueInput | Prisma.SavedSnapWhereUniqueInput[];
     delete?: Prisma.SavedSnapWhereUniqueInput | Prisma.SavedSnapWhereUniqueInput[];
     connect?: Prisma.SavedSnapWhereUniqueInput | Prisma.SavedSnapWhereUniqueInput[];
-    update?: Prisma.SavedSnapUpdateWithWhereUniqueWithoutUserInput | Prisma.SavedSnapUpdateWithWhereUniqueWithoutUserInput[];
-    updateMany?: Prisma.SavedSnapUpdateManyWithWhereWithoutUserInput | Prisma.SavedSnapUpdateManyWithWhereWithoutUserInput[];
+    update?: Prisma.SavedSnapUpdateWithWhereUniqueWithoutSavedUserInput | Prisma.SavedSnapUpdateWithWhereUniqueWithoutSavedUserInput[];
+    updateMany?: Prisma.SavedSnapUpdateManyWithWhereWithoutSavedUserInput | Prisma.SavedSnapUpdateManyWithWhereWithoutSavedUserInput[];
     deleteMany?: Prisma.SavedSnapScalarWhereInput | Prisma.SavedSnapScalarWhereInput[];
 };
 export type SavedSnapUncheckedUpdateManyWithoutAuthorNestedInput = {
@@ -335,17 +306,17 @@ export type SavedSnapUncheckedUpdateManyWithoutAuthorNestedInput = {
     updateMany?: Prisma.SavedSnapUpdateManyWithWhereWithoutAuthorInput | Prisma.SavedSnapUpdateManyWithWhereWithoutAuthorInput[];
     deleteMany?: Prisma.SavedSnapScalarWhereInput | Prisma.SavedSnapScalarWhereInput[];
 };
-export type SavedSnapUncheckedUpdateManyWithoutUserNestedInput = {
-    create?: Prisma.XOR<Prisma.SavedSnapCreateWithoutUserInput, Prisma.SavedSnapUncheckedCreateWithoutUserInput> | Prisma.SavedSnapCreateWithoutUserInput[] | Prisma.SavedSnapUncheckedCreateWithoutUserInput[];
-    connectOrCreate?: Prisma.SavedSnapCreateOrConnectWithoutUserInput | Prisma.SavedSnapCreateOrConnectWithoutUserInput[];
-    upsert?: Prisma.SavedSnapUpsertWithWhereUniqueWithoutUserInput | Prisma.SavedSnapUpsertWithWhereUniqueWithoutUserInput[];
-    createMany?: Prisma.SavedSnapCreateManyUserInputEnvelope;
+export type SavedSnapUncheckedUpdateManyWithoutSavedUserNestedInput = {
+    create?: Prisma.XOR<Prisma.SavedSnapCreateWithoutSavedUserInput, Prisma.SavedSnapUncheckedCreateWithoutSavedUserInput> | Prisma.SavedSnapCreateWithoutSavedUserInput[] | Prisma.SavedSnapUncheckedCreateWithoutSavedUserInput[];
+    connectOrCreate?: Prisma.SavedSnapCreateOrConnectWithoutSavedUserInput | Prisma.SavedSnapCreateOrConnectWithoutSavedUserInput[];
+    upsert?: Prisma.SavedSnapUpsertWithWhereUniqueWithoutSavedUserInput | Prisma.SavedSnapUpsertWithWhereUniqueWithoutSavedUserInput[];
+    createMany?: Prisma.SavedSnapCreateManySavedUserInputEnvelope;
     set?: Prisma.SavedSnapWhereUniqueInput | Prisma.SavedSnapWhereUniqueInput[];
     disconnect?: Prisma.SavedSnapWhereUniqueInput | Prisma.SavedSnapWhereUniqueInput[];
     delete?: Prisma.SavedSnapWhereUniqueInput | Prisma.SavedSnapWhereUniqueInput[];
     connect?: Prisma.SavedSnapWhereUniqueInput | Prisma.SavedSnapWhereUniqueInput[];
-    update?: Prisma.SavedSnapUpdateWithWhereUniqueWithoutUserInput | Prisma.SavedSnapUpdateWithWhereUniqueWithoutUserInput[];
-    updateMany?: Prisma.SavedSnapUpdateManyWithWhereWithoutUserInput | Prisma.SavedSnapUpdateManyWithWhereWithoutUserInput[];
+    update?: Prisma.SavedSnapUpdateWithWhereUniqueWithoutSavedUserInput | Prisma.SavedSnapUpdateWithWhereUniqueWithoutSavedUserInput[];
+    updateMany?: Prisma.SavedSnapUpdateManyWithWhereWithoutSavedUserInput | Prisma.SavedSnapUpdateManyWithWhereWithoutSavedUserInput[];
     deleteMany?: Prisma.SavedSnapScalarWhereInput | Prisma.SavedSnapScalarWhereInput[];
 };
 export type SavedSnapCreateNestedManyWithoutPostInput = {
@@ -387,11 +358,12 @@ export type SavedSnapUncheckedUpdateManyWithoutPostNestedInput = {
     deleteMany?: Prisma.SavedSnapScalarWhereInput | Prisma.SavedSnapScalarWhereInput[];
 };
 export type SavedSnapCreateWithoutAuthorInput = {
+    id?: string;
     post?: Prisma.PostCreateNestedOneWithoutSaveSnapInput;
-    user: Prisma.UserCreateNestedOneWithoutSavedBySnapsInput;
+    savedUser: Prisma.UserCreateNestedOneWithoutSavedBySnapsInput;
 };
 export type SavedSnapUncheckedCreateWithoutAuthorInput = {
-    id?: number;
+    id?: string;
     postId: string;
     savedUserId: string;
 };
@@ -403,21 +375,22 @@ export type SavedSnapCreateManyAuthorInputEnvelope = {
     data: Prisma.SavedSnapCreateManyAuthorInput | Prisma.SavedSnapCreateManyAuthorInput[];
     skipDuplicates?: boolean;
 };
-export type SavedSnapCreateWithoutUserInput = {
+export type SavedSnapCreateWithoutSavedUserInput = {
+    id?: string;
     author: Prisma.UserCreateNestedOneWithoutSnapAuthorInput;
     post?: Prisma.PostCreateNestedOneWithoutSaveSnapInput;
 };
-export type SavedSnapUncheckedCreateWithoutUserInput = {
-    id?: number;
+export type SavedSnapUncheckedCreateWithoutSavedUserInput = {
+    id?: string;
     authorId: string;
     postId: string;
 };
-export type SavedSnapCreateOrConnectWithoutUserInput = {
+export type SavedSnapCreateOrConnectWithoutSavedUserInput = {
     where: Prisma.SavedSnapWhereUniqueInput;
-    create: Prisma.XOR<Prisma.SavedSnapCreateWithoutUserInput, Prisma.SavedSnapUncheckedCreateWithoutUserInput>;
+    create: Prisma.XOR<Prisma.SavedSnapCreateWithoutSavedUserInput, Prisma.SavedSnapUncheckedCreateWithoutSavedUserInput>;
 };
-export type SavedSnapCreateManyUserInputEnvelope = {
-    data: Prisma.SavedSnapCreateManyUserInput | Prisma.SavedSnapCreateManyUserInput[];
+export type SavedSnapCreateManySavedUserInputEnvelope = {
+    data: Prisma.SavedSnapCreateManySavedUserInput | Prisma.SavedSnapCreateManySavedUserInput[];
     skipDuplicates?: boolean;
 };
 export type SavedSnapUpsertWithWhereUniqueWithoutAuthorInput = {
@@ -437,30 +410,31 @@ export type SavedSnapScalarWhereInput = {
     AND?: Prisma.SavedSnapScalarWhereInput | Prisma.SavedSnapScalarWhereInput[];
     OR?: Prisma.SavedSnapScalarWhereInput[];
     NOT?: Prisma.SavedSnapScalarWhereInput | Prisma.SavedSnapScalarWhereInput[];
-    id?: Prisma.IntFilter<"SavedSnap"> | number;
+    id?: Prisma.StringFilter<"SavedSnap"> | string;
     authorId?: Prisma.StringFilter<"SavedSnap"> | string;
     postId?: Prisma.StringFilter<"SavedSnap"> | string;
     savedUserId?: Prisma.StringFilter<"SavedSnap"> | string;
 };
-export type SavedSnapUpsertWithWhereUniqueWithoutUserInput = {
+export type SavedSnapUpsertWithWhereUniqueWithoutSavedUserInput = {
     where: Prisma.SavedSnapWhereUniqueInput;
-    update: Prisma.XOR<Prisma.SavedSnapUpdateWithoutUserInput, Prisma.SavedSnapUncheckedUpdateWithoutUserInput>;
-    create: Prisma.XOR<Prisma.SavedSnapCreateWithoutUserInput, Prisma.SavedSnapUncheckedCreateWithoutUserInput>;
+    update: Prisma.XOR<Prisma.SavedSnapUpdateWithoutSavedUserInput, Prisma.SavedSnapUncheckedUpdateWithoutSavedUserInput>;
+    create: Prisma.XOR<Prisma.SavedSnapCreateWithoutSavedUserInput, Prisma.SavedSnapUncheckedCreateWithoutSavedUserInput>;
 };
-export type SavedSnapUpdateWithWhereUniqueWithoutUserInput = {
+export type SavedSnapUpdateWithWhereUniqueWithoutSavedUserInput = {
     where: Prisma.SavedSnapWhereUniqueInput;
-    data: Prisma.XOR<Prisma.SavedSnapUpdateWithoutUserInput, Prisma.SavedSnapUncheckedUpdateWithoutUserInput>;
+    data: Prisma.XOR<Prisma.SavedSnapUpdateWithoutSavedUserInput, Prisma.SavedSnapUncheckedUpdateWithoutSavedUserInput>;
 };
-export type SavedSnapUpdateManyWithWhereWithoutUserInput = {
+export type SavedSnapUpdateManyWithWhereWithoutSavedUserInput = {
     where: Prisma.SavedSnapScalarWhereInput;
-    data: Prisma.XOR<Prisma.SavedSnapUpdateManyMutationInput, Prisma.SavedSnapUncheckedUpdateManyWithoutUserInput>;
+    data: Prisma.XOR<Prisma.SavedSnapUpdateManyMutationInput, Prisma.SavedSnapUncheckedUpdateManyWithoutSavedUserInput>;
 };
 export type SavedSnapCreateWithoutPostInput = {
+    id?: string;
     author: Prisma.UserCreateNestedOneWithoutSnapAuthorInput;
-    user: Prisma.UserCreateNestedOneWithoutSavedBySnapsInput;
+    savedUser: Prisma.UserCreateNestedOneWithoutSavedBySnapsInput;
 };
 export type SavedSnapUncheckedCreateWithoutPostInput = {
-    id?: number;
+    id?: string;
     authorId: string;
     savedUserId: string;
 };
@@ -486,59 +460,62 @@ export type SavedSnapUpdateManyWithWhereWithoutPostInput = {
     data: Prisma.XOR<Prisma.SavedSnapUpdateManyMutationInput, Prisma.SavedSnapUncheckedUpdateManyWithoutPostInput>;
 };
 export type SavedSnapCreateManyAuthorInput = {
-    id?: number;
+    id?: string;
     postId: string;
     savedUserId: string;
 };
-export type SavedSnapCreateManyUserInput = {
-    id?: number;
+export type SavedSnapCreateManySavedUserInput = {
+    id?: string;
     authorId: string;
     postId: string;
 };
 export type SavedSnapUpdateWithoutAuthorInput = {
+    id?: Prisma.StringFieldUpdateOperationsInput | string;
     post?: Prisma.PostUpdateOneWithoutSaveSnapNestedInput;
-    user?: Prisma.UserUpdateOneRequiredWithoutSavedBySnapsNestedInput;
+    savedUser?: Prisma.UserUpdateOneRequiredWithoutSavedBySnapsNestedInput;
 };
 export type SavedSnapUncheckedUpdateWithoutAuthorInput = {
-    id?: Prisma.IntFieldUpdateOperationsInput | number;
+    id?: Prisma.StringFieldUpdateOperationsInput | string;
     postId?: Prisma.StringFieldUpdateOperationsInput | string;
     savedUserId?: Prisma.StringFieldUpdateOperationsInput | string;
 };
 export type SavedSnapUncheckedUpdateManyWithoutAuthorInput = {
-    id?: Prisma.IntFieldUpdateOperationsInput | number;
+    id?: Prisma.StringFieldUpdateOperationsInput | string;
     postId?: Prisma.StringFieldUpdateOperationsInput | string;
     savedUserId?: Prisma.StringFieldUpdateOperationsInput | string;
 };
-export type SavedSnapUpdateWithoutUserInput = {
+export type SavedSnapUpdateWithoutSavedUserInput = {
+    id?: Prisma.StringFieldUpdateOperationsInput | string;
     author?: Prisma.UserUpdateOneRequiredWithoutSnapAuthorNestedInput;
     post?: Prisma.PostUpdateOneWithoutSaveSnapNestedInput;
 };
-export type SavedSnapUncheckedUpdateWithoutUserInput = {
-    id?: Prisma.IntFieldUpdateOperationsInput | number;
+export type SavedSnapUncheckedUpdateWithoutSavedUserInput = {
+    id?: Prisma.StringFieldUpdateOperationsInput | string;
     authorId?: Prisma.StringFieldUpdateOperationsInput | string;
     postId?: Prisma.StringFieldUpdateOperationsInput | string;
 };
-export type SavedSnapUncheckedUpdateManyWithoutUserInput = {
-    id?: Prisma.IntFieldUpdateOperationsInput | number;
+export type SavedSnapUncheckedUpdateManyWithoutSavedUserInput = {
+    id?: Prisma.StringFieldUpdateOperationsInput | string;
     authorId?: Prisma.StringFieldUpdateOperationsInput | string;
     postId?: Prisma.StringFieldUpdateOperationsInput | string;
 };
 export type SavedSnapCreateManyPostInput = {
-    id?: number;
+    id?: string;
     authorId: string;
     savedUserId: string;
 };
 export type SavedSnapUpdateWithoutPostInput = {
+    id?: Prisma.StringFieldUpdateOperationsInput | string;
     author?: Prisma.UserUpdateOneRequiredWithoutSnapAuthorNestedInput;
-    user?: Prisma.UserUpdateOneRequiredWithoutSavedBySnapsNestedInput;
+    savedUser?: Prisma.UserUpdateOneRequiredWithoutSavedBySnapsNestedInput;
 };
 export type SavedSnapUncheckedUpdateWithoutPostInput = {
-    id?: Prisma.IntFieldUpdateOperationsInput | number;
+    id?: Prisma.StringFieldUpdateOperationsInput | string;
     authorId?: Prisma.StringFieldUpdateOperationsInput | string;
     savedUserId?: Prisma.StringFieldUpdateOperationsInput | string;
 };
 export type SavedSnapUncheckedUpdateManyWithoutPostInput = {
-    id?: Prisma.IntFieldUpdateOperationsInput | number;
+    id?: Prisma.StringFieldUpdateOperationsInput | string;
     authorId?: Prisma.StringFieldUpdateOperationsInput | string;
     savedUserId?: Prisma.StringFieldUpdateOperationsInput | string;
 };
@@ -549,7 +526,7 @@ export type SavedSnapSelect<ExtArgs extends runtime.Types.Extensions.InternalArg
     savedUserId?: boolean;
     author?: boolean | Prisma.UserDefaultArgs<ExtArgs>;
     post?: boolean | Prisma.SavedSnap$postArgs<ExtArgs>;
-    user?: boolean | Prisma.UserDefaultArgs<ExtArgs>;
+    savedUser?: boolean | Prisma.UserDefaultArgs<ExtArgs>;
 }, ExtArgs["result"]["savedSnap"]>;
 export type SavedSnapSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
     id?: boolean;
@@ -558,7 +535,7 @@ export type SavedSnapSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Ext
     savedUserId?: boolean;
     author?: boolean | Prisma.UserDefaultArgs<ExtArgs>;
     post?: boolean | Prisma.SavedSnap$postArgs<ExtArgs>;
-    user?: boolean | Prisma.UserDefaultArgs<ExtArgs>;
+    savedUser?: boolean | Prisma.UserDefaultArgs<ExtArgs>;
 }, ExtArgs["result"]["savedSnap"]>;
 export type SavedSnapSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
     id?: boolean;
@@ -567,7 +544,7 @@ export type SavedSnapSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Ext
     savedUserId?: boolean;
     author?: boolean | Prisma.UserDefaultArgs<ExtArgs>;
     post?: boolean | Prisma.SavedSnap$postArgs<ExtArgs>;
-    user?: boolean | Prisma.UserDefaultArgs<ExtArgs>;
+    savedUser?: boolean | Prisma.UserDefaultArgs<ExtArgs>;
 }, ExtArgs["result"]["savedSnap"]>;
 export type SavedSnapSelectScalar = {
     id?: boolean;
@@ -579,27 +556,27 @@ export type SavedSnapOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs 
 export type SavedSnapInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
     author?: boolean | Prisma.UserDefaultArgs<ExtArgs>;
     post?: boolean | Prisma.SavedSnap$postArgs<ExtArgs>;
-    user?: boolean | Prisma.UserDefaultArgs<ExtArgs>;
+    savedUser?: boolean | Prisma.UserDefaultArgs<ExtArgs>;
 };
 export type SavedSnapIncludeCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
     author?: boolean | Prisma.UserDefaultArgs<ExtArgs>;
     post?: boolean | Prisma.SavedSnap$postArgs<ExtArgs>;
-    user?: boolean | Prisma.UserDefaultArgs<ExtArgs>;
+    savedUser?: boolean | Prisma.UserDefaultArgs<ExtArgs>;
 };
 export type SavedSnapIncludeUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
     author?: boolean | Prisma.UserDefaultArgs<ExtArgs>;
     post?: boolean | Prisma.SavedSnap$postArgs<ExtArgs>;
-    user?: boolean | Prisma.UserDefaultArgs<ExtArgs>;
+    savedUser?: boolean | Prisma.UserDefaultArgs<ExtArgs>;
 };
 export type $SavedSnapPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
     name: "SavedSnap";
     objects: {
         author: Prisma.$UserPayload<ExtArgs>;
         post: Prisma.$PostPayload<ExtArgs> | null;
-        user: Prisma.$UserPayload<ExtArgs>;
+        savedUser: Prisma.$UserPayload<ExtArgs>;
     };
     scalars: runtime.Types.Extensions.GetPayloadResult<{
-        id: number;
+        id: string;
         authorId: string;
         postId: string;
         savedUserId: string;
@@ -934,7 +911,7 @@ export interface Prisma__SavedSnapClient<T, Null = never, ExtArgs extends runtim
     readonly [Symbol.toStringTag]: "PrismaPromise";
     author<T extends Prisma.UserDefaultArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.UserDefaultArgs<ExtArgs>>): Prisma.Prisma__UserClient<runtime.Types.Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>;
     post<T extends Prisma.SavedSnap$postArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.SavedSnap$postArgs<ExtArgs>>): Prisma.Prisma__PostClient<runtime.Types.Result.GetResult<Prisma.$PostPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>;
-    user<T extends Prisma.UserDefaultArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.UserDefaultArgs<ExtArgs>>): Prisma.Prisma__UserClient<runtime.Types.Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>;
+    savedUser<T extends Prisma.UserDefaultArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.UserDefaultArgs<ExtArgs>>): Prisma.Prisma__UserClient<runtime.Types.Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>;
     /**
      * Attaches callbacks for the resolution and/or rejection of the Promise.
      * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -960,7 +937,7 @@ export interface Prisma__SavedSnapClient<T, Null = never, ExtArgs extends runtim
  * Fields of the SavedSnap model
  */
 export interface SavedSnapFieldRefs {
-    readonly id: Prisma.FieldRef<"SavedSnap", 'Int'>;
+    readonly id: Prisma.FieldRef<"SavedSnap", 'String'>;
     readonly authorId: Prisma.FieldRef<"SavedSnap", 'String'>;
     readonly postId: Prisma.FieldRef<"SavedSnap", 'String'>;
     readonly savedUserId: Prisma.FieldRef<"SavedSnap", 'String'>;

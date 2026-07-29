@@ -65,7 +65,7 @@ export default function ConversationListItem({ conversation, isActive, onClick }
         </div>
         <div className="flex items-center justify-between gap-2">
           <p className="truncate text-xs text-muted-foreground">
-            {lastMessage?.body ?? "No messages yet"}
+            {lastMessage?.content ?? "No messages yet"}
           </p>
           {unreadCount > 0 && (
             <Badge className="h-4 min-w-4 shrink-0 px-1 text-[10px]">

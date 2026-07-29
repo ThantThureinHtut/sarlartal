@@ -214,6 +214,28 @@ export interface PrismaClient<in LogOpts extends Prisma.LogLevel = never, in out
     get savedSnap(): Prisma.SavedSnapDelegate<ExtArgs, {
         omit: OmitOpts;
     }>;
+    /**
+     * `prisma.conversation`: Exposes CRUD operations for the **Conversation** model.
+      * Example usage:
+      * ```ts
+      * // Fetch zero or more Conversations
+      * const conversations = await prisma.conversation.findMany()
+      * ```
+      */
+    get conversation(): Prisma.ConversationDelegate<ExtArgs, {
+        omit: OmitOpts;
+    }>;
+    /**
+     * `prisma.message`: Exposes CRUD operations for the **Message** model.
+      * Example usage:
+      * ```ts
+      * // Fetch zero or more Messages
+      * const messages = await prisma.message.findMany()
+      * ```
+      */
+    get message(): Prisma.MessageDelegate<ExtArgs, {
+        omit: OmitOpts;
+    }>;
 }
 export declare function getPrismaClientClass(): PrismaClientConstructor;
 //# sourceMappingURL=class.d.ts.map

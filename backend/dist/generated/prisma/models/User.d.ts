@@ -1,4 +1,5 @@
 import type * as runtime from "@prisma/client/runtime/client";
+import type * as $Enums from "../enums";
 import type * as Prisma from "../internal/prismaNamespace";
 /**
  * Model User
@@ -17,6 +18,8 @@ export type UserMinAggregateOutputType = {
     emailVerified: boolean | null;
     bio: string | null;
     image: string | null;
+    cover_image: string | null;
+    status: $Enums.UserStatus | null;
     createdAt: Date | null;
     updatedAt: Date | null;
 };
@@ -27,6 +30,8 @@ export type UserMaxAggregateOutputType = {
     emailVerified: boolean | null;
     bio: string | null;
     image: string | null;
+    cover_image: string | null;
+    status: $Enums.UserStatus | null;
     createdAt: Date | null;
     updatedAt: Date | null;
 };
@@ -37,6 +42,8 @@ export type UserCountAggregateOutputType = {
     emailVerified: number;
     bio: number;
     image: number;
+    cover_image: number;
+    status: number;
     createdAt: number;
     updatedAt: number;
     _all: number;
@@ -48,6 +55,8 @@ export type UserMinAggregateInputType = {
     emailVerified?: true;
     bio?: true;
     image?: true;
+    cover_image?: true;
+    status?: true;
     createdAt?: true;
     updatedAt?: true;
 };
@@ -58,6 +67,8 @@ export type UserMaxAggregateInputType = {
     emailVerified?: true;
     bio?: true;
     image?: true;
+    cover_image?: true;
+    status?: true;
     createdAt?: true;
     updatedAt?: true;
 };
@@ -68,6 +79,8 @@ export type UserCountAggregateInputType = {
     emailVerified?: true;
     bio?: true;
     image?: true;
+    cover_image?: true;
+    status?: true;
     createdAt?: true;
     updatedAt?: true;
     _all?: true;
@@ -141,6 +154,8 @@ export type UserGroupByOutputType = {
     emailVerified: boolean;
     bio: string | null;
     image: string | null;
+    cover_image: string | null;
+    status: $Enums.UserStatus;
     createdAt: Date;
     updatedAt: Date;
     _count: UserCountAggregateOutputType | null;
@@ -160,6 +175,8 @@ export type UserWhereInput = {
     emailVerified?: Prisma.BoolFilter<"User"> | boolean;
     bio?: Prisma.StringNullableFilter<"User"> | string | null;
     image?: Prisma.StringNullableFilter<"User"> | string | null;
+    cover_image?: Prisma.StringNullableFilter<"User"> | string | null;
+    status?: Prisma.EnumUserStatusFilter<"User"> | $Enums.UserStatus;
     createdAt?: Prisma.DateTimeFilter<"User"> | Date | string;
     updatedAt?: Prisma.DateTimeFilter<"User"> | Date | string;
     sessions?: Prisma.SessionListRelationFilter;
@@ -168,12 +185,14 @@ export type UserWhereInput = {
     likes?: Prisma.LikeListRelationFilter;
     followers?: Prisma.FollowListRelationFilter;
     following?: Prisma.FollowListRelationFilter;
-    follows?: Prisma.FollowListRelationFilter;
     recipientNotifications?: Prisma.NotificationListRelationFilter;
     sentNotifications?: Prisma.NotificationListRelationFilter;
-    notifications?: Prisma.NotificationListRelationFilter;
     snapAuthor?: Prisma.SavedSnapListRelationFilter;
     savedBySnaps?: Prisma.SavedSnapListRelationFilter;
+    conversationsOne?: Prisma.ConversationListRelationFilter;
+    conversationsTwo?: Prisma.ConversationListRelationFilter;
+    sentMessages?: Prisma.MessageListRelationFilter;
+    receivedMessages?: Prisma.MessageListRelationFilter;
 };
 export type UserOrderByWithRelationInput = {
     id?: Prisma.SortOrder;
@@ -182,6 +201,8 @@ export type UserOrderByWithRelationInput = {
     emailVerified?: Prisma.SortOrder;
     bio?: Prisma.SortOrderInput | Prisma.SortOrder;
     image?: Prisma.SortOrderInput | Prisma.SortOrder;
+    cover_image?: Prisma.SortOrderInput | Prisma.SortOrder;
+    status?: Prisma.SortOrder;
     createdAt?: Prisma.SortOrder;
     updatedAt?: Prisma.SortOrder;
     sessions?: Prisma.SessionOrderByRelationAggregateInput;
@@ -190,12 +211,14 @@ export type UserOrderByWithRelationInput = {
     likes?: Prisma.LikeOrderByRelationAggregateInput;
     followers?: Prisma.FollowOrderByRelationAggregateInput;
     following?: Prisma.FollowOrderByRelationAggregateInput;
-    follows?: Prisma.FollowOrderByRelationAggregateInput;
     recipientNotifications?: Prisma.NotificationOrderByRelationAggregateInput;
     sentNotifications?: Prisma.NotificationOrderByRelationAggregateInput;
-    notifications?: Prisma.NotificationOrderByRelationAggregateInput;
     snapAuthor?: Prisma.SavedSnapOrderByRelationAggregateInput;
     savedBySnaps?: Prisma.SavedSnapOrderByRelationAggregateInput;
+    conversationsOne?: Prisma.ConversationOrderByRelationAggregateInput;
+    conversationsTwo?: Prisma.ConversationOrderByRelationAggregateInput;
+    sentMessages?: Prisma.MessageOrderByRelationAggregateInput;
+    receivedMessages?: Prisma.MessageOrderByRelationAggregateInput;
 };
 export type UserWhereUniqueInput = Prisma.AtLeast<{
     id?: string;
@@ -207,6 +230,8 @@ export type UserWhereUniqueInput = Prisma.AtLeast<{
     emailVerified?: Prisma.BoolFilter<"User"> | boolean;
     bio?: Prisma.StringNullableFilter<"User"> | string | null;
     image?: Prisma.StringNullableFilter<"User"> | string | null;
+    cover_image?: Prisma.StringNullableFilter<"User"> | string | null;
+    status?: Prisma.EnumUserStatusFilter<"User"> | $Enums.UserStatus;
     createdAt?: Prisma.DateTimeFilter<"User"> | Date | string;
     updatedAt?: Prisma.DateTimeFilter<"User"> | Date | string;
     sessions?: Prisma.SessionListRelationFilter;
@@ -215,12 +240,14 @@ export type UserWhereUniqueInput = Prisma.AtLeast<{
     likes?: Prisma.LikeListRelationFilter;
     followers?: Prisma.FollowListRelationFilter;
     following?: Prisma.FollowListRelationFilter;
-    follows?: Prisma.FollowListRelationFilter;
     recipientNotifications?: Prisma.NotificationListRelationFilter;
     sentNotifications?: Prisma.NotificationListRelationFilter;
-    notifications?: Prisma.NotificationListRelationFilter;
     snapAuthor?: Prisma.SavedSnapListRelationFilter;
     savedBySnaps?: Prisma.SavedSnapListRelationFilter;
+    conversationsOne?: Prisma.ConversationListRelationFilter;
+    conversationsTwo?: Prisma.ConversationListRelationFilter;
+    sentMessages?: Prisma.MessageListRelationFilter;
+    receivedMessages?: Prisma.MessageListRelationFilter;
 }, "id" | "email">;
 export type UserOrderByWithAggregationInput = {
     id?: Prisma.SortOrder;
@@ -229,6 +256,8 @@ export type UserOrderByWithAggregationInput = {
     emailVerified?: Prisma.SortOrder;
     bio?: Prisma.SortOrderInput | Prisma.SortOrder;
     image?: Prisma.SortOrderInput | Prisma.SortOrder;
+    cover_image?: Prisma.SortOrderInput | Prisma.SortOrder;
+    status?: Prisma.SortOrder;
     createdAt?: Prisma.SortOrder;
     updatedAt?: Prisma.SortOrder;
     _count?: Prisma.UserCountOrderByAggregateInput;
@@ -245,16 +274,20 @@ export type UserScalarWhereWithAggregatesInput = {
     emailVerified?: Prisma.BoolWithAggregatesFilter<"User"> | boolean;
     bio?: Prisma.StringNullableWithAggregatesFilter<"User"> | string | null;
     image?: Prisma.StringNullableWithAggregatesFilter<"User"> | string | null;
+    cover_image?: Prisma.StringNullableWithAggregatesFilter<"User"> | string | null;
+    status?: Prisma.EnumUserStatusWithAggregatesFilter<"User"> | $Enums.UserStatus;
     createdAt?: Prisma.DateTimeWithAggregatesFilter<"User"> | Date | string;
     updatedAt?: Prisma.DateTimeWithAggregatesFilter<"User"> | Date | string;
 };
 export type UserCreateInput = {
-    id: string;
+    id?: string;
     name: string;
     email: string;
     emailVerified: boolean;
     bio?: string | null;
     image?: string | null;
+    cover_image?: string | null;
+    status?: $Enums.UserStatus;
     createdAt: Date | string;
     updatedAt: Date | string;
     sessions?: Prisma.SessionCreateNestedManyWithoutUserInput;
@@ -263,20 +296,24 @@ export type UserCreateInput = {
     likes?: Prisma.LikeCreateNestedManyWithoutUserInput;
     followers?: Prisma.FollowCreateNestedManyWithoutFollowingInput;
     following?: Prisma.FollowCreateNestedManyWithoutFollowerInput;
-    follows?: Prisma.FollowCreateNestedManyWithoutUserInput;
     recipientNotifications?: Prisma.NotificationCreateNestedManyWithoutRecipientInput;
     sentNotifications?: Prisma.NotificationCreateNestedManyWithoutSenderInput;
-    notifications?: Prisma.NotificationCreateNestedManyWithoutUserInput;
     snapAuthor?: Prisma.SavedSnapCreateNestedManyWithoutAuthorInput;
-    savedBySnaps?: Prisma.SavedSnapCreateNestedManyWithoutUserInput;
+    savedBySnaps?: Prisma.SavedSnapCreateNestedManyWithoutSavedUserInput;
+    conversationsOne?: Prisma.ConversationCreateNestedManyWithoutUser1Input;
+    conversationsTwo?: Prisma.ConversationCreateNestedManyWithoutUser2Input;
+    sentMessages?: Prisma.MessageCreateNestedManyWithoutSenderInput;
+    receivedMessages?: Prisma.MessageCreateNestedManyWithoutReceiverInput;
 };
 export type UserUncheckedCreateInput = {
-    id: string;
+    id?: string;
     name: string;
     email: string;
     emailVerified: boolean;
     bio?: string | null;
     image?: string | null;
+    cover_image?: string | null;
+    status?: $Enums.UserStatus;
     createdAt: Date | string;
     updatedAt: Date | string;
     sessions?: Prisma.SessionUncheckedCreateNestedManyWithoutUserInput;
@@ -285,12 +322,14 @@ export type UserUncheckedCreateInput = {
     likes?: Prisma.LikeUncheckedCreateNestedManyWithoutUserInput;
     followers?: Prisma.FollowUncheckedCreateNestedManyWithoutFollowingInput;
     following?: Prisma.FollowUncheckedCreateNestedManyWithoutFollowerInput;
-    follows?: Prisma.FollowUncheckedCreateNestedManyWithoutUserInput;
     recipientNotifications?: Prisma.NotificationUncheckedCreateNestedManyWithoutRecipientInput;
     sentNotifications?: Prisma.NotificationUncheckedCreateNestedManyWithoutSenderInput;
-    notifications?: Prisma.NotificationUncheckedCreateNestedManyWithoutUserInput;
     snapAuthor?: Prisma.SavedSnapUncheckedCreateNestedManyWithoutAuthorInput;
-    savedBySnaps?: Prisma.SavedSnapUncheckedCreateNestedManyWithoutUserInput;
+    savedBySnaps?: Prisma.SavedSnapUncheckedCreateNestedManyWithoutSavedUserInput;
+    conversationsOne?: Prisma.ConversationUncheckedCreateNestedManyWithoutUser1Input;
+    conversationsTwo?: Prisma.ConversationUncheckedCreateNestedManyWithoutUser2Input;
+    sentMessages?: Prisma.MessageUncheckedCreateNestedManyWithoutSenderInput;
+    receivedMessages?: Prisma.MessageUncheckedCreateNestedManyWithoutReceiverInput;
 };
 export type UserUpdateInput = {
     id?: Prisma.StringFieldUpdateOperationsInput | string;
@@ -299,6 +338,8 @@ export type UserUpdateInput = {
     emailVerified?: Prisma.BoolFieldUpdateOperationsInput | boolean;
     bio?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
     image?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
+    cover_image?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
+    status?: Prisma.EnumUserStatusFieldUpdateOperationsInput | $Enums.UserStatus;
     createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
     updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
     sessions?: Prisma.SessionUpdateManyWithoutUserNestedInput;
@@ -307,12 +348,14 @@ export type UserUpdateInput = {
     likes?: Prisma.LikeUpdateManyWithoutUserNestedInput;
     followers?: Prisma.FollowUpdateManyWithoutFollowingNestedInput;
     following?: Prisma.FollowUpdateManyWithoutFollowerNestedInput;
-    follows?: Prisma.FollowUpdateManyWithoutUserNestedInput;
     recipientNotifications?: Prisma.NotificationUpdateManyWithoutRecipientNestedInput;
     sentNotifications?: Prisma.NotificationUpdateManyWithoutSenderNestedInput;
-    notifications?: Prisma.NotificationUpdateManyWithoutUserNestedInput;
     snapAuthor?: Prisma.SavedSnapUpdateManyWithoutAuthorNestedInput;
-    savedBySnaps?: Prisma.SavedSnapUpdateManyWithoutUserNestedInput;
+    savedBySnaps?: Prisma.SavedSnapUpdateManyWithoutSavedUserNestedInput;
+    conversationsOne?: Prisma.ConversationUpdateManyWithoutUser1NestedInput;
+    conversationsTwo?: Prisma.ConversationUpdateManyWithoutUser2NestedInput;
+    sentMessages?: Prisma.MessageUpdateManyWithoutSenderNestedInput;
+    receivedMessages?: Prisma.MessageUpdateManyWithoutReceiverNestedInput;
 };
 export type UserUncheckedUpdateInput = {
     id?: Prisma.StringFieldUpdateOperationsInput | string;
@@ -321,6 +364,8 @@ export type UserUncheckedUpdateInput = {
     emailVerified?: Prisma.BoolFieldUpdateOperationsInput | boolean;
     bio?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
     image?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
+    cover_image?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
+    status?: Prisma.EnumUserStatusFieldUpdateOperationsInput | $Enums.UserStatus;
     createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
     updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
     sessions?: Prisma.SessionUncheckedUpdateManyWithoutUserNestedInput;
@@ -329,20 +374,24 @@ export type UserUncheckedUpdateInput = {
     likes?: Prisma.LikeUncheckedUpdateManyWithoutUserNestedInput;
     followers?: Prisma.FollowUncheckedUpdateManyWithoutFollowingNestedInput;
     following?: Prisma.FollowUncheckedUpdateManyWithoutFollowerNestedInput;
-    follows?: Prisma.FollowUncheckedUpdateManyWithoutUserNestedInput;
     recipientNotifications?: Prisma.NotificationUncheckedUpdateManyWithoutRecipientNestedInput;
     sentNotifications?: Prisma.NotificationUncheckedUpdateManyWithoutSenderNestedInput;
-    notifications?: Prisma.NotificationUncheckedUpdateManyWithoutUserNestedInput;
     snapAuthor?: Prisma.SavedSnapUncheckedUpdateManyWithoutAuthorNestedInput;
-    savedBySnaps?: Prisma.SavedSnapUncheckedUpdateManyWithoutUserNestedInput;
+    savedBySnaps?: Prisma.SavedSnapUncheckedUpdateManyWithoutSavedUserNestedInput;
+    conversationsOne?: Prisma.ConversationUncheckedUpdateManyWithoutUser1NestedInput;
+    conversationsTwo?: Prisma.ConversationUncheckedUpdateManyWithoutUser2NestedInput;
+    sentMessages?: Prisma.MessageUncheckedUpdateManyWithoutSenderNestedInput;
+    receivedMessages?: Prisma.MessageUncheckedUpdateManyWithoutReceiverNestedInput;
 };
 export type UserCreateManyInput = {
-    id: string;
+    id?: string;
     name: string;
     email: string;
     emailVerified: boolean;
     bio?: string | null;
     image?: string | null;
+    cover_image?: string | null;
+    status?: $Enums.UserStatus;
     createdAt: Date | string;
     updatedAt: Date | string;
 };
@@ -353,6 +402,8 @@ export type UserUpdateManyMutationInput = {
     emailVerified?: Prisma.BoolFieldUpdateOperationsInput | boolean;
     bio?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
     image?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
+    cover_image?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
+    status?: Prisma.EnumUserStatusFieldUpdateOperationsInput | $Enums.UserStatus;
     createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
     updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
 };
@@ -363,6 +414,8 @@ export type UserUncheckedUpdateManyInput = {
     emailVerified?: Prisma.BoolFieldUpdateOperationsInput | boolean;
     bio?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
     image?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
+    cover_image?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
+    status?: Prisma.EnumUserStatusFieldUpdateOperationsInput | $Enums.UserStatus;
     createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
     updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
 };
@@ -373,6 +426,8 @@ export type UserCountOrderByAggregateInput = {
     emailVerified?: Prisma.SortOrder;
     bio?: Prisma.SortOrder;
     image?: Prisma.SortOrder;
+    cover_image?: Prisma.SortOrder;
+    status?: Prisma.SortOrder;
     createdAt?: Prisma.SortOrder;
     updatedAt?: Prisma.SortOrder;
 };
@@ -383,6 +438,8 @@ export type UserMaxOrderByAggregateInput = {
     emailVerified?: Prisma.SortOrder;
     bio?: Prisma.SortOrder;
     image?: Prisma.SortOrder;
+    cover_image?: Prisma.SortOrder;
+    status?: Prisma.SortOrder;
     createdAt?: Prisma.SortOrder;
     updatedAt?: Prisma.SortOrder;
 };
@@ -393,6 +450,8 @@ export type UserMinOrderByAggregateInput = {
     emailVerified?: Prisma.SortOrder;
     bio?: Prisma.SortOrder;
     image?: Prisma.SortOrder;
+    cover_image?: Prisma.SortOrder;
+    status?: Prisma.SortOrder;
     createdAt?: Prisma.SortOrder;
     updatedAt?: Prisma.SortOrder;
 };
@@ -412,6 +471,9 @@ export type BoolFieldUpdateOperationsInput = {
 };
 export type NullableStringFieldUpdateOperationsInput = {
     set?: string | null;
+};
+export type EnumUserStatusFieldUpdateOperationsInput = {
+    set?: $Enums.UserStatus;
 };
 export type DateTimeFieldUpdateOperationsInput = {
     set?: Date | string;
@@ -474,11 +536,6 @@ export type UserCreateNestedOneWithoutFollowersInput = {
     connectOrCreate?: Prisma.UserCreateOrConnectWithoutFollowersInput;
     connect?: Prisma.UserWhereUniqueInput;
 };
-export type UserCreateNestedOneWithoutFollowsInput = {
-    create?: Prisma.XOR<Prisma.UserCreateWithoutFollowsInput, Prisma.UserUncheckedCreateWithoutFollowsInput>;
-    connectOrCreate?: Prisma.UserCreateOrConnectWithoutFollowsInput;
-    connect?: Prisma.UserWhereUniqueInput;
-};
 export type UserUpdateOneRequiredWithoutFollowingNestedInput = {
     create?: Prisma.XOR<Prisma.UserCreateWithoutFollowingInput, Prisma.UserUncheckedCreateWithoutFollowingInput>;
     connectOrCreate?: Prisma.UserCreateOrConnectWithoutFollowingInput;
@@ -493,15 +550,6 @@ export type UserUpdateOneRequiredWithoutFollowersNestedInput = {
     connect?: Prisma.UserWhereUniqueInput;
     update?: Prisma.XOR<Prisma.XOR<Prisma.UserUpdateToOneWithWhereWithoutFollowersInput, Prisma.UserUpdateWithoutFollowersInput>, Prisma.UserUncheckedUpdateWithoutFollowersInput>;
 };
-export type UserUpdateOneWithoutFollowsNestedInput = {
-    create?: Prisma.XOR<Prisma.UserCreateWithoutFollowsInput, Prisma.UserUncheckedCreateWithoutFollowsInput>;
-    connectOrCreate?: Prisma.UserCreateOrConnectWithoutFollowsInput;
-    upsert?: Prisma.UserUpsertWithoutFollowsInput;
-    disconnect?: Prisma.UserWhereInput | boolean;
-    delete?: Prisma.UserWhereInput | boolean;
-    connect?: Prisma.UserWhereUniqueInput;
-    update?: Prisma.XOR<Prisma.XOR<Prisma.UserUpdateToOneWithWhereWithoutFollowsInput, Prisma.UserUpdateWithoutFollowsInput>, Prisma.UserUncheckedUpdateWithoutFollowsInput>;
-};
 export type UserCreateNestedOneWithoutSentNotificationsInput = {
     create?: Prisma.XOR<Prisma.UserCreateWithoutSentNotificationsInput, Prisma.UserUncheckedCreateWithoutSentNotificationsInput>;
     connectOrCreate?: Prisma.UserCreateOrConnectWithoutSentNotificationsInput;
@@ -510,11 +558,6 @@ export type UserCreateNestedOneWithoutSentNotificationsInput = {
 export type UserCreateNestedOneWithoutRecipientNotificationsInput = {
     create?: Prisma.XOR<Prisma.UserCreateWithoutRecipientNotificationsInput, Prisma.UserUncheckedCreateWithoutRecipientNotificationsInput>;
     connectOrCreate?: Prisma.UserCreateOrConnectWithoutRecipientNotificationsInput;
-    connect?: Prisma.UserWhereUniqueInput;
-};
-export type UserCreateNestedOneWithoutNotificationsInput = {
-    create?: Prisma.XOR<Prisma.UserCreateWithoutNotificationsInput, Prisma.UserUncheckedCreateWithoutNotificationsInput>;
-    connectOrCreate?: Prisma.UserCreateOrConnectWithoutNotificationsInput;
     connect?: Prisma.UserWhereUniqueInput;
 };
 export type UserUpdateOneWithoutSentNotificationsNestedInput = {
@@ -532,15 +575,6 @@ export type UserUpdateOneRequiredWithoutRecipientNotificationsNestedInput = {
     upsert?: Prisma.UserUpsertWithoutRecipientNotificationsInput;
     connect?: Prisma.UserWhereUniqueInput;
     update?: Prisma.XOR<Prisma.XOR<Prisma.UserUpdateToOneWithWhereWithoutRecipientNotificationsInput, Prisma.UserUpdateWithoutRecipientNotificationsInput>, Prisma.UserUncheckedUpdateWithoutRecipientNotificationsInput>;
-};
-export type UserUpdateOneWithoutNotificationsNestedInput = {
-    create?: Prisma.XOR<Prisma.UserCreateWithoutNotificationsInput, Prisma.UserUncheckedCreateWithoutNotificationsInput>;
-    connectOrCreate?: Prisma.UserCreateOrConnectWithoutNotificationsInput;
-    upsert?: Prisma.UserUpsertWithoutNotificationsInput;
-    disconnect?: Prisma.UserWhereInput | boolean;
-    delete?: Prisma.UserWhereInput | boolean;
-    connect?: Prisma.UserWhereUniqueInput;
-    update?: Prisma.XOR<Prisma.XOR<Prisma.UserUpdateToOneWithWhereWithoutNotificationsInput, Prisma.UserUpdateWithoutNotificationsInput>, Prisma.UserUncheckedUpdateWithoutNotificationsInput>;
 };
 export type UserCreateNestedOneWithoutSnapAuthorInput = {
     create?: Prisma.XOR<Prisma.UserCreateWithoutSnapAuthorInput, Prisma.UserUncheckedCreateWithoutSnapAuthorInput>;
@@ -566,13 +600,63 @@ export type UserUpdateOneRequiredWithoutSavedBySnapsNestedInput = {
     connect?: Prisma.UserWhereUniqueInput;
     update?: Prisma.XOR<Prisma.XOR<Prisma.UserUpdateToOneWithWhereWithoutSavedBySnapsInput, Prisma.UserUpdateWithoutSavedBySnapsInput>, Prisma.UserUncheckedUpdateWithoutSavedBySnapsInput>;
 };
+export type UserCreateNestedOneWithoutConversationsOneInput = {
+    create?: Prisma.XOR<Prisma.UserCreateWithoutConversationsOneInput, Prisma.UserUncheckedCreateWithoutConversationsOneInput>;
+    connectOrCreate?: Prisma.UserCreateOrConnectWithoutConversationsOneInput;
+    connect?: Prisma.UserWhereUniqueInput;
+};
+export type UserCreateNestedOneWithoutConversationsTwoInput = {
+    create?: Prisma.XOR<Prisma.UserCreateWithoutConversationsTwoInput, Prisma.UserUncheckedCreateWithoutConversationsTwoInput>;
+    connectOrCreate?: Prisma.UserCreateOrConnectWithoutConversationsTwoInput;
+    connect?: Prisma.UserWhereUniqueInput;
+};
+export type UserUpdateOneRequiredWithoutConversationsOneNestedInput = {
+    create?: Prisma.XOR<Prisma.UserCreateWithoutConversationsOneInput, Prisma.UserUncheckedCreateWithoutConversationsOneInput>;
+    connectOrCreate?: Prisma.UserCreateOrConnectWithoutConversationsOneInput;
+    upsert?: Prisma.UserUpsertWithoutConversationsOneInput;
+    connect?: Prisma.UserWhereUniqueInput;
+    update?: Prisma.XOR<Prisma.XOR<Prisma.UserUpdateToOneWithWhereWithoutConversationsOneInput, Prisma.UserUpdateWithoutConversationsOneInput>, Prisma.UserUncheckedUpdateWithoutConversationsOneInput>;
+};
+export type UserUpdateOneRequiredWithoutConversationsTwoNestedInput = {
+    create?: Prisma.XOR<Prisma.UserCreateWithoutConversationsTwoInput, Prisma.UserUncheckedCreateWithoutConversationsTwoInput>;
+    connectOrCreate?: Prisma.UserCreateOrConnectWithoutConversationsTwoInput;
+    upsert?: Prisma.UserUpsertWithoutConversationsTwoInput;
+    connect?: Prisma.UserWhereUniqueInput;
+    update?: Prisma.XOR<Prisma.XOR<Prisma.UserUpdateToOneWithWhereWithoutConversationsTwoInput, Prisma.UserUpdateWithoutConversationsTwoInput>, Prisma.UserUncheckedUpdateWithoutConversationsTwoInput>;
+};
+export type UserCreateNestedOneWithoutSentMessagesInput = {
+    create?: Prisma.XOR<Prisma.UserCreateWithoutSentMessagesInput, Prisma.UserUncheckedCreateWithoutSentMessagesInput>;
+    connectOrCreate?: Prisma.UserCreateOrConnectWithoutSentMessagesInput;
+    connect?: Prisma.UserWhereUniqueInput;
+};
+export type UserCreateNestedOneWithoutReceivedMessagesInput = {
+    create?: Prisma.XOR<Prisma.UserCreateWithoutReceivedMessagesInput, Prisma.UserUncheckedCreateWithoutReceivedMessagesInput>;
+    connectOrCreate?: Prisma.UserCreateOrConnectWithoutReceivedMessagesInput;
+    connect?: Prisma.UserWhereUniqueInput;
+};
+export type UserUpdateOneRequiredWithoutSentMessagesNestedInput = {
+    create?: Prisma.XOR<Prisma.UserCreateWithoutSentMessagesInput, Prisma.UserUncheckedCreateWithoutSentMessagesInput>;
+    connectOrCreate?: Prisma.UserCreateOrConnectWithoutSentMessagesInput;
+    upsert?: Prisma.UserUpsertWithoutSentMessagesInput;
+    connect?: Prisma.UserWhereUniqueInput;
+    update?: Prisma.XOR<Prisma.XOR<Prisma.UserUpdateToOneWithWhereWithoutSentMessagesInput, Prisma.UserUpdateWithoutSentMessagesInput>, Prisma.UserUncheckedUpdateWithoutSentMessagesInput>;
+};
+export type UserUpdateOneRequiredWithoutReceivedMessagesNestedInput = {
+    create?: Prisma.XOR<Prisma.UserCreateWithoutReceivedMessagesInput, Prisma.UserUncheckedCreateWithoutReceivedMessagesInput>;
+    connectOrCreate?: Prisma.UserCreateOrConnectWithoutReceivedMessagesInput;
+    upsert?: Prisma.UserUpsertWithoutReceivedMessagesInput;
+    connect?: Prisma.UserWhereUniqueInput;
+    update?: Prisma.XOR<Prisma.XOR<Prisma.UserUpdateToOneWithWhereWithoutReceivedMessagesInput, Prisma.UserUpdateWithoutReceivedMessagesInput>, Prisma.UserUncheckedUpdateWithoutReceivedMessagesInput>;
+};
 export type UserCreateWithoutSessionsInput = {
-    id: string;
+    id?: string;
     name: string;
     email: string;
     emailVerified: boolean;
     bio?: string | null;
     image?: string | null;
+    cover_image?: string | null;
+    status?: $Enums.UserStatus;
     createdAt: Date | string;
     updatedAt: Date | string;
     accounts?: Prisma.AccountCreateNestedManyWithoutUserInput;
@@ -580,20 +664,24 @@ export type UserCreateWithoutSessionsInput = {
     likes?: Prisma.LikeCreateNestedManyWithoutUserInput;
     followers?: Prisma.FollowCreateNestedManyWithoutFollowingInput;
     following?: Prisma.FollowCreateNestedManyWithoutFollowerInput;
-    follows?: Prisma.FollowCreateNestedManyWithoutUserInput;
     recipientNotifications?: Prisma.NotificationCreateNestedManyWithoutRecipientInput;
     sentNotifications?: Prisma.NotificationCreateNestedManyWithoutSenderInput;
-    notifications?: Prisma.NotificationCreateNestedManyWithoutUserInput;
     snapAuthor?: Prisma.SavedSnapCreateNestedManyWithoutAuthorInput;
-    savedBySnaps?: Prisma.SavedSnapCreateNestedManyWithoutUserInput;
+    savedBySnaps?: Prisma.SavedSnapCreateNestedManyWithoutSavedUserInput;
+    conversationsOne?: Prisma.ConversationCreateNestedManyWithoutUser1Input;
+    conversationsTwo?: Prisma.ConversationCreateNestedManyWithoutUser2Input;
+    sentMessages?: Prisma.MessageCreateNestedManyWithoutSenderInput;
+    receivedMessages?: Prisma.MessageCreateNestedManyWithoutReceiverInput;
 };
 export type UserUncheckedCreateWithoutSessionsInput = {
-    id: string;
+    id?: string;
     name: string;
     email: string;
     emailVerified: boolean;
     bio?: string | null;
     image?: string | null;
+    cover_image?: string | null;
+    status?: $Enums.UserStatus;
     createdAt: Date | string;
     updatedAt: Date | string;
     accounts?: Prisma.AccountUncheckedCreateNestedManyWithoutUserInput;
@@ -601,12 +689,14 @@ export type UserUncheckedCreateWithoutSessionsInput = {
     likes?: Prisma.LikeUncheckedCreateNestedManyWithoutUserInput;
     followers?: Prisma.FollowUncheckedCreateNestedManyWithoutFollowingInput;
     following?: Prisma.FollowUncheckedCreateNestedManyWithoutFollowerInput;
-    follows?: Prisma.FollowUncheckedCreateNestedManyWithoutUserInput;
     recipientNotifications?: Prisma.NotificationUncheckedCreateNestedManyWithoutRecipientInput;
     sentNotifications?: Prisma.NotificationUncheckedCreateNestedManyWithoutSenderInput;
-    notifications?: Prisma.NotificationUncheckedCreateNestedManyWithoutUserInput;
     snapAuthor?: Prisma.SavedSnapUncheckedCreateNestedManyWithoutAuthorInput;
-    savedBySnaps?: Prisma.SavedSnapUncheckedCreateNestedManyWithoutUserInput;
+    savedBySnaps?: Prisma.SavedSnapUncheckedCreateNestedManyWithoutSavedUserInput;
+    conversationsOne?: Prisma.ConversationUncheckedCreateNestedManyWithoutUser1Input;
+    conversationsTwo?: Prisma.ConversationUncheckedCreateNestedManyWithoutUser2Input;
+    sentMessages?: Prisma.MessageUncheckedCreateNestedManyWithoutSenderInput;
+    receivedMessages?: Prisma.MessageUncheckedCreateNestedManyWithoutReceiverInput;
 };
 export type UserCreateOrConnectWithoutSessionsInput = {
     where: Prisma.UserWhereUniqueInput;
@@ -628,6 +718,8 @@ export type UserUpdateWithoutSessionsInput = {
     emailVerified?: Prisma.BoolFieldUpdateOperationsInput | boolean;
     bio?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
     image?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
+    cover_image?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
+    status?: Prisma.EnumUserStatusFieldUpdateOperationsInput | $Enums.UserStatus;
     createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
     updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
     accounts?: Prisma.AccountUpdateManyWithoutUserNestedInput;
@@ -635,12 +727,14 @@ export type UserUpdateWithoutSessionsInput = {
     likes?: Prisma.LikeUpdateManyWithoutUserNestedInput;
     followers?: Prisma.FollowUpdateManyWithoutFollowingNestedInput;
     following?: Prisma.FollowUpdateManyWithoutFollowerNestedInput;
-    follows?: Prisma.FollowUpdateManyWithoutUserNestedInput;
     recipientNotifications?: Prisma.NotificationUpdateManyWithoutRecipientNestedInput;
     sentNotifications?: Prisma.NotificationUpdateManyWithoutSenderNestedInput;
-    notifications?: Prisma.NotificationUpdateManyWithoutUserNestedInput;
     snapAuthor?: Prisma.SavedSnapUpdateManyWithoutAuthorNestedInput;
-    savedBySnaps?: Prisma.SavedSnapUpdateManyWithoutUserNestedInput;
+    savedBySnaps?: Prisma.SavedSnapUpdateManyWithoutSavedUserNestedInput;
+    conversationsOne?: Prisma.ConversationUpdateManyWithoutUser1NestedInput;
+    conversationsTwo?: Prisma.ConversationUpdateManyWithoutUser2NestedInput;
+    sentMessages?: Prisma.MessageUpdateManyWithoutSenderNestedInput;
+    receivedMessages?: Prisma.MessageUpdateManyWithoutReceiverNestedInput;
 };
 export type UserUncheckedUpdateWithoutSessionsInput = {
     id?: Prisma.StringFieldUpdateOperationsInput | string;
@@ -649,6 +743,8 @@ export type UserUncheckedUpdateWithoutSessionsInput = {
     emailVerified?: Prisma.BoolFieldUpdateOperationsInput | boolean;
     bio?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
     image?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
+    cover_image?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
+    status?: Prisma.EnumUserStatusFieldUpdateOperationsInput | $Enums.UserStatus;
     createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
     updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
     accounts?: Prisma.AccountUncheckedUpdateManyWithoutUserNestedInput;
@@ -656,20 +752,24 @@ export type UserUncheckedUpdateWithoutSessionsInput = {
     likes?: Prisma.LikeUncheckedUpdateManyWithoutUserNestedInput;
     followers?: Prisma.FollowUncheckedUpdateManyWithoutFollowingNestedInput;
     following?: Prisma.FollowUncheckedUpdateManyWithoutFollowerNestedInput;
-    follows?: Prisma.FollowUncheckedUpdateManyWithoutUserNestedInput;
     recipientNotifications?: Prisma.NotificationUncheckedUpdateManyWithoutRecipientNestedInput;
     sentNotifications?: Prisma.NotificationUncheckedUpdateManyWithoutSenderNestedInput;
-    notifications?: Prisma.NotificationUncheckedUpdateManyWithoutUserNestedInput;
     snapAuthor?: Prisma.SavedSnapUncheckedUpdateManyWithoutAuthorNestedInput;
-    savedBySnaps?: Prisma.SavedSnapUncheckedUpdateManyWithoutUserNestedInput;
+    savedBySnaps?: Prisma.SavedSnapUncheckedUpdateManyWithoutSavedUserNestedInput;
+    conversationsOne?: Prisma.ConversationUncheckedUpdateManyWithoutUser1NestedInput;
+    conversationsTwo?: Prisma.ConversationUncheckedUpdateManyWithoutUser2NestedInput;
+    sentMessages?: Prisma.MessageUncheckedUpdateManyWithoutSenderNestedInput;
+    receivedMessages?: Prisma.MessageUncheckedUpdateManyWithoutReceiverNestedInput;
 };
 export type UserCreateWithoutAccountsInput = {
-    id: string;
+    id?: string;
     name: string;
     email: string;
     emailVerified: boolean;
     bio?: string | null;
     image?: string | null;
+    cover_image?: string | null;
+    status?: $Enums.UserStatus;
     createdAt: Date | string;
     updatedAt: Date | string;
     sessions?: Prisma.SessionCreateNestedManyWithoutUserInput;
@@ -677,20 +777,24 @@ export type UserCreateWithoutAccountsInput = {
     likes?: Prisma.LikeCreateNestedManyWithoutUserInput;
     followers?: Prisma.FollowCreateNestedManyWithoutFollowingInput;
     following?: Prisma.FollowCreateNestedManyWithoutFollowerInput;
-    follows?: Prisma.FollowCreateNestedManyWithoutUserInput;
     recipientNotifications?: Prisma.NotificationCreateNestedManyWithoutRecipientInput;
     sentNotifications?: Prisma.NotificationCreateNestedManyWithoutSenderInput;
-    notifications?: Prisma.NotificationCreateNestedManyWithoutUserInput;
     snapAuthor?: Prisma.SavedSnapCreateNestedManyWithoutAuthorInput;
-    savedBySnaps?: Prisma.SavedSnapCreateNestedManyWithoutUserInput;
+    savedBySnaps?: Prisma.SavedSnapCreateNestedManyWithoutSavedUserInput;
+    conversationsOne?: Prisma.ConversationCreateNestedManyWithoutUser1Input;
+    conversationsTwo?: Prisma.ConversationCreateNestedManyWithoutUser2Input;
+    sentMessages?: Prisma.MessageCreateNestedManyWithoutSenderInput;
+    receivedMessages?: Prisma.MessageCreateNestedManyWithoutReceiverInput;
 };
 export type UserUncheckedCreateWithoutAccountsInput = {
-    id: string;
+    id?: string;
     name: string;
     email: string;
     emailVerified: boolean;
     bio?: string | null;
     image?: string | null;
+    cover_image?: string | null;
+    status?: $Enums.UserStatus;
     createdAt: Date | string;
     updatedAt: Date | string;
     sessions?: Prisma.SessionUncheckedCreateNestedManyWithoutUserInput;
@@ -698,12 +802,14 @@ export type UserUncheckedCreateWithoutAccountsInput = {
     likes?: Prisma.LikeUncheckedCreateNestedManyWithoutUserInput;
     followers?: Prisma.FollowUncheckedCreateNestedManyWithoutFollowingInput;
     following?: Prisma.FollowUncheckedCreateNestedManyWithoutFollowerInput;
-    follows?: Prisma.FollowUncheckedCreateNestedManyWithoutUserInput;
     recipientNotifications?: Prisma.NotificationUncheckedCreateNestedManyWithoutRecipientInput;
     sentNotifications?: Prisma.NotificationUncheckedCreateNestedManyWithoutSenderInput;
-    notifications?: Prisma.NotificationUncheckedCreateNestedManyWithoutUserInput;
     snapAuthor?: Prisma.SavedSnapUncheckedCreateNestedManyWithoutAuthorInput;
-    savedBySnaps?: Prisma.SavedSnapUncheckedCreateNestedManyWithoutUserInput;
+    savedBySnaps?: Prisma.SavedSnapUncheckedCreateNestedManyWithoutSavedUserInput;
+    conversationsOne?: Prisma.ConversationUncheckedCreateNestedManyWithoutUser1Input;
+    conversationsTwo?: Prisma.ConversationUncheckedCreateNestedManyWithoutUser2Input;
+    sentMessages?: Prisma.MessageUncheckedCreateNestedManyWithoutSenderInput;
+    receivedMessages?: Prisma.MessageUncheckedCreateNestedManyWithoutReceiverInput;
 };
 export type UserCreateOrConnectWithoutAccountsInput = {
     where: Prisma.UserWhereUniqueInput;
@@ -725,6 +831,8 @@ export type UserUpdateWithoutAccountsInput = {
     emailVerified?: Prisma.BoolFieldUpdateOperationsInput | boolean;
     bio?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
     image?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
+    cover_image?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
+    status?: Prisma.EnumUserStatusFieldUpdateOperationsInput | $Enums.UserStatus;
     createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
     updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
     sessions?: Prisma.SessionUpdateManyWithoutUserNestedInput;
@@ -732,12 +840,14 @@ export type UserUpdateWithoutAccountsInput = {
     likes?: Prisma.LikeUpdateManyWithoutUserNestedInput;
     followers?: Prisma.FollowUpdateManyWithoutFollowingNestedInput;
     following?: Prisma.FollowUpdateManyWithoutFollowerNestedInput;
-    follows?: Prisma.FollowUpdateManyWithoutUserNestedInput;
     recipientNotifications?: Prisma.NotificationUpdateManyWithoutRecipientNestedInput;
     sentNotifications?: Prisma.NotificationUpdateManyWithoutSenderNestedInput;
-    notifications?: Prisma.NotificationUpdateManyWithoutUserNestedInput;
     snapAuthor?: Prisma.SavedSnapUpdateManyWithoutAuthorNestedInput;
-    savedBySnaps?: Prisma.SavedSnapUpdateManyWithoutUserNestedInput;
+    savedBySnaps?: Prisma.SavedSnapUpdateManyWithoutSavedUserNestedInput;
+    conversationsOne?: Prisma.ConversationUpdateManyWithoutUser1NestedInput;
+    conversationsTwo?: Prisma.ConversationUpdateManyWithoutUser2NestedInput;
+    sentMessages?: Prisma.MessageUpdateManyWithoutSenderNestedInput;
+    receivedMessages?: Prisma.MessageUpdateManyWithoutReceiverNestedInput;
 };
 export type UserUncheckedUpdateWithoutAccountsInput = {
     id?: Prisma.StringFieldUpdateOperationsInput | string;
@@ -746,6 +856,8 @@ export type UserUncheckedUpdateWithoutAccountsInput = {
     emailVerified?: Prisma.BoolFieldUpdateOperationsInput | boolean;
     bio?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
     image?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
+    cover_image?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
+    status?: Prisma.EnumUserStatusFieldUpdateOperationsInput | $Enums.UserStatus;
     createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
     updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
     sessions?: Prisma.SessionUncheckedUpdateManyWithoutUserNestedInput;
@@ -753,20 +865,24 @@ export type UserUncheckedUpdateWithoutAccountsInput = {
     likes?: Prisma.LikeUncheckedUpdateManyWithoutUserNestedInput;
     followers?: Prisma.FollowUncheckedUpdateManyWithoutFollowingNestedInput;
     following?: Prisma.FollowUncheckedUpdateManyWithoutFollowerNestedInput;
-    follows?: Prisma.FollowUncheckedUpdateManyWithoutUserNestedInput;
     recipientNotifications?: Prisma.NotificationUncheckedUpdateManyWithoutRecipientNestedInput;
     sentNotifications?: Prisma.NotificationUncheckedUpdateManyWithoutSenderNestedInput;
-    notifications?: Prisma.NotificationUncheckedUpdateManyWithoutUserNestedInput;
     snapAuthor?: Prisma.SavedSnapUncheckedUpdateManyWithoutAuthorNestedInput;
-    savedBySnaps?: Prisma.SavedSnapUncheckedUpdateManyWithoutUserNestedInput;
+    savedBySnaps?: Prisma.SavedSnapUncheckedUpdateManyWithoutSavedUserNestedInput;
+    conversationsOne?: Prisma.ConversationUncheckedUpdateManyWithoutUser1NestedInput;
+    conversationsTwo?: Prisma.ConversationUncheckedUpdateManyWithoutUser2NestedInput;
+    sentMessages?: Prisma.MessageUncheckedUpdateManyWithoutSenderNestedInput;
+    receivedMessages?: Prisma.MessageUncheckedUpdateManyWithoutReceiverNestedInput;
 };
 export type UserCreateWithoutPostsInput = {
-    id: string;
+    id?: string;
     name: string;
     email: string;
     emailVerified: boolean;
     bio?: string | null;
     image?: string | null;
+    cover_image?: string | null;
+    status?: $Enums.UserStatus;
     createdAt: Date | string;
     updatedAt: Date | string;
     sessions?: Prisma.SessionCreateNestedManyWithoutUserInput;
@@ -774,20 +890,24 @@ export type UserCreateWithoutPostsInput = {
     likes?: Prisma.LikeCreateNestedManyWithoutUserInput;
     followers?: Prisma.FollowCreateNestedManyWithoutFollowingInput;
     following?: Prisma.FollowCreateNestedManyWithoutFollowerInput;
-    follows?: Prisma.FollowCreateNestedManyWithoutUserInput;
     recipientNotifications?: Prisma.NotificationCreateNestedManyWithoutRecipientInput;
     sentNotifications?: Prisma.NotificationCreateNestedManyWithoutSenderInput;
-    notifications?: Prisma.NotificationCreateNestedManyWithoutUserInput;
     snapAuthor?: Prisma.SavedSnapCreateNestedManyWithoutAuthorInput;
-    savedBySnaps?: Prisma.SavedSnapCreateNestedManyWithoutUserInput;
+    savedBySnaps?: Prisma.SavedSnapCreateNestedManyWithoutSavedUserInput;
+    conversationsOne?: Prisma.ConversationCreateNestedManyWithoutUser1Input;
+    conversationsTwo?: Prisma.ConversationCreateNestedManyWithoutUser2Input;
+    sentMessages?: Prisma.MessageCreateNestedManyWithoutSenderInput;
+    receivedMessages?: Prisma.MessageCreateNestedManyWithoutReceiverInput;
 };
 export type UserUncheckedCreateWithoutPostsInput = {
-    id: string;
+    id?: string;
     name: string;
     email: string;
     emailVerified: boolean;
     bio?: string | null;
     image?: string | null;
+    cover_image?: string | null;
+    status?: $Enums.UserStatus;
     createdAt: Date | string;
     updatedAt: Date | string;
     sessions?: Prisma.SessionUncheckedCreateNestedManyWithoutUserInput;
@@ -795,12 +915,14 @@ export type UserUncheckedCreateWithoutPostsInput = {
     likes?: Prisma.LikeUncheckedCreateNestedManyWithoutUserInput;
     followers?: Prisma.FollowUncheckedCreateNestedManyWithoutFollowingInput;
     following?: Prisma.FollowUncheckedCreateNestedManyWithoutFollowerInput;
-    follows?: Prisma.FollowUncheckedCreateNestedManyWithoutUserInput;
     recipientNotifications?: Prisma.NotificationUncheckedCreateNestedManyWithoutRecipientInput;
     sentNotifications?: Prisma.NotificationUncheckedCreateNestedManyWithoutSenderInput;
-    notifications?: Prisma.NotificationUncheckedCreateNestedManyWithoutUserInput;
     snapAuthor?: Prisma.SavedSnapUncheckedCreateNestedManyWithoutAuthorInput;
-    savedBySnaps?: Prisma.SavedSnapUncheckedCreateNestedManyWithoutUserInput;
+    savedBySnaps?: Prisma.SavedSnapUncheckedCreateNestedManyWithoutSavedUserInput;
+    conversationsOne?: Prisma.ConversationUncheckedCreateNestedManyWithoutUser1Input;
+    conversationsTwo?: Prisma.ConversationUncheckedCreateNestedManyWithoutUser2Input;
+    sentMessages?: Prisma.MessageUncheckedCreateNestedManyWithoutSenderInput;
+    receivedMessages?: Prisma.MessageUncheckedCreateNestedManyWithoutReceiverInput;
 };
 export type UserCreateOrConnectWithoutPostsInput = {
     where: Prisma.UserWhereUniqueInput;
@@ -822,6 +944,8 @@ export type UserUpdateWithoutPostsInput = {
     emailVerified?: Prisma.BoolFieldUpdateOperationsInput | boolean;
     bio?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
     image?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
+    cover_image?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
+    status?: Prisma.EnumUserStatusFieldUpdateOperationsInput | $Enums.UserStatus;
     createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
     updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
     sessions?: Prisma.SessionUpdateManyWithoutUserNestedInput;
@@ -829,12 +953,14 @@ export type UserUpdateWithoutPostsInput = {
     likes?: Prisma.LikeUpdateManyWithoutUserNestedInput;
     followers?: Prisma.FollowUpdateManyWithoutFollowingNestedInput;
     following?: Prisma.FollowUpdateManyWithoutFollowerNestedInput;
-    follows?: Prisma.FollowUpdateManyWithoutUserNestedInput;
     recipientNotifications?: Prisma.NotificationUpdateManyWithoutRecipientNestedInput;
     sentNotifications?: Prisma.NotificationUpdateManyWithoutSenderNestedInput;
-    notifications?: Prisma.NotificationUpdateManyWithoutUserNestedInput;
     snapAuthor?: Prisma.SavedSnapUpdateManyWithoutAuthorNestedInput;
-    savedBySnaps?: Prisma.SavedSnapUpdateManyWithoutUserNestedInput;
+    savedBySnaps?: Prisma.SavedSnapUpdateManyWithoutSavedUserNestedInput;
+    conversationsOne?: Prisma.ConversationUpdateManyWithoutUser1NestedInput;
+    conversationsTwo?: Prisma.ConversationUpdateManyWithoutUser2NestedInput;
+    sentMessages?: Prisma.MessageUpdateManyWithoutSenderNestedInput;
+    receivedMessages?: Prisma.MessageUpdateManyWithoutReceiverNestedInput;
 };
 export type UserUncheckedUpdateWithoutPostsInput = {
     id?: Prisma.StringFieldUpdateOperationsInput | string;
@@ -843,6 +969,8 @@ export type UserUncheckedUpdateWithoutPostsInput = {
     emailVerified?: Prisma.BoolFieldUpdateOperationsInput | boolean;
     bio?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
     image?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
+    cover_image?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
+    status?: Prisma.EnumUserStatusFieldUpdateOperationsInput | $Enums.UserStatus;
     createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
     updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
     sessions?: Prisma.SessionUncheckedUpdateManyWithoutUserNestedInput;
@@ -850,20 +978,24 @@ export type UserUncheckedUpdateWithoutPostsInput = {
     likes?: Prisma.LikeUncheckedUpdateManyWithoutUserNestedInput;
     followers?: Prisma.FollowUncheckedUpdateManyWithoutFollowingNestedInput;
     following?: Prisma.FollowUncheckedUpdateManyWithoutFollowerNestedInput;
-    follows?: Prisma.FollowUncheckedUpdateManyWithoutUserNestedInput;
     recipientNotifications?: Prisma.NotificationUncheckedUpdateManyWithoutRecipientNestedInput;
     sentNotifications?: Prisma.NotificationUncheckedUpdateManyWithoutSenderNestedInput;
-    notifications?: Prisma.NotificationUncheckedUpdateManyWithoutUserNestedInput;
     snapAuthor?: Prisma.SavedSnapUncheckedUpdateManyWithoutAuthorNestedInput;
-    savedBySnaps?: Prisma.SavedSnapUncheckedUpdateManyWithoutUserNestedInput;
+    savedBySnaps?: Prisma.SavedSnapUncheckedUpdateManyWithoutSavedUserNestedInput;
+    conversationsOne?: Prisma.ConversationUncheckedUpdateManyWithoutUser1NestedInput;
+    conversationsTwo?: Prisma.ConversationUncheckedUpdateManyWithoutUser2NestedInput;
+    sentMessages?: Prisma.MessageUncheckedUpdateManyWithoutSenderNestedInput;
+    receivedMessages?: Prisma.MessageUncheckedUpdateManyWithoutReceiverNestedInput;
 };
 export type UserCreateWithoutLikesInput = {
-    id: string;
+    id?: string;
     name: string;
     email: string;
     emailVerified: boolean;
     bio?: string | null;
     image?: string | null;
+    cover_image?: string | null;
+    status?: $Enums.UserStatus;
     createdAt: Date | string;
     updatedAt: Date | string;
     sessions?: Prisma.SessionCreateNestedManyWithoutUserInput;
@@ -871,20 +1003,24 @@ export type UserCreateWithoutLikesInput = {
     posts?: Prisma.PostCreateNestedManyWithoutUserInput;
     followers?: Prisma.FollowCreateNestedManyWithoutFollowingInput;
     following?: Prisma.FollowCreateNestedManyWithoutFollowerInput;
-    follows?: Prisma.FollowCreateNestedManyWithoutUserInput;
     recipientNotifications?: Prisma.NotificationCreateNestedManyWithoutRecipientInput;
     sentNotifications?: Prisma.NotificationCreateNestedManyWithoutSenderInput;
-    notifications?: Prisma.NotificationCreateNestedManyWithoutUserInput;
     snapAuthor?: Prisma.SavedSnapCreateNestedManyWithoutAuthorInput;
-    savedBySnaps?: Prisma.SavedSnapCreateNestedManyWithoutUserInput;
+    savedBySnaps?: Prisma.SavedSnapCreateNestedManyWithoutSavedUserInput;
+    conversationsOne?: Prisma.ConversationCreateNestedManyWithoutUser1Input;
+    conversationsTwo?: Prisma.ConversationCreateNestedManyWithoutUser2Input;
+    sentMessages?: Prisma.MessageCreateNestedManyWithoutSenderInput;
+    receivedMessages?: Prisma.MessageCreateNestedManyWithoutReceiverInput;
 };
 export type UserUncheckedCreateWithoutLikesInput = {
-    id: string;
+    id?: string;
     name: string;
     email: string;
     emailVerified: boolean;
     bio?: string | null;
     image?: string | null;
+    cover_image?: string | null;
+    status?: $Enums.UserStatus;
     createdAt: Date | string;
     updatedAt: Date | string;
     sessions?: Prisma.SessionUncheckedCreateNestedManyWithoutUserInput;
@@ -892,12 +1028,14 @@ export type UserUncheckedCreateWithoutLikesInput = {
     posts?: Prisma.PostUncheckedCreateNestedManyWithoutUserInput;
     followers?: Prisma.FollowUncheckedCreateNestedManyWithoutFollowingInput;
     following?: Prisma.FollowUncheckedCreateNestedManyWithoutFollowerInput;
-    follows?: Prisma.FollowUncheckedCreateNestedManyWithoutUserInput;
     recipientNotifications?: Prisma.NotificationUncheckedCreateNestedManyWithoutRecipientInput;
     sentNotifications?: Prisma.NotificationUncheckedCreateNestedManyWithoutSenderInput;
-    notifications?: Prisma.NotificationUncheckedCreateNestedManyWithoutUserInput;
     snapAuthor?: Prisma.SavedSnapUncheckedCreateNestedManyWithoutAuthorInput;
-    savedBySnaps?: Prisma.SavedSnapUncheckedCreateNestedManyWithoutUserInput;
+    savedBySnaps?: Prisma.SavedSnapUncheckedCreateNestedManyWithoutSavedUserInput;
+    conversationsOne?: Prisma.ConversationUncheckedCreateNestedManyWithoutUser1Input;
+    conversationsTwo?: Prisma.ConversationUncheckedCreateNestedManyWithoutUser2Input;
+    sentMessages?: Prisma.MessageUncheckedCreateNestedManyWithoutSenderInput;
+    receivedMessages?: Prisma.MessageUncheckedCreateNestedManyWithoutReceiverInput;
 };
 export type UserCreateOrConnectWithoutLikesInput = {
     where: Prisma.UserWhereUniqueInput;
@@ -919,6 +1057,8 @@ export type UserUpdateWithoutLikesInput = {
     emailVerified?: Prisma.BoolFieldUpdateOperationsInput | boolean;
     bio?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
     image?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
+    cover_image?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
+    status?: Prisma.EnumUserStatusFieldUpdateOperationsInput | $Enums.UserStatus;
     createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
     updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
     sessions?: Prisma.SessionUpdateManyWithoutUserNestedInput;
@@ -926,12 +1066,14 @@ export type UserUpdateWithoutLikesInput = {
     posts?: Prisma.PostUpdateManyWithoutUserNestedInput;
     followers?: Prisma.FollowUpdateManyWithoutFollowingNestedInput;
     following?: Prisma.FollowUpdateManyWithoutFollowerNestedInput;
-    follows?: Prisma.FollowUpdateManyWithoutUserNestedInput;
     recipientNotifications?: Prisma.NotificationUpdateManyWithoutRecipientNestedInput;
     sentNotifications?: Prisma.NotificationUpdateManyWithoutSenderNestedInput;
-    notifications?: Prisma.NotificationUpdateManyWithoutUserNestedInput;
     snapAuthor?: Prisma.SavedSnapUpdateManyWithoutAuthorNestedInput;
-    savedBySnaps?: Prisma.SavedSnapUpdateManyWithoutUserNestedInput;
+    savedBySnaps?: Prisma.SavedSnapUpdateManyWithoutSavedUserNestedInput;
+    conversationsOne?: Prisma.ConversationUpdateManyWithoutUser1NestedInput;
+    conversationsTwo?: Prisma.ConversationUpdateManyWithoutUser2NestedInput;
+    sentMessages?: Prisma.MessageUpdateManyWithoutSenderNestedInput;
+    receivedMessages?: Prisma.MessageUpdateManyWithoutReceiverNestedInput;
 };
 export type UserUncheckedUpdateWithoutLikesInput = {
     id?: Prisma.StringFieldUpdateOperationsInput | string;
@@ -940,6 +1082,8 @@ export type UserUncheckedUpdateWithoutLikesInput = {
     emailVerified?: Prisma.BoolFieldUpdateOperationsInput | boolean;
     bio?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
     image?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
+    cover_image?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
+    status?: Prisma.EnumUserStatusFieldUpdateOperationsInput | $Enums.UserStatus;
     createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
     updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
     sessions?: Prisma.SessionUncheckedUpdateManyWithoutUserNestedInput;
@@ -947,20 +1091,24 @@ export type UserUncheckedUpdateWithoutLikesInput = {
     posts?: Prisma.PostUncheckedUpdateManyWithoutUserNestedInput;
     followers?: Prisma.FollowUncheckedUpdateManyWithoutFollowingNestedInput;
     following?: Prisma.FollowUncheckedUpdateManyWithoutFollowerNestedInput;
-    follows?: Prisma.FollowUncheckedUpdateManyWithoutUserNestedInput;
     recipientNotifications?: Prisma.NotificationUncheckedUpdateManyWithoutRecipientNestedInput;
     sentNotifications?: Prisma.NotificationUncheckedUpdateManyWithoutSenderNestedInput;
-    notifications?: Prisma.NotificationUncheckedUpdateManyWithoutUserNestedInput;
     snapAuthor?: Prisma.SavedSnapUncheckedUpdateManyWithoutAuthorNestedInput;
-    savedBySnaps?: Prisma.SavedSnapUncheckedUpdateManyWithoutUserNestedInput;
+    savedBySnaps?: Prisma.SavedSnapUncheckedUpdateManyWithoutSavedUserNestedInput;
+    conversationsOne?: Prisma.ConversationUncheckedUpdateManyWithoutUser1NestedInput;
+    conversationsTwo?: Prisma.ConversationUncheckedUpdateManyWithoutUser2NestedInput;
+    sentMessages?: Prisma.MessageUncheckedUpdateManyWithoutSenderNestedInput;
+    receivedMessages?: Prisma.MessageUncheckedUpdateManyWithoutReceiverNestedInput;
 };
 export type UserCreateWithoutFollowingInput = {
-    id: string;
+    id?: string;
     name: string;
     email: string;
     emailVerified: boolean;
     bio?: string | null;
     image?: string | null;
+    cover_image?: string | null;
+    status?: $Enums.UserStatus;
     createdAt: Date | string;
     updatedAt: Date | string;
     sessions?: Prisma.SessionCreateNestedManyWithoutUserInput;
@@ -968,20 +1116,24 @@ export type UserCreateWithoutFollowingInput = {
     posts?: Prisma.PostCreateNestedManyWithoutUserInput;
     likes?: Prisma.LikeCreateNestedManyWithoutUserInput;
     followers?: Prisma.FollowCreateNestedManyWithoutFollowingInput;
-    follows?: Prisma.FollowCreateNestedManyWithoutUserInput;
     recipientNotifications?: Prisma.NotificationCreateNestedManyWithoutRecipientInput;
     sentNotifications?: Prisma.NotificationCreateNestedManyWithoutSenderInput;
-    notifications?: Prisma.NotificationCreateNestedManyWithoutUserInput;
     snapAuthor?: Prisma.SavedSnapCreateNestedManyWithoutAuthorInput;
-    savedBySnaps?: Prisma.SavedSnapCreateNestedManyWithoutUserInput;
+    savedBySnaps?: Prisma.SavedSnapCreateNestedManyWithoutSavedUserInput;
+    conversationsOne?: Prisma.ConversationCreateNestedManyWithoutUser1Input;
+    conversationsTwo?: Prisma.ConversationCreateNestedManyWithoutUser2Input;
+    sentMessages?: Prisma.MessageCreateNestedManyWithoutSenderInput;
+    receivedMessages?: Prisma.MessageCreateNestedManyWithoutReceiverInput;
 };
 export type UserUncheckedCreateWithoutFollowingInput = {
-    id: string;
+    id?: string;
     name: string;
     email: string;
     emailVerified: boolean;
     bio?: string | null;
     image?: string | null;
+    cover_image?: string | null;
+    status?: $Enums.UserStatus;
     createdAt: Date | string;
     updatedAt: Date | string;
     sessions?: Prisma.SessionUncheckedCreateNestedManyWithoutUserInput;
@@ -989,24 +1141,28 @@ export type UserUncheckedCreateWithoutFollowingInput = {
     posts?: Prisma.PostUncheckedCreateNestedManyWithoutUserInput;
     likes?: Prisma.LikeUncheckedCreateNestedManyWithoutUserInput;
     followers?: Prisma.FollowUncheckedCreateNestedManyWithoutFollowingInput;
-    follows?: Prisma.FollowUncheckedCreateNestedManyWithoutUserInput;
     recipientNotifications?: Prisma.NotificationUncheckedCreateNestedManyWithoutRecipientInput;
     sentNotifications?: Prisma.NotificationUncheckedCreateNestedManyWithoutSenderInput;
-    notifications?: Prisma.NotificationUncheckedCreateNestedManyWithoutUserInput;
     snapAuthor?: Prisma.SavedSnapUncheckedCreateNestedManyWithoutAuthorInput;
-    savedBySnaps?: Prisma.SavedSnapUncheckedCreateNestedManyWithoutUserInput;
+    savedBySnaps?: Prisma.SavedSnapUncheckedCreateNestedManyWithoutSavedUserInput;
+    conversationsOne?: Prisma.ConversationUncheckedCreateNestedManyWithoutUser1Input;
+    conversationsTwo?: Prisma.ConversationUncheckedCreateNestedManyWithoutUser2Input;
+    sentMessages?: Prisma.MessageUncheckedCreateNestedManyWithoutSenderInput;
+    receivedMessages?: Prisma.MessageUncheckedCreateNestedManyWithoutReceiverInput;
 };
 export type UserCreateOrConnectWithoutFollowingInput = {
     where: Prisma.UserWhereUniqueInput;
     create: Prisma.XOR<Prisma.UserCreateWithoutFollowingInput, Prisma.UserUncheckedCreateWithoutFollowingInput>;
 };
 export type UserCreateWithoutFollowersInput = {
-    id: string;
+    id?: string;
     name: string;
     email: string;
     emailVerified: boolean;
     bio?: string | null;
     image?: string | null;
+    cover_image?: string | null;
+    status?: $Enums.UserStatus;
     createdAt: Date | string;
     updatedAt: Date | string;
     sessions?: Prisma.SessionCreateNestedManyWithoutUserInput;
@@ -1014,20 +1170,24 @@ export type UserCreateWithoutFollowersInput = {
     posts?: Prisma.PostCreateNestedManyWithoutUserInput;
     likes?: Prisma.LikeCreateNestedManyWithoutUserInput;
     following?: Prisma.FollowCreateNestedManyWithoutFollowerInput;
-    follows?: Prisma.FollowCreateNestedManyWithoutUserInput;
     recipientNotifications?: Prisma.NotificationCreateNestedManyWithoutRecipientInput;
     sentNotifications?: Prisma.NotificationCreateNestedManyWithoutSenderInput;
-    notifications?: Prisma.NotificationCreateNestedManyWithoutUserInput;
     snapAuthor?: Prisma.SavedSnapCreateNestedManyWithoutAuthorInput;
-    savedBySnaps?: Prisma.SavedSnapCreateNestedManyWithoutUserInput;
+    savedBySnaps?: Prisma.SavedSnapCreateNestedManyWithoutSavedUserInput;
+    conversationsOne?: Prisma.ConversationCreateNestedManyWithoutUser1Input;
+    conversationsTwo?: Prisma.ConversationCreateNestedManyWithoutUser2Input;
+    sentMessages?: Prisma.MessageCreateNestedManyWithoutSenderInput;
+    receivedMessages?: Prisma.MessageCreateNestedManyWithoutReceiverInput;
 };
 export type UserUncheckedCreateWithoutFollowersInput = {
-    id: string;
+    id?: string;
     name: string;
     email: string;
     emailVerified: boolean;
     bio?: string | null;
     image?: string | null;
+    cover_image?: string | null;
+    status?: $Enums.UserStatus;
     createdAt: Date | string;
     updatedAt: Date | string;
     sessions?: Prisma.SessionUncheckedCreateNestedManyWithoutUserInput;
@@ -1035,62 +1195,18 @@ export type UserUncheckedCreateWithoutFollowersInput = {
     posts?: Prisma.PostUncheckedCreateNestedManyWithoutUserInput;
     likes?: Prisma.LikeUncheckedCreateNestedManyWithoutUserInput;
     following?: Prisma.FollowUncheckedCreateNestedManyWithoutFollowerInput;
-    follows?: Prisma.FollowUncheckedCreateNestedManyWithoutUserInput;
     recipientNotifications?: Prisma.NotificationUncheckedCreateNestedManyWithoutRecipientInput;
     sentNotifications?: Prisma.NotificationUncheckedCreateNestedManyWithoutSenderInput;
-    notifications?: Prisma.NotificationUncheckedCreateNestedManyWithoutUserInput;
     snapAuthor?: Prisma.SavedSnapUncheckedCreateNestedManyWithoutAuthorInput;
-    savedBySnaps?: Prisma.SavedSnapUncheckedCreateNestedManyWithoutUserInput;
+    savedBySnaps?: Prisma.SavedSnapUncheckedCreateNestedManyWithoutSavedUserInput;
+    conversationsOne?: Prisma.ConversationUncheckedCreateNestedManyWithoutUser1Input;
+    conversationsTwo?: Prisma.ConversationUncheckedCreateNestedManyWithoutUser2Input;
+    sentMessages?: Prisma.MessageUncheckedCreateNestedManyWithoutSenderInput;
+    receivedMessages?: Prisma.MessageUncheckedCreateNestedManyWithoutReceiverInput;
 };
 export type UserCreateOrConnectWithoutFollowersInput = {
     where: Prisma.UserWhereUniqueInput;
     create: Prisma.XOR<Prisma.UserCreateWithoutFollowersInput, Prisma.UserUncheckedCreateWithoutFollowersInput>;
-};
-export type UserCreateWithoutFollowsInput = {
-    id: string;
-    name: string;
-    email: string;
-    emailVerified: boolean;
-    bio?: string | null;
-    image?: string | null;
-    createdAt: Date | string;
-    updatedAt: Date | string;
-    sessions?: Prisma.SessionCreateNestedManyWithoutUserInput;
-    accounts?: Prisma.AccountCreateNestedManyWithoutUserInput;
-    posts?: Prisma.PostCreateNestedManyWithoutUserInput;
-    likes?: Prisma.LikeCreateNestedManyWithoutUserInput;
-    followers?: Prisma.FollowCreateNestedManyWithoutFollowingInput;
-    following?: Prisma.FollowCreateNestedManyWithoutFollowerInput;
-    recipientNotifications?: Prisma.NotificationCreateNestedManyWithoutRecipientInput;
-    sentNotifications?: Prisma.NotificationCreateNestedManyWithoutSenderInput;
-    notifications?: Prisma.NotificationCreateNestedManyWithoutUserInput;
-    snapAuthor?: Prisma.SavedSnapCreateNestedManyWithoutAuthorInput;
-    savedBySnaps?: Prisma.SavedSnapCreateNestedManyWithoutUserInput;
-};
-export type UserUncheckedCreateWithoutFollowsInput = {
-    id: string;
-    name: string;
-    email: string;
-    emailVerified: boolean;
-    bio?: string | null;
-    image?: string | null;
-    createdAt: Date | string;
-    updatedAt: Date | string;
-    sessions?: Prisma.SessionUncheckedCreateNestedManyWithoutUserInput;
-    accounts?: Prisma.AccountUncheckedCreateNestedManyWithoutUserInput;
-    posts?: Prisma.PostUncheckedCreateNestedManyWithoutUserInput;
-    likes?: Prisma.LikeUncheckedCreateNestedManyWithoutUserInput;
-    followers?: Prisma.FollowUncheckedCreateNestedManyWithoutFollowingInput;
-    following?: Prisma.FollowUncheckedCreateNestedManyWithoutFollowerInput;
-    recipientNotifications?: Prisma.NotificationUncheckedCreateNestedManyWithoutRecipientInput;
-    sentNotifications?: Prisma.NotificationUncheckedCreateNestedManyWithoutSenderInput;
-    notifications?: Prisma.NotificationUncheckedCreateNestedManyWithoutUserInput;
-    snapAuthor?: Prisma.SavedSnapUncheckedCreateNestedManyWithoutAuthorInput;
-    savedBySnaps?: Prisma.SavedSnapUncheckedCreateNestedManyWithoutUserInput;
-};
-export type UserCreateOrConnectWithoutFollowsInput = {
-    where: Prisma.UserWhereUniqueInput;
-    create: Prisma.XOR<Prisma.UserCreateWithoutFollowsInput, Prisma.UserUncheckedCreateWithoutFollowsInput>;
 };
 export type UserUpsertWithoutFollowingInput = {
     update: Prisma.XOR<Prisma.UserUpdateWithoutFollowingInput, Prisma.UserUncheckedUpdateWithoutFollowingInput>;
@@ -1108,6 +1224,8 @@ export type UserUpdateWithoutFollowingInput = {
     emailVerified?: Prisma.BoolFieldUpdateOperationsInput | boolean;
     bio?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
     image?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
+    cover_image?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
+    status?: Prisma.EnumUserStatusFieldUpdateOperationsInput | $Enums.UserStatus;
     createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
     updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
     sessions?: Prisma.SessionUpdateManyWithoutUserNestedInput;
@@ -1115,12 +1233,14 @@ export type UserUpdateWithoutFollowingInput = {
     posts?: Prisma.PostUpdateManyWithoutUserNestedInput;
     likes?: Prisma.LikeUpdateManyWithoutUserNestedInput;
     followers?: Prisma.FollowUpdateManyWithoutFollowingNestedInput;
-    follows?: Prisma.FollowUpdateManyWithoutUserNestedInput;
     recipientNotifications?: Prisma.NotificationUpdateManyWithoutRecipientNestedInput;
     sentNotifications?: Prisma.NotificationUpdateManyWithoutSenderNestedInput;
-    notifications?: Prisma.NotificationUpdateManyWithoutUserNestedInput;
     snapAuthor?: Prisma.SavedSnapUpdateManyWithoutAuthorNestedInput;
-    savedBySnaps?: Prisma.SavedSnapUpdateManyWithoutUserNestedInput;
+    savedBySnaps?: Prisma.SavedSnapUpdateManyWithoutSavedUserNestedInput;
+    conversationsOne?: Prisma.ConversationUpdateManyWithoutUser1NestedInput;
+    conversationsTwo?: Prisma.ConversationUpdateManyWithoutUser2NestedInput;
+    sentMessages?: Prisma.MessageUpdateManyWithoutSenderNestedInput;
+    receivedMessages?: Prisma.MessageUpdateManyWithoutReceiverNestedInput;
 };
 export type UserUncheckedUpdateWithoutFollowingInput = {
     id?: Prisma.StringFieldUpdateOperationsInput | string;
@@ -1129,6 +1249,8 @@ export type UserUncheckedUpdateWithoutFollowingInput = {
     emailVerified?: Prisma.BoolFieldUpdateOperationsInput | boolean;
     bio?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
     image?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
+    cover_image?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
+    status?: Prisma.EnumUserStatusFieldUpdateOperationsInput | $Enums.UserStatus;
     createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
     updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
     sessions?: Prisma.SessionUncheckedUpdateManyWithoutUserNestedInput;
@@ -1136,12 +1258,14 @@ export type UserUncheckedUpdateWithoutFollowingInput = {
     posts?: Prisma.PostUncheckedUpdateManyWithoutUserNestedInput;
     likes?: Prisma.LikeUncheckedUpdateManyWithoutUserNestedInput;
     followers?: Prisma.FollowUncheckedUpdateManyWithoutFollowingNestedInput;
-    follows?: Prisma.FollowUncheckedUpdateManyWithoutUserNestedInput;
     recipientNotifications?: Prisma.NotificationUncheckedUpdateManyWithoutRecipientNestedInput;
     sentNotifications?: Prisma.NotificationUncheckedUpdateManyWithoutSenderNestedInput;
-    notifications?: Prisma.NotificationUncheckedUpdateManyWithoutUserNestedInput;
     snapAuthor?: Prisma.SavedSnapUncheckedUpdateManyWithoutAuthorNestedInput;
-    savedBySnaps?: Prisma.SavedSnapUncheckedUpdateManyWithoutUserNestedInput;
+    savedBySnaps?: Prisma.SavedSnapUncheckedUpdateManyWithoutSavedUserNestedInput;
+    conversationsOne?: Prisma.ConversationUncheckedUpdateManyWithoutUser1NestedInput;
+    conversationsTwo?: Prisma.ConversationUncheckedUpdateManyWithoutUser2NestedInput;
+    sentMessages?: Prisma.MessageUncheckedUpdateManyWithoutSenderNestedInput;
+    receivedMessages?: Prisma.MessageUncheckedUpdateManyWithoutReceiverNestedInput;
 };
 export type UserUpsertWithoutFollowersInput = {
     update: Prisma.XOR<Prisma.UserUpdateWithoutFollowersInput, Prisma.UserUncheckedUpdateWithoutFollowersInput>;
@@ -1159,6 +1283,8 @@ export type UserUpdateWithoutFollowersInput = {
     emailVerified?: Prisma.BoolFieldUpdateOperationsInput | boolean;
     bio?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
     image?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
+    cover_image?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
+    status?: Prisma.EnumUserStatusFieldUpdateOperationsInput | $Enums.UserStatus;
     createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
     updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
     sessions?: Prisma.SessionUpdateManyWithoutUserNestedInput;
@@ -1166,12 +1292,14 @@ export type UserUpdateWithoutFollowersInput = {
     posts?: Prisma.PostUpdateManyWithoutUserNestedInput;
     likes?: Prisma.LikeUpdateManyWithoutUserNestedInput;
     following?: Prisma.FollowUpdateManyWithoutFollowerNestedInput;
-    follows?: Prisma.FollowUpdateManyWithoutUserNestedInput;
     recipientNotifications?: Prisma.NotificationUpdateManyWithoutRecipientNestedInput;
     sentNotifications?: Prisma.NotificationUpdateManyWithoutSenderNestedInput;
-    notifications?: Prisma.NotificationUpdateManyWithoutUserNestedInput;
     snapAuthor?: Prisma.SavedSnapUpdateManyWithoutAuthorNestedInput;
-    savedBySnaps?: Prisma.SavedSnapUpdateManyWithoutUserNestedInput;
+    savedBySnaps?: Prisma.SavedSnapUpdateManyWithoutSavedUserNestedInput;
+    conversationsOne?: Prisma.ConversationUpdateManyWithoutUser1NestedInput;
+    conversationsTwo?: Prisma.ConversationUpdateManyWithoutUser2NestedInput;
+    sentMessages?: Prisma.MessageUpdateManyWithoutSenderNestedInput;
+    receivedMessages?: Prisma.MessageUpdateManyWithoutReceiverNestedInput;
 };
 export type UserUncheckedUpdateWithoutFollowersInput = {
     id?: Prisma.StringFieldUpdateOperationsInput | string;
@@ -1180,6 +1308,8 @@ export type UserUncheckedUpdateWithoutFollowersInput = {
     emailVerified?: Prisma.BoolFieldUpdateOperationsInput | boolean;
     bio?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
     image?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
+    cover_image?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
+    status?: Prisma.EnumUserStatusFieldUpdateOperationsInput | $Enums.UserStatus;
     createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
     updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
     sessions?: Prisma.SessionUncheckedUpdateManyWithoutUserNestedInput;
@@ -1187,71 +1317,24 @@ export type UserUncheckedUpdateWithoutFollowersInput = {
     posts?: Prisma.PostUncheckedUpdateManyWithoutUserNestedInput;
     likes?: Prisma.LikeUncheckedUpdateManyWithoutUserNestedInput;
     following?: Prisma.FollowUncheckedUpdateManyWithoutFollowerNestedInput;
-    follows?: Prisma.FollowUncheckedUpdateManyWithoutUserNestedInput;
     recipientNotifications?: Prisma.NotificationUncheckedUpdateManyWithoutRecipientNestedInput;
     sentNotifications?: Prisma.NotificationUncheckedUpdateManyWithoutSenderNestedInput;
-    notifications?: Prisma.NotificationUncheckedUpdateManyWithoutUserNestedInput;
     snapAuthor?: Prisma.SavedSnapUncheckedUpdateManyWithoutAuthorNestedInput;
-    savedBySnaps?: Prisma.SavedSnapUncheckedUpdateManyWithoutUserNestedInput;
-};
-export type UserUpsertWithoutFollowsInput = {
-    update: Prisma.XOR<Prisma.UserUpdateWithoutFollowsInput, Prisma.UserUncheckedUpdateWithoutFollowsInput>;
-    create: Prisma.XOR<Prisma.UserCreateWithoutFollowsInput, Prisma.UserUncheckedCreateWithoutFollowsInput>;
-    where?: Prisma.UserWhereInput;
-};
-export type UserUpdateToOneWithWhereWithoutFollowsInput = {
-    where?: Prisma.UserWhereInput;
-    data: Prisma.XOR<Prisma.UserUpdateWithoutFollowsInput, Prisma.UserUncheckedUpdateWithoutFollowsInput>;
-};
-export type UserUpdateWithoutFollowsInput = {
-    id?: Prisma.StringFieldUpdateOperationsInput | string;
-    name?: Prisma.StringFieldUpdateOperationsInput | string;
-    email?: Prisma.StringFieldUpdateOperationsInput | string;
-    emailVerified?: Prisma.BoolFieldUpdateOperationsInput | boolean;
-    bio?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
-    image?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
-    createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
-    updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
-    sessions?: Prisma.SessionUpdateManyWithoutUserNestedInput;
-    accounts?: Prisma.AccountUpdateManyWithoutUserNestedInput;
-    posts?: Prisma.PostUpdateManyWithoutUserNestedInput;
-    likes?: Prisma.LikeUpdateManyWithoutUserNestedInput;
-    followers?: Prisma.FollowUpdateManyWithoutFollowingNestedInput;
-    following?: Prisma.FollowUpdateManyWithoutFollowerNestedInput;
-    recipientNotifications?: Prisma.NotificationUpdateManyWithoutRecipientNestedInput;
-    sentNotifications?: Prisma.NotificationUpdateManyWithoutSenderNestedInput;
-    notifications?: Prisma.NotificationUpdateManyWithoutUserNestedInput;
-    snapAuthor?: Prisma.SavedSnapUpdateManyWithoutAuthorNestedInput;
-    savedBySnaps?: Prisma.SavedSnapUpdateManyWithoutUserNestedInput;
-};
-export type UserUncheckedUpdateWithoutFollowsInput = {
-    id?: Prisma.StringFieldUpdateOperationsInput | string;
-    name?: Prisma.StringFieldUpdateOperationsInput | string;
-    email?: Prisma.StringFieldUpdateOperationsInput | string;
-    emailVerified?: Prisma.BoolFieldUpdateOperationsInput | boolean;
-    bio?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
-    image?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
-    createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
-    updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
-    sessions?: Prisma.SessionUncheckedUpdateManyWithoutUserNestedInput;
-    accounts?: Prisma.AccountUncheckedUpdateManyWithoutUserNestedInput;
-    posts?: Prisma.PostUncheckedUpdateManyWithoutUserNestedInput;
-    likes?: Prisma.LikeUncheckedUpdateManyWithoutUserNestedInput;
-    followers?: Prisma.FollowUncheckedUpdateManyWithoutFollowingNestedInput;
-    following?: Prisma.FollowUncheckedUpdateManyWithoutFollowerNestedInput;
-    recipientNotifications?: Prisma.NotificationUncheckedUpdateManyWithoutRecipientNestedInput;
-    sentNotifications?: Prisma.NotificationUncheckedUpdateManyWithoutSenderNestedInput;
-    notifications?: Prisma.NotificationUncheckedUpdateManyWithoutUserNestedInput;
-    snapAuthor?: Prisma.SavedSnapUncheckedUpdateManyWithoutAuthorNestedInput;
-    savedBySnaps?: Prisma.SavedSnapUncheckedUpdateManyWithoutUserNestedInput;
+    savedBySnaps?: Prisma.SavedSnapUncheckedUpdateManyWithoutSavedUserNestedInput;
+    conversationsOne?: Prisma.ConversationUncheckedUpdateManyWithoutUser1NestedInput;
+    conversationsTwo?: Prisma.ConversationUncheckedUpdateManyWithoutUser2NestedInput;
+    sentMessages?: Prisma.MessageUncheckedUpdateManyWithoutSenderNestedInput;
+    receivedMessages?: Prisma.MessageUncheckedUpdateManyWithoutReceiverNestedInput;
 };
 export type UserCreateWithoutSentNotificationsInput = {
-    id: string;
+    id?: string;
     name: string;
     email: string;
     emailVerified: boolean;
     bio?: string | null;
     image?: string | null;
+    cover_image?: string | null;
+    status?: $Enums.UserStatus;
     createdAt: Date | string;
     updatedAt: Date | string;
     sessions?: Prisma.SessionCreateNestedManyWithoutUserInput;
@@ -1260,19 +1343,23 @@ export type UserCreateWithoutSentNotificationsInput = {
     likes?: Prisma.LikeCreateNestedManyWithoutUserInput;
     followers?: Prisma.FollowCreateNestedManyWithoutFollowingInput;
     following?: Prisma.FollowCreateNestedManyWithoutFollowerInput;
-    follows?: Prisma.FollowCreateNestedManyWithoutUserInput;
     recipientNotifications?: Prisma.NotificationCreateNestedManyWithoutRecipientInput;
-    notifications?: Prisma.NotificationCreateNestedManyWithoutUserInput;
     snapAuthor?: Prisma.SavedSnapCreateNestedManyWithoutAuthorInput;
-    savedBySnaps?: Prisma.SavedSnapCreateNestedManyWithoutUserInput;
+    savedBySnaps?: Prisma.SavedSnapCreateNestedManyWithoutSavedUserInput;
+    conversationsOne?: Prisma.ConversationCreateNestedManyWithoutUser1Input;
+    conversationsTwo?: Prisma.ConversationCreateNestedManyWithoutUser2Input;
+    sentMessages?: Prisma.MessageCreateNestedManyWithoutSenderInput;
+    receivedMessages?: Prisma.MessageCreateNestedManyWithoutReceiverInput;
 };
 export type UserUncheckedCreateWithoutSentNotificationsInput = {
-    id: string;
+    id?: string;
     name: string;
     email: string;
     emailVerified: boolean;
     bio?: string | null;
     image?: string | null;
+    cover_image?: string | null;
+    status?: $Enums.UserStatus;
     createdAt: Date | string;
     updatedAt: Date | string;
     sessions?: Prisma.SessionUncheckedCreateNestedManyWithoutUserInput;
@@ -1281,23 +1368,27 @@ export type UserUncheckedCreateWithoutSentNotificationsInput = {
     likes?: Prisma.LikeUncheckedCreateNestedManyWithoutUserInput;
     followers?: Prisma.FollowUncheckedCreateNestedManyWithoutFollowingInput;
     following?: Prisma.FollowUncheckedCreateNestedManyWithoutFollowerInput;
-    follows?: Prisma.FollowUncheckedCreateNestedManyWithoutUserInput;
     recipientNotifications?: Prisma.NotificationUncheckedCreateNestedManyWithoutRecipientInput;
-    notifications?: Prisma.NotificationUncheckedCreateNestedManyWithoutUserInput;
     snapAuthor?: Prisma.SavedSnapUncheckedCreateNestedManyWithoutAuthorInput;
-    savedBySnaps?: Prisma.SavedSnapUncheckedCreateNestedManyWithoutUserInput;
+    savedBySnaps?: Prisma.SavedSnapUncheckedCreateNestedManyWithoutSavedUserInput;
+    conversationsOne?: Prisma.ConversationUncheckedCreateNestedManyWithoutUser1Input;
+    conversationsTwo?: Prisma.ConversationUncheckedCreateNestedManyWithoutUser2Input;
+    sentMessages?: Prisma.MessageUncheckedCreateNestedManyWithoutSenderInput;
+    receivedMessages?: Prisma.MessageUncheckedCreateNestedManyWithoutReceiverInput;
 };
 export type UserCreateOrConnectWithoutSentNotificationsInput = {
     where: Prisma.UserWhereUniqueInput;
     create: Prisma.XOR<Prisma.UserCreateWithoutSentNotificationsInput, Prisma.UserUncheckedCreateWithoutSentNotificationsInput>;
 };
 export type UserCreateWithoutRecipientNotificationsInput = {
-    id: string;
+    id?: string;
     name: string;
     email: string;
     emailVerified: boolean;
     bio?: string | null;
     image?: string | null;
+    cover_image?: string | null;
+    status?: $Enums.UserStatus;
     createdAt: Date | string;
     updatedAt: Date | string;
     sessions?: Prisma.SessionCreateNestedManyWithoutUserInput;
@@ -1306,19 +1397,23 @@ export type UserCreateWithoutRecipientNotificationsInput = {
     likes?: Prisma.LikeCreateNestedManyWithoutUserInput;
     followers?: Prisma.FollowCreateNestedManyWithoutFollowingInput;
     following?: Prisma.FollowCreateNestedManyWithoutFollowerInput;
-    follows?: Prisma.FollowCreateNestedManyWithoutUserInput;
     sentNotifications?: Prisma.NotificationCreateNestedManyWithoutSenderInput;
-    notifications?: Prisma.NotificationCreateNestedManyWithoutUserInput;
     snapAuthor?: Prisma.SavedSnapCreateNestedManyWithoutAuthorInput;
-    savedBySnaps?: Prisma.SavedSnapCreateNestedManyWithoutUserInput;
+    savedBySnaps?: Prisma.SavedSnapCreateNestedManyWithoutSavedUserInput;
+    conversationsOne?: Prisma.ConversationCreateNestedManyWithoutUser1Input;
+    conversationsTwo?: Prisma.ConversationCreateNestedManyWithoutUser2Input;
+    sentMessages?: Prisma.MessageCreateNestedManyWithoutSenderInput;
+    receivedMessages?: Prisma.MessageCreateNestedManyWithoutReceiverInput;
 };
 export type UserUncheckedCreateWithoutRecipientNotificationsInput = {
-    id: string;
+    id?: string;
     name: string;
     email: string;
     emailVerified: boolean;
     bio?: string | null;
     image?: string | null;
+    cover_image?: string | null;
+    status?: $Enums.UserStatus;
     createdAt: Date | string;
     updatedAt: Date | string;
     sessions?: Prisma.SessionUncheckedCreateNestedManyWithoutUserInput;
@@ -1327,61 +1422,17 @@ export type UserUncheckedCreateWithoutRecipientNotificationsInput = {
     likes?: Prisma.LikeUncheckedCreateNestedManyWithoutUserInput;
     followers?: Prisma.FollowUncheckedCreateNestedManyWithoutFollowingInput;
     following?: Prisma.FollowUncheckedCreateNestedManyWithoutFollowerInput;
-    follows?: Prisma.FollowUncheckedCreateNestedManyWithoutUserInput;
     sentNotifications?: Prisma.NotificationUncheckedCreateNestedManyWithoutSenderInput;
-    notifications?: Prisma.NotificationUncheckedCreateNestedManyWithoutUserInput;
     snapAuthor?: Prisma.SavedSnapUncheckedCreateNestedManyWithoutAuthorInput;
-    savedBySnaps?: Prisma.SavedSnapUncheckedCreateNestedManyWithoutUserInput;
+    savedBySnaps?: Prisma.SavedSnapUncheckedCreateNestedManyWithoutSavedUserInput;
+    conversationsOne?: Prisma.ConversationUncheckedCreateNestedManyWithoutUser1Input;
+    conversationsTwo?: Prisma.ConversationUncheckedCreateNestedManyWithoutUser2Input;
+    sentMessages?: Prisma.MessageUncheckedCreateNestedManyWithoutSenderInput;
+    receivedMessages?: Prisma.MessageUncheckedCreateNestedManyWithoutReceiverInput;
 };
 export type UserCreateOrConnectWithoutRecipientNotificationsInput = {
     where: Prisma.UserWhereUniqueInput;
     create: Prisma.XOR<Prisma.UserCreateWithoutRecipientNotificationsInput, Prisma.UserUncheckedCreateWithoutRecipientNotificationsInput>;
-};
-export type UserCreateWithoutNotificationsInput = {
-    id: string;
-    name: string;
-    email: string;
-    emailVerified: boolean;
-    bio?: string | null;
-    image?: string | null;
-    createdAt: Date | string;
-    updatedAt: Date | string;
-    sessions?: Prisma.SessionCreateNestedManyWithoutUserInput;
-    accounts?: Prisma.AccountCreateNestedManyWithoutUserInput;
-    posts?: Prisma.PostCreateNestedManyWithoutUserInput;
-    likes?: Prisma.LikeCreateNestedManyWithoutUserInput;
-    followers?: Prisma.FollowCreateNestedManyWithoutFollowingInput;
-    following?: Prisma.FollowCreateNestedManyWithoutFollowerInput;
-    follows?: Prisma.FollowCreateNestedManyWithoutUserInput;
-    recipientNotifications?: Prisma.NotificationCreateNestedManyWithoutRecipientInput;
-    sentNotifications?: Prisma.NotificationCreateNestedManyWithoutSenderInput;
-    snapAuthor?: Prisma.SavedSnapCreateNestedManyWithoutAuthorInput;
-    savedBySnaps?: Prisma.SavedSnapCreateNestedManyWithoutUserInput;
-};
-export type UserUncheckedCreateWithoutNotificationsInput = {
-    id: string;
-    name: string;
-    email: string;
-    emailVerified: boolean;
-    bio?: string | null;
-    image?: string | null;
-    createdAt: Date | string;
-    updatedAt: Date | string;
-    sessions?: Prisma.SessionUncheckedCreateNestedManyWithoutUserInput;
-    accounts?: Prisma.AccountUncheckedCreateNestedManyWithoutUserInput;
-    posts?: Prisma.PostUncheckedCreateNestedManyWithoutUserInput;
-    likes?: Prisma.LikeUncheckedCreateNestedManyWithoutUserInput;
-    followers?: Prisma.FollowUncheckedCreateNestedManyWithoutFollowingInput;
-    following?: Prisma.FollowUncheckedCreateNestedManyWithoutFollowerInput;
-    follows?: Prisma.FollowUncheckedCreateNestedManyWithoutUserInput;
-    recipientNotifications?: Prisma.NotificationUncheckedCreateNestedManyWithoutRecipientInput;
-    sentNotifications?: Prisma.NotificationUncheckedCreateNestedManyWithoutSenderInput;
-    snapAuthor?: Prisma.SavedSnapUncheckedCreateNestedManyWithoutAuthorInput;
-    savedBySnaps?: Prisma.SavedSnapUncheckedCreateNestedManyWithoutUserInput;
-};
-export type UserCreateOrConnectWithoutNotificationsInput = {
-    where: Prisma.UserWhereUniqueInput;
-    create: Prisma.XOR<Prisma.UserCreateWithoutNotificationsInput, Prisma.UserUncheckedCreateWithoutNotificationsInput>;
 };
 export type UserUpsertWithoutSentNotificationsInput = {
     update: Prisma.XOR<Prisma.UserUpdateWithoutSentNotificationsInput, Prisma.UserUncheckedUpdateWithoutSentNotificationsInput>;
@@ -1399,6 +1450,8 @@ export type UserUpdateWithoutSentNotificationsInput = {
     emailVerified?: Prisma.BoolFieldUpdateOperationsInput | boolean;
     bio?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
     image?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
+    cover_image?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
+    status?: Prisma.EnumUserStatusFieldUpdateOperationsInput | $Enums.UserStatus;
     createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
     updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
     sessions?: Prisma.SessionUpdateManyWithoutUserNestedInput;
@@ -1407,11 +1460,13 @@ export type UserUpdateWithoutSentNotificationsInput = {
     likes?: Prisma.LikeUpdateManyWithoutUserNestedInput;
     followers?: Prisma.FollowUpdateManyWithoutFollowingNestedInput;
     following?: Prisma.FollowUpdateManyWithoutFollowerNestedInput;
-    follows?: Prisma.FollowUpdateManyWithoutUserNestedInput;
     recipientNotifications?: Prisma.NotificationUpdateManyWithoutRecipientNestedInput;
-    notifications?: Prisma.NotificationUpdateManyWithoutUserNestedInput;
     snapAuthor?: Prisma.SavedSnapUpdateManyWithoutAuthorNestedInput;
-    savedBySnaps?: Prisma.SavedSnapUpdateManyWithoutUserNestedInput;
+    savedBySnaps?: Prisma.SavedSnapUpdateManyWithoutSavedUserNestedInput;
+    conversationsOne?: Prisma.ConversationUpdateManyWithoutUser1NestedInput;
+    conversationsTwo?: Prisma.ConversationUpdateManyWithoutUser2NestedInput;
+    sentMessages?: Prisma.MessageUpdateManyWithoutSenderNestedInput;
+    receivedMessages?: Prisma.MessageUpdateManyWithoutReceiverNestedInput;
 };
 export type UserUncheckedUpdateWithoutSentNotificationsInput = {
     id?: Prisma.StringFieldUpdateOperationsInput | string;
@@ -1420,6 +1475,8 @@ export type UserUncheckedUpdateWithoutSentNotificationsInput = {
     emailVerified?: Prisma.BoolFieldUpdateOperationsInput | boolean;
     bio?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
     image?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
+    cover_image?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
+    status?: Prisma.EnumUserStatusFieldUpdateOperationsInput | $Enums.UserStatus;
     createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
     updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
     sessions?: Prisma.SessionUncheckedUpdateManyWithoutUserNestedInput;
@@ -1428,11 +1485,13 @@ export type UserUncheckedUpdateWithoutSentNotificationsInput = {
     likes?: Prisma.LikeUncheckedUpdateManyWithoutUserNestedInput;
     followers?: Prisma.FollowUncheckedUpdateManyWithoutFollowingNestedInput;
     following?: Prisma.FollowUncheckedUpdateManyWithoutFollowerNestedInput;
-    follows?: Prisma.FollowUncheckedUpdateManyWithoutUserNestedInput;
     recipientNotifications?: Prisma.NotificationUncheckedUpdateManyWithoutRecipientNestedInput;
-    notifications?: Prisma.NotificationUncheckedUpdateManyWithoutUserNestedInput;
     snapAuthor?: Prisma.SavedSnapUncheckedUpdateManyWithoutAuthorNestedInput;
-    savedBySnaps?: Prisma.SavedSnapUncheckedUpdateManyWithoutUserNestedInput;
+    savedBySnaps?: Prisma.SavedSnapUncheckedUpdateManyWithoutSavedUserNestedInput;
+    conversationsOne?: Prisma.ConversationUncheckedUpdateManyWithoutUser1NestedInput;
+    conversationsTwo?: Prisma.ConversationUncheckedUpdateManyWithoutUser2NestedInput;
+    sentMessages?: Prisma.MessageUncheckedUpdateManyWithoutSenderNestedInput;
+    receivedMessages?: Prisma.MessageUncheckedUpdateManyWithoutReceiverNestedInput;
 };
 export type UserUpsertWithoutRecipientNotificationsInput = {
     update: Prisma.XOR<Prisma.UserUpdateWithoutRecipientNotificationsInput, Prisma.UserUncheckedUpdateWithoutRecipientNotificationsInput>;
@@ -1450,6 +1509,8 @@ export type UserUpdateWithoutRecipientNotificationsInput = {
     emailVerified?: Prisma.BoolFieldUpdateOperationsInput | boolean;
     bio?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
     image?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
+    cover_image?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
+    status?: Prisma.EnumUserStatusFieldUpdateOperationsInput | $Enums.UserStatus;
     createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
     updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
     sessions?: Prisma.SessionUpdateManyWithoutUserNestedInput;
@@ -1458,11 +1519,13 @@ export type UserUpdateWithoutRecipientNotificationsInput = {
     likes?: Prisma.LikeUpdateManyWithoutUserNestedInput;
     followers?: Prisma.FollowUpdateManyWithoutFollowingNestedInput;
     following?: Prisma.FollowUpdateManyWithoutFollowerNestedInput;
-    follows?: Prisma.FollowUpdateManyWithoutUserNestedInput;
     sentNotifications?: Prisma.NotificationUpdateManyWithoutSenderNestedInput;
-    notifications?: Prisma.NotificationUpdateManyWithoutUserNestedInput;
     snapAuthor?: Prisma.SavedSnapUpdateManyWithoutAuthorNestedInput;
-    savedBySnaps?: Prisma.SavedSnapUpdateManyWithoutUserNestedInput;
+    savedBySnaps?: Prisma.SavedSnapUpdateManyWithoutSavedUserNestedInput;
+    conversationsOne?: Prisma.ConversationUpdateManyWithoutUser1NestedInput;
+    conversationsTwo?: Prisma.ConversationUpdateManyWithoutUser2NestedInput;
+    sentMessages?: Prisma.MessageUpdateManyWithoutSenderNestedInput;
+    receivedMessages?: Prisma.MessageUpdateManyWithoutReceiverNestedInput;
 };
 export type UserUncheckedUpdateWithoutRecipientNotificationsInput = {
     id?: Prisma.StringFieldUpdateOperationsInput | string;
@@ -1471,6 +1534,8 @@ export type UserUncheckedUpdateWithoutRecipientNotificationsInput = {
     emailVerified?: Prisma.BoolFieldUpdateOperationsInput | boolean;
     bio?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
     image?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
+    cover_image?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
+    status?: Prisma.EnumUserStatusFieldUpdateOperationsInput | $Enums.UserStatus;
     createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
     updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
     sessions?: Prisma.SessionUncheckedUpdateManyWithoutUserNestedInput;
@@ -1479,70 +1544,23 @@ export type UserUncheckedUpdateWithoutRecipientNotificationsInput = {
     likes?: Prisma.LikeUncheckedUpdateManyWithoutUserNestedInput;
     followers?: Prisma.FollowUncheckedUpdateManyWithoutFollowingNestedInput;
     following?: Prisma.FollowUncheckedUpdateManyWithoutFollowerNestedInput;
-    follows?: Prisma.FollowUncheckedUpdateManyWithoutUserNestedInput;
-    sentNotifications?: Prisma.NotificationUncheckedUpdateManyWithoutSenderNestedInput;
-    notifications?: Prisma.NotificationUncheckedUpdateManyWithoutUserNestedInput;
-    snapAuthor?: Prisma.SavedSnapUncheckedUpdateManyWithoutAuthorNestedInput;
-    savedBySnaps?: Prisma.SavedSnapUncheckedUpdateManyWithoutUserNestedInput;
-};
-export type UserUpsertWithoutNotificationsInput = {
-    update: Prisma.XOR<Prisma.UserUpdateWithoutNotificationsInput, Prisma.UserUncheckedUpdateWithoutNotificationsInput>;
-    create: Prisma.XOR<Prisma.UserCreateWithoutNotificationsInput, Prisma.UserUncheckedCreateWithoutNotificationsInput>;
-    where?: Prisma.UserWhereInput;
-};
-export type UserUpdateToOneWithWhereWithoutNotificationsInput = {
-    where?: Prisma.UserWhereInput;
-    data: Prisma.XOR<Prisma.UserUpdateWithoutNotificationsInput, Prisma.UserUncheckedUpdateWithoutNotificationsInput>;
-};
-export type UserUpdateWithoutNotificationsInput = {
-    id?: Prisma.StringFieldUpdateOperationsInput | string;
-    name?: Prisma.StringFieldUpdateOperationsInput | string;
-    email?: Prisma.StringFieldUpdateOperationsInput | string;
-    emailVerified?: Prisma.BoolFieldUpdateOperationsInput | boolean;
-    bio?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
-    image?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
-    createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
-    updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
-    sessions?: Prisma.SessionUpdateManyWithoutUserNestedInput;
-    accounts?: Prisma.AccountUpdateManyWithoutUserNestedInput;
-    posts?: Prisma.PostUpdateManyWithoutUserNestedInput;
-    likes?: Prisma.LikeUpdateManyWithoutUserNestedInput;
-    followers?: Prisma.FollowUpdateManyWithoutFollowingNestedInput;
-    following?: Prisma.FollowUpdateManyWithoutFollowerNestedInput;
-    follows?: Prisma.FollowUpdateManyWithoutUserNestedInput;
-    recipientNotifications?: Prisma.NotificationUpdateManyWithoutRecipientNestedInput;
-    sentNotifications?: Prisma.NotificationUpdateManyWithoutSenderNestedInput;
-    snapAuthor?: Prisma.SavedSnapUpdateManyWithoutAuthorNestedInput;
-    savedBySnaps?: Prisma.SavedSnapUpdateManyWithoutUserNestedInput;
-};
-export type UserUncheckedUpdateWithoutNotificationsInput = {
-    id?: Prisma.StringFieldUpdateOperationsInput | string;
-    name?: Prisma.StringFieldUpdateOperationsInput | string;
-    email?: Prisma.StringFieldUpdateOperationsInput | string;
-    emailVerified?: Prisma.BoolFieldUpdateOperationsInput | boolean;
-    bio?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
-    image?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
-    createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
-    updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
-    sessions?: Prisma.SessionUncheckedUpdateManyWithoutUserNestedInput;
-    accounts?: Prisma.AccountUncheckedUpdateManyWithoutUserNestedInput;
-    posts?: Prisma.PostUncheckedUpdateManyWithoutUserNestedInput;
-    likes?: Prisma.LikeUncheckedUpdateManyWithoutUserNestedInput;
-    followers?: Prisma.FollowUncheckedUpdateManyWithoutFollowingNestedInput;
-    following?: Prisma.FollowUncheckedUpdateManyWithoutFollowerNestedInput;
-    follows?: Prisma.FollowUncheckedUpdateManyWithoutUserNestedInput;
-    recipientNotifications?: Prisma.NotificationUncheckedUpdateManyWithoutRecipientNestedInput;
     sentNotifications?: Prisma.NotificationUncheckedUpdateManyWithoutSenderNestedInput;
     snapAuthor?: Prisma.SavedSnapUncheckedUpdateManyWithoutAuthorNestedInput;
-    savedBySnaps?: Prisma.SavedSnapUncheckedUpdateManyWithoutUserNestedInput;
+    savedBySnaps?: Prisma.SavedSnapUncheckedUpdateManyWithoutSavedUserNestedInput;
+    conversationsOne?: Prisma.ConversationUncheckedUpdateManyWithoutUser1NestedInput;
+    conversationsTwo?: Prisma.ConversationUncheckedUpdateManyWithoutUser2NestedInput;
+    sentMessages?: Prisma.MessageUncheckedUpdateManyWithoutSenderNestedInput;
+    receivedMessages?: Prisma.MessageUncheckedUpdateManyWithoutReceiverNestedInput;
 };
 export type UserCreateWithoutSnapAuthorInput = {
-    id: string;
+    id?: string;
     name: string;
     email: string;
     emailVerified: boolean;
     bio?: string | null;
     image?: string | null;
+    cover_image?: string | null;
+    status?: $Enums.UserStatus;
     createdAt: Date | string;
     updatedAt: Date | string;
     sessions?: Prisma.SessionCreateNestedManyWithoutUserInput;
@@ -1551,19 +1569,23 @@ export type UserCreateWithoutSnapAuthorInput = {
     likes?: Prisma.LikeCreateNestedManyWithoutUserInput;
     followers?: Prisma.FollowCreateNestedManyWithoutFollowingInput;
     following?: Prisma.FollowCreateNestedManyWithoutFollowerInput;
-    follows?: Prisma.FollowCreateNestedManyWithoutUserInput;
     recipientNotifications?: Prisma.NotificationCreateNestedManyWithoutRecipientInput;
     sentNotifications?: Prisma.NotificationCreateNestedManyWithoutSenderInput;
-    notifications?: Prisma.NotificationCreateNestedManyWithoutUserInput;
-    savedBySnaps?: Prisma.SavedSnapCreateNestedManyWithoutUserInput;
+    savedBySnaps?: Prisma.SavedSnapCreateNestedManyWithoutSavedUserInput;
+    conversationsOne?: Prisma.ConversationCreateNestedManyWithoutUser1Input;
+    conversationsTwo?: Prisma.ConversationCreateNestedManyWithoutUser2Input;
+    sentMessages?: Prisma.MessageCreateNestedManyWithoutSenderInput;
+    receivedMessages?: Prisma.MessageCreateNestedManyWithoutReceiverInput;
 };
 export type UserUncheckedCreateWithoutSnapAuthorInput = {
-    id: string;
+    id?: string;
     name: string;
     email: string;
     emailVerified: boolean;
     bio?: string | null;
     image?: string | null;
+    cover_image?: string | null;
+    status?: $Enums.UserStatus;
     createdAt: Date | string;
     updatedAt: Date | string;
     sessions?: Prisma.SessionUncheckedCreateNestedManyWithoutUserInput;
@@ -1572,23 +1594,27 @@ export type UserUncheckedCreateWithoutSnapAuthorInput = {
     likes?: Prisma.LikeUncheckedCreateNestedManyWithoutUserInput;
     followers?: Prisma.FollowUncheckedCreateNestedManyWithoutFollowingInput;
     following?: Prisma.FollowUncheckedCreateNestedManyWithoutFollowerInput;
-    follows?: Prisma.FollowUncheckedCreateNestedManyWithoutUserInput;
     recipientNotifications?: Prisma.NotificationUncheckedCreateNestedManyWithoutRecipientInput;
     sentNotifications?: Prisma.NotificationUncheckedCreateNestedManyWithoutSenderInput;
-    notifications?: Prisma.NotificationUncheckedCreateNestedManyWithoutUserInput;
-    savedBySnaps?: Prisma.SavedSnapUncheckedCreateNestedManyWithoutUserInput;
+    savedBySnaps?: Prisma.SavedSnapUncheckedCreateNestedManyWithoutSavedUserInput;
+    conversationsOne?: Prisma.ConversationUncheckedCreateNestedManyWithoutUser1Input;
+    conversationsTwo?: Prisma.ConversationUncheckedCreateNestedManyWithoutUser2Input;
+    sentMessages?: Prisma.MessageUncheckedCreateNestedManyWithoutSenderInput;
+    receivedMessages?: Prisma.MessageUncheckedCreateNestedManyWithoutReceiverInput;
 };
 export type UserCreateOrConnectWithoutSnapAuthorInput = {
     where: Prisma.UserWhereUniqueInput;
     create: Prisma.XOR<Prisma.UserCreateWithoutSnapAuthorInput, Prisma.UserUncheckedCreateWithoutSnapAuthorInput>;
 };
 export type UserCreateWithoutSavedBySnapsInput = {
-    id: string;
+    id?: string;
     name: string;
     email: string;
     emailVerified: boolean;
     bio?: string | null;
     image?: string | null;
+    cover_image?: string | null;
+    status?: $Enums.UserStatus;
     createdAt: Date | string;
     updatedAt: Date | string;
     sessions?: Prisma.SessionCreateNestedManyWithoutUserInput;
@@ -1597,19 +1623,23 @@ export type UserCreateWithoutSavedBySnapsInput = {
     likes?: Prisma.LikeCreateNestedManyWithoutUserInput;
     followers?: Prisma.FollowCreateNestedManyWithoutFollowingInput;
     following?: Prisma.FollowCreateNestedManyWithoutFollowerInput;
-    follows?: Prisma.FollowCreateNestedManyWithoutUserInput;
     recipientNotifications?: Prisma.NotificationCreateNestedManyWithoutRecipientInput;
     sentNotifications?: Prisma.NotificationCreateNestedManyWithoutSenderInput;
-    notifications?: Prisma.NotificationCreateNestedManyWithoutUserInput;
     snapAuthor?: Prisma.SavedSnapCreateNestedManyWithoutAuthorInput;
+    conversationsOne?: Prisma.ConversationCreateNestedManyWithoutUser1Input;
+    conversationsTwo?: Prisma.ConversationCreateNestedManyWithoutUser2Input;
+    sentMessages?: Prisma.MessageCreateNestedManyWithoutSenderInput;
+    receivedMessages?: Prisma.MessageCreateNestedManyWithoutReceiverInput;
 };
 export type UserUncheckedCreateWithoutSavedBySnapsInput = {
-    id: string;
+    id?: string;
     name: string;
     email: string;
     emailVerified: boolean;
     bio?: string | null;
     image?: string | null;
+    cover_image?: string | null;
+    status?: $Enums.UserStatus;
     createdAt: Date | string;
     updatedAt: Date | string;
     sessions?: Prisma.SessionUncheckedCreateNestedManyWithoutUserInput;
@@ -1618,11 +1648,13 @@ export type UserUncheckedCreateWithoutSavedBySnapsInput = {
     likes?: Prisma.LikeUncheckedCreateNestedManyWithoutUserInput;
     followers?: Prisma.FollowUncheckedCreateNestedManyWithoutFollowingInput;
     following?: Prisma.FollowUncheckedCreateNestedManyWithoutFollowerInput;
-    follows?: Prisma.FollowUncheckedCreateNestedManyWithoutUserInput;
     recipientNotifications?: Prisma.NotificationUncheckedCreateNestedManyWithoutRecipientInput;
     sentNotifications?: Prisma.NotificationUncheckedCreateNestedManyWithoutSenderInput;
-    notifications?: Prisma.NotificationUncheckedCreateNestedManyWithoutUserInput;
     snapAuthor?: Prisma.SavedSnapUncheckedCreateNestedManyWithoutAuthorInput;
+    conversationsOne?: Prisma.ConversationUncheckedCreateNestedManyWithoutUser1Input;
+    conversationsTwo?: Prisma.ConversationUncheckedCreateNestedManyWithoutUser2Input;
+    sentMessages?: Prisma.MessageUncheckedCreateNestedManyWithoutSenderInput;
+    receivedMessages?: Prisma.MessageUncheckedCreateNestedManyWithoutReceiverInput;
 };
 export type UserCreateOrConnectWithoutSavedBySnapsInput = {
     where: Prisma.UserWhereUniqueInput;
@@ -1644,6 +1676,8 @@ export type UserUpdateWithoutSnapAuthorInput = {
     emailVerified?: Prisma.BoolFieldUpdateOperationsInput | boolean;
     bio?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
     image?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
+    cover_image?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
+    status?: Prisma.EnumUserStatusFieldUpdateOperationsInput | $Enums.UserStatus;
     createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
     updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
     sessions?: Prisma.SessionUpdateManyWithoutUserNestedInput;
@@ -1652,11 +1686,13 @@ export type UserUpdateWithoutSnapAuthorInput = {
     likes?: Prisma.LikeUpdateManyWithoutUserNestedInput;
     followers?: Prisma.FollowUpdateManyWithoutFollowingNestedInput;
     following?: Prisma.FollowUpdateManyWithoutFollowerNestedInput;
-    follows?: Prisma.FollowUpdateManyWithoutUserNestedInput;
     recipientNotifications?: Prisma.NotificationUpdateManyWithoutRecipientNestedInput;
     sentNotifications?: Prisma.NotificationUpdateManyWithoutSenderNestedInput;
-    notifications?: Prisma.NotificationUpdateManyWithoutUserNestedInput;
-    savedBySnaps?: Prisma.SavedSnapUpdateManyWithoutUserNestedInput;
+    savedBySnaps?: Prisma.SavedSnapUpdateManyWithoutSavedUserNestedInput;
+    conversationsOne?: Prisma.ConversationUpdateManyWithoutUser1NestedInput;
+    conversationsTwo?: Prisma.ConversationUpdateManyWithoutUser2NestedInput;
+    sentMessages?: Prisma.MessageUpdateManyWithoutSenderNestedInput;
+    receivedMessages?: Prisma.MessageUpdateManyWithoutReceiverNestedInput;
 };
 export type UserUncheckedUpdateWithoutSnapAuthorInput = {
     id?: Prisma.StringFieldUpdateOperationsInput | string;
@@ -1665,6 +1701,8 @@ export type UserUncheckedUpdateWithoutSnapAuthorInput = {
     emailVerified?: Prisma.BoolFieldUpdateOperationsInput | boolean;
     bio?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
     image?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
+    cover_image?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
+    status?: Prisma.EnumUserStatusFieldUpdateOperationsInput | $Enums.UserStatus;
     createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
     updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
     sessions?: Prisma.SessionUncheckedUpdateManyWithoutUserNestedInput;
@@ -1673,11 +1711,13 @@ export type UserUncheckedUpdateWithoutSnapAuthorInput = {
     likes?: Prisma.LikeUncheckedUpdateManyWithoutUserNestedInput;
     followers?: Prisma.FollowUncheckedUpdateManyWithoutFollowingNestedInput;
     following?: Prisma.FollowUncheckedUpdateManyWithoutFollowerNestedInput;
-    follows?: Prisma.FollowUncheckedUpdateManyWithoutUserNestedInput;
     recipientNotifications?: Prisma.NotificationUncheckedUpdateManyWithoutRecipientNestedInput;
     sentNotifications?: Prisma.NotificationUncheckedUpdateManyWithoutSenderNestedInput;
-    notifications?: Prisma.NotificationUncheckedUpdateManyWithoutUserNestedInput;
-    savedBySnaps?: Prisma.SavedSnapUncheckedUpdateManyWithoutUserNestedInput;
+    savedBySnaps?: Prisma.SavedSnapUncheckedUpdateManyWithoutSavedUserNestedInput;
+    conversationsOne?: Prisma.ConversationUncheckedUpdateManyWithoutUser1NestedInput;
+    conversationsTwo?: Prisma.ConversationUncheckedUpdateManyWithoutUser2NestedInput;
+    sentMessages?: Prisma.MessageUncheckedUpdateManyWithoutSenderNestedInput;
+    receivedMessages?: Prisma.MessageUncheckedUpdateManyWithoutReceiverNestedInput;
 };
 export type UserUpsertWithoutSavedBySnapsInput = {
     update: Prisma.XOR<Prisma.UserUpdateWithoutSavedBySnapsInput, Prisma.UserUncheckedUpdateWithoutSavedBySnapsInput>;
@@ -1695,6 +1735,8 @@ export type UserUpdateWithoutSavedBySnapsInput = {
     emailVerified?: Prisma.BoolFieldUpdateOperationsInput | boolean;
     bio?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
     image?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
+    cover_image?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
+    status?: Prisma.EnumUserStatusFieldUpdateOperationsInput | $Enums.UserStatus;
     createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
     updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
     sessions?: Prisma.SessionUpdateManyWithoutUserNestedInput;
@@ -1703,11 +1745,13 @@ export type UserUpdateWithoutSavedBySnapsInput = {
     likes?: Prisma.LikeUpdateManyWithoutUserNestedInput;
     followers?: Prisma.FollowUpdateManyWithoutFollowingNestedInput;
     following?: Prisma.FollowUpdateManyWithoutFollowerNestedInput;
-    follows?: Prisma.FollowUpdateManyWithoutUserNestedInput;
     recipientNotifications?: Prisma.NotificationUpdateManyWithoutRecipientNestedInput;
     sentNotifications?: Prisma.NotificationUpdateManyWithoutSenderNestedInput;
-    notifications?: Prisma.NotificationUpdateManyWithoutUserNestedInput;
     snapAuthor?: Prisma.SavedSnapUpdateManyWithoutAuthorNestedInput;
+    conversationsOne?: Prisma.ConversationUpdateManyWithoutUser1NestedInput;
+    conversationsTwo?: Prisma.ConversationUpdateManyWithoutUser2NestedInput;
+    sentMessages?: Prisma.MessageUpdateManyWithoutSenderNestedInput;
+    receivedMessages?: Prisma.MessageUpdateManyWithoutReceiverNestedInput;
 };
 export type UserUncheckedUpdateWithoutSavedBySnapsInput = {
     id?: Prisma.StringFieldUpdateOperationsInput | string;
@@ -1716,6 +1760,8 @@ export type UserUncheckedUpdateWithoutSavedBySnapsInput = {
     emailVerified?: Prisma.BoolFieldUpdateOperationsInput | boolean;
     bio?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
     image?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
+    cover_image?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
+    status?: Prisma.EnumUserStatusFieldUpdateOperationsInput | $Enums.UserStatus;
     createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
     updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
     sessions?: Prisma.SessionUncheckedUpdateManyWithoutUserNestedInput;
@@ -1724,11 +1770,465 @@ export type UserUncheckedUpdateWithoutSavedBySnapsInput = {
     likes?: Prisma.LikeUncheckedUpdateManyWithoutUserNestedInput;
     followers?: Prisma.FollowUncheckedUpdateManyWithoutFollowingNestedInput;
     following?: Prisma.FollowUncheckedUpdateManyWithoutFollowerNestedInput;
-    follows?: Prisma.FollowUncheckedUpdateManyWithoutUserNestedInput;
     recipientNotifications?: Prisma.NotificationUncheckedUpdateManyWithoutRecipientNestedInput;
     sentNotifications?: Prisma.NotificationUncheckedUpdateManyWithoutSenderNestedInput;
-    notifications?: Prisma.NotificationUncheckedUpdateManyWithoutUserNestedInput;
     snapAuthor?: Prisma.SavedSnapUncheckedUpdateManyWithoutAuthorNestedInput;
+    conversationsOne?: Prisma.ConversationUncheckedUpdateManyWithoutUser1NestedInput;
+    conversationsTwo?: Prisma.ConversationUncheckedUpdateManyWithoutUser2NestedInput;
+    sentMessages?: Prisma.MessageUncheckedUpdateManyWithoutSenderNestedInput;
+    receivedMessages?: Prisma.MessageUncheckedUpdateManyWithoutReceiverNestedInput;
+};
+export type UserCreateWithoutConversationsOneInput = {
+    id?: string;
+    name: string;
+    email: string;
+    emailVerified: boolean;
+    bio?: string | null;
+    image?: string | null;
+    cover_image?: string | null;
+    status?: $Enums.UserStatus;
+    createdAt: Date | string;
+    updatedAt: Date | string;
+    sessions?: Prisma.SessionCreateNestedManyWithoutUserInput;
+    accounts?: Prisma.AccountCreateNestedManyWithoutUserInput;
+    posts?: Prisma.PostCreateNestedManyWithoutUserInput;
+    likes?: Prisma.LikeCreateNestedManyWithoutUserInput;
+    followers?: Prisma.FollowCreateNestedManyWithoutFollowingInput;
+    following?: Prisma.FollowCreateNestedManyWithoutFollowerInput;
+    recipientNotifications?: Prisma.NotificationCreateNestedManyWithoutRecipientInput;
+    sentNotifications?: Prisma.NotificationCreateNestedManyWithoutSenderInput;
+    snapAuthor?: Prisma.SavedSnapCreateNestedManyWithoutAuthorInput;
+    savedBySnaps?: Prisma.SavedSnapCreateNestedManyWithoutSavedUserInput;
+    conversationsTwo?: Prisma.ConversationCreateNestedManyWithoutUser2Input;
+    sentMessages?: Prisma.MessageCreateNestedManyWithoutSenderInput;
+    receivedMessages?: Prisma.MessageCreateNestedManyWithoutReceiverInput;
+};
+export type UserUncheckedCreateWithoutConversationsOneInput = {
+    id?: string;
+    name: string;
+    email: string;
+    emailVerified: boolean;
+    bio?: string | null;
+    image?: string | null;
+    cover_image?: string | null;
+    status?: $Enums.UserStatus;
+    createdAt: Date | string;
+    updatedAt: Date | string;
+    sessions?: Prisma.SessionUncheckedCreateNestedManyWithoutUserInput;
+    accounts?: Prisma.AccountUncheckedCreateNestedManyWithoutUserInput;
+    posts?: Prisma.PostUncheckedCreateNestedManyWithoutUserInput;
+    likes?: Prisma.LikeUncheckedCreateNestedManyWithoutUserInput;
+    followers?: Prisma.FollowUncheckedCreateNestedManyWithoutFollowingInput;
+    following?: Prisma.FollowUncheckedCreateNestedManyWithoutFollowerInput;
+    recipientNotifications?: Prisma.NotificationUncheckedCreateNestedManyWithoutRecipientInput;
+    sentNotifications?: Prisma.NotificationUncheckedCreateNestedManyWithoutSenderInput;
+    snapAuthor?: Prisma.SavedSnapUncheckedCreateNestedManyWithoutAuthorInput;
+    savedBySnaps?: Prisma.SavedSnapUncheckedCreateNestedManyWithoutSavedUserInput;
+    conversationsTwo?: Prisma.ConversationUncheckedCreateNestedManyWithoutUser2Input;
+    sentMessages?: Prisma.MessageUncheckedCreateNestedManyWithoutSenderInput;
+    receivedMessages?: Prisma.MessageUncheckedCreateNestedManyWithoutReceiverInput;
+};
+export type UserCreateOrConnectWithoutConversationsOneInput = {
+    where: Prisma.UserWhereUniqueInput;
+    create: Prisma.XOR<Prisma.UserCreateWithoutConversationsOneInput, Prisma.UserUncheckedCreateWithoutConversationsOneInput>;
+};
+export type UserCreateWithoutConversationsTwoInput = {
+    id?: string;
+    name: string;
+    email: string;
+    emailVerified: boolean;
+    bio?: string | null;
+    image?: string | null;
+    cover_image?: string | null;
+    status?: $Enums.UserStatus;
+    createdAt: Date | string;
+    updatedAt: Date | string;
+    sessions?: Prisma.SessionCreateNestedManyWithoutUserInput;
+    accounts?: Prisma.AccountCreateNestedManyWithoutUserInput;
+    posts?: Prisma.PostCreateNestedManyWithoutUserInput;
+    likes?: Prisma.LikeCreateNestedManyWithoutUserInput;
+    followers?: Prisma.FollowCreateNestedManyWithoutFollowingInput;
+    following?: Prisma.FollowCreateNestedManyWithoutFollowerInput;
+    recipientNotifications?: Prisma.NotificationCreateNestedManyWithoutRecipientInput;
+    sentNotifications?: Prisma.NotificationCreateNestedManyWithoutSenderInput;
+    snapAuthor?: Prisma.SavedSnapCreateNestedManyWithoutAuthorInput;
+    savedBySnaps?: Prisma.SavedSnapCreateNestedManyWithoutSavedUserInput;
+    conversationsOne?: Prisma.ConversationCreateNestedManyWithoutUser1Input;
+    sentMessages?: Prisma.MessageCreateNestedManyWithoutSenderInput;
+    receivedMessages?: Prisma.MessageCreateNestedManyWithoutReceiverInput;
+};
+export type UserUncheckedCreateWithoutConversationsTwoInput = {
+    id?: string;
+    name: string;
+    email: string;
+    emailVerified: boolean;
+    bio?: string | null;
+    image?: string | null;
+    cover_image?: string | null;
+    status?: $Enums.UserStatus;
+    createdAt: Date | string;
+    updatedAt: Date | string;
+    sessions?: Prisma.SessionUncheckedCreateNestedManyWithoutUserInput;
+    accounts?: Prisma.AccountUncheckedCreateNestedManyWithoutUserInput;
+    posts?: Prisma.PostUncheckedCreateNestedManyWithoutUserInput;
+    likes?: Prisma.LikeUncheckedCreateNestedManyWithoutUserInput;
+    followers?: Prisma.FollowUncheckedCreateNestedManyWithoutFollowingInput;
+    following?: Prisma.FollowUncheckedCreateNestedManyWithoutFollowerInput;
+    recipientNotifications?: Prisma.NotificationUncheckedCreateNestedManyWithoutRecipientInput;
+    sentNotifications?: Prisma.NotificationUncheckedCreateNestedManyWithoutSenderInput;
+    snapAuthor?: Prisma.SavedSnapUncheckedCreateNestedManyWithoutAuthorInput;
+    savedBySnaps?: Prisma.SavedSnapUncheckedCreateNestedManyWithoutSavedUserInput;
+    conversationsOne?: Prisma.ConversationUncheckedCreateNestedManyWithoutUser1Input;
+    sentMessages?: Prisma.MessageUncheckedCreateNestedManyWithoutSenderInput;
+    receivedMessages?: Prisma.MessageUncheckedCreateNestedManyWithoutReceiverInput;
+};
+export type UserCreateOrConnectWithoutConversationsTwoInput = {
+    where: Prisma.UserWhereUniqueInput;
+    create: Prisma.XOR<Prisma.UserCreateWithoutConversationsTwoInput, Prisma.UserUncheckedCreateWithoutConversationsTwoInput>;
+};
+export type UserUpsertWithoutConversationsOneInput = {
+    update: Prisma.XOR<Prisma.UserUpdateWithoutConversationsOneInput, Prisma.UserUncheckedUpdateWithoutConversationsOneInput>;
+    create: Prisma.XOR<Prisma.UserCreateWithoutConversationsOneInput, Prisma.UserUncheckedCreateWithoutConversationsOneInput>;
+    where?: Prisma.UserWhereInput;
+};
+export type UserUpdateToOneWithWhereWithoutConversationsOneInput = {
+    where?: Prisma.UserWhereInput;
+    data: Prisma.XOR<Prisma.UserUpdateWithoutConversationsOneInput, Prisma.UserUncheckedUpdateWithoutConversationsOneInput>;
+};
+export type UserUpdateWithoutConversationsOneInput = {
+    id?: Prisma.StringFieldUpdateOperationsInput | string;
+    name?: Prisma.StringFieldUpdateOperationsInput | string;
+    email?: Prisma.StringFieldUpdateOperationsInput | string;
+    emailVerified?: Prisma.BoolFieldUpdateOperationsInput | boolean;
+    bio?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
+    image?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
+    cover_image?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
+    status?: Prisma.EnumUserStatusFieldUpdateOperationsInput | $Enums.UserStatus;
+    createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
+    updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
+    sessions?: Prisma.SessionUpdateManyWithoutUserNestedInput;
+    accounts?: Prisma.AccountUpdateManyWithoutUserNestedInput;
+    posts?: Prisma.PostUpdateManyWithoutUserNestedInput;
+    likes?: Prisma.LikeUpdateManyWithoutUserNestedInput;
+    followers?: Prisma.FollowUpdateManyWithoutFollowingNestedInput;
+    following?: Prisma.FollowUpdateManyWithoutFollowerNestedInput;
+    recipientNotifications?: Prisma.NotificationUpdateManyWithoutRecipientNestedInput;
+    sentNotifications?: Prisma.NotificationUpdateManyWithoutSenderNestedInput;
+    snapAuthor?: Prisma.SavedSnapUpdateManyWithoutAuthorNestedInput;
+    savedBySnaps?: Prisma.SavedSnapUpdateManyWithoutSavedUserNestedInput;
+    conversationsTwo?: Prisma.ConversationUpdateManyWithoutUser2NestedInput;
+    sentMessages?: Prisma.MessageUpdateManyWithoutSenderNestedInput;
+    receivedMessages?: Prisma.MessageUpdateManyWithoutReceiverNestedInput;
+};
+export type UserUncheckedUpdateWithoutConversationsOneInput = {
+    id?: Prisma.StringFieldUpdateOperationsInput | string;
+    name?: Prisma.StringFieldUpdateOperationsInput | string;
+    email?: Prisma.StringFieldUpdateOperationsInput | string;
+    emailVerified?: Prisma.BoolFieldUpdateOperationsInput | boolean;
+    bio?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
+    image?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
+    cover_image?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
+    status?: Prisma.EnumUserStatusFieldUpdateOperationsInput | $Enums.UserStatus;
+    createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
+    updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
+    sessions?: Prisma.SessionUncheckedUpdateManyWithoutUserNestedInput;
+    accounts?: Prisma.AccountUncheckedUpdateManyWithoutUserNestedInput;
+    posts?: Prisma.PostUncheckedUpdateManyWithoutUserNestedInput;
+    likes?: Prisma.LikeUncheckedUpdateManyWithoutUserNestedInput;
+    followers?: Prisma.FollowUncheckedUpdateManyWithoutFollowingNestedInput;
+    following?: Prisma.FollowUncheckedUpdateManyWithoutFollowerNestedInput;
+    recipientNotifications?: Prisma.NotificationUncheckedUpdateManyWithoutRecipientNestedInput;
+    sentNotifications?: Prisma.NotificationUncheckedUpdateManyWithoutSenderNestedInput;
+    snapAuthor?: Prisma.SavedSnapUncheckedUpdateManyWithoutAuthorNestedInput;
+    savedBySnaps?: Prisma.SavedSnapUncheckedUpdateManyWithoutSavedUserNestedInput;
+    conversationsTwo?: Prisma.ConversationUncheckedUpdateManyWithoutUser2NestedInput;
+    sentMessages?: Prisma.MessageUncheckedUpdateManyWithoutSenderNestedInput;
+    receivedMessages?: Prisma.MessageUncheckedUpdateManyWithoutReceiverNestedInput;
+};
+export type UserUpsertWithoutConversationsTwoInput = {
+    update: Prisma.XOR<Prisma.UserUpdateWithoutConversationsTwoInput, Prisma.UserUncheckedUpdateWithoutConversationsTwoInput>;
+    create: Prisma.XOR<Prisma.UserCreateWithoutConversationsTwoInput, Prisma.UserUncheckedCreateWithoutConversationsTwoInput>;
+    where?: Prisma.UserWhereInput;
+};
+export type UserUpdateToOneWithWhereWithoutConversationsTwoInput = {
+    where?: Prisma.UserWhereInput;
+    data: Prisma.XOR<Prisma.UserUpdateWithoutConversationsTwoInput, Prisma.UserUncheckedUpdateWithoutConversationsTwoInput>;
+};
+export type UserUpdateWithoutConversationsTwoInput = {
+    id?: Prisma.StringFieldUpdateOperationsInput | string;
+    name?: Prisma.StringFieldUpdateOperationsInput | string;
+    email?: Prisma.StringFieldUpdateOperationsInput | string;
+    emailVerified?: Prisma.BoolFieldUpdateOperationsInput | boolean;
+    bio?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
+    image?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
+    cover_image?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
+    status?: Prisma.EnumUserStatusFieldUpdateOperationsInput | $Enums.UserStatus;
+    createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
+    updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
+    sessions?: Prisma.SessionUpdateManyWithoutUserNestedInput;
+    accounts?: Prisma.AccountUpdateManyWithoutUserNestedInput;
+    posts?: Prisma.PostUpdateManyWithoutUserNestedInput;
+    likes?: Prisma.LikeUpdateManyWithoutUserNestedInput;
+    followers?: Prisma.FollowUpdateManyWithoutFollowingNestedInput;
+    following?: Prisma.FollowUpdateManyWithoutFollowerNestedInput;
+    recipientNotifications?: Prisma.NotificationUpdateManyWithoutRecipientNestedInput;
+    sentNotifications?: Prisma.NotificationUpdateManyWithoutSenderNestedInput;
+    snapAuthor?: Prisma.SavedSnapUpdateManyWithoutAuthorNestedInput;
+    savedBySnaps?: Prisma.SavedSnapUpdateManyWithoutSavedUserNestedInput;
+    conversationsOne?: Prisma.ConversationUpdateManyWithoutUser1NestedInput;
+    sentMessages?: Prisma.MessageUpdateManyWithoutSenderNestedInput;
+    receivedMessages?: Prisma.MessageUpdateManyWithoutReceiverNestedInput;
+};
+export type UserUncheckedUpdateWithoutConversationsTwoInput = {
+    id?: Prisma.StringFieldUpdateOperationsInput | string;
+    name?: Prisma.StringFieldUpdateOperationsInput | string;
+    email?: Prisma.StringFieldUpdateOperationsInput | string;
+    emailVerified?: Prisma.BoolFieldUpdateOperationsInput | boolean;
+    bio?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
+    image?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
+    cover_image?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
+    status?: Prisma.EnumUserStatusFieldUpdateOperationsInput | $Enums.UserStatus;
+    createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
+    updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
+    sessions?: Prisma.SessionUncheckedUpdateManyWithoutUserNestedInput;
+    accounts?: Prisma.AccountUncheckedUpdateManyWithoutUserNestedInput;
+    posts?: Prisma.PostUncheckedUpdateManyWithoutUserNestedInput;
+    likes?: Prisma.LikeUncheckedUpdateManyWithoutUserNestedInput;
+    followers?: Prisma.FollowUncheckedUpdateManyWithoutFollowingNestedInput;
+    following?: Prisma.FollowUncheckedUpdateManyWithoutFollowerNestedInput;
+    recipientNotifications?: Prisma.NotificationUncheckedUpdateManyWithoutRecipientNestedInput;
+    sentNotifications?: Prisma.NotificationUncheckedUpdateManyWithoutSenderNestedInput;
+    snapAuthor?: Prisma.SavedSnapUncheckedUpdateManyWithoutAuthorNestedInput;
+    savedBySnaps?: Prisma.SavedSnapUncheckedUpdateManyWithoutSavedUserNestedInput;
+    conversationsOne?: Prisma.ConversationUncheckedUpdateManyWithoutUser1NestedInput;
+    sentMessages?: Prisma.MessageUncheckedUpdateManyWithoutSenderNestedInput;
+    receivedMessages?: Prisma.MessageUncheckedUpdateManyWithoutReceiverNestedInput;
+};
+export type UserCreateWithoutSentMessagesInput = {
+    id?: string;
+    name: string;
+    email: string;
+    emailVerified: boolean;
+    bio?: string | null;
+    image?: string | null;
+    cover_image?: string | null;
+    status?: $Enums.UserStatus;
+    createdAt: Date | string;
+    updatedAt: Date | string;
+    sessions?: Prisma.SessionCreateNestedManyWithoutUserInput;
+    accounts?: Prisma.AccountCreateNestedManyWithoutUserInput;
+    posts?: Prisma.PostCreateNestedManyWithoutUserInput;
+    likes?: Prisma.LikeCreateNestedManyWithoutUserInput;
+    followers?: Prisma.FollowCreateNestedManyWithoutFollowingInput;
+    following?: Prisma.FollowCreateNestedManyWithoutFollowerInput;
+    recipientNotifications?: Prisma.NotificationCreateNestedManyWithoutRecipientInput;
+    sentNotifications?: Prisma.NotificationCreateNestedManyWithoutSenderInput;
+    snapAuthor?: Prisma.SavedSnapCreateNestedManyWithoutAuthorInput;
+    savedBySnaps?: Prisma.SavedSnapCreateNestedManyWithoutSavedUserInput;
+    conversationsOne?: Prisma.ConversationCreateNestedManyWithoutUser1Input;
+    conversationsTwo?: Prisma.ConversationCreateNestedManyWithoutUser2Input;
+    receivedMessages?: Prisma.MessageCreateNestedManyWithoutReceiverInput;
+};
+export type UserUncheckedCreateWithoutSentMessagesInput = {
+    id?: string;
+    name: string;
+    email: string;
+    emailVerified: boolean;
+    bio?: string | null;
+    image?: string | null;
+    cover_image?: string | null;
+    status?: $Enums.UserStatus;
+    createdAt: Date | string;
+    updatedAt: Date | string;
+    sessions?: Prisma.SessionUncheckedCreateNestedManyWithoutUserInput;
+    accounts?: Prisma.AccountUncheckedCreateNestedManyWithoutUserInput;
+    posts?: Prisma.PostUncheckedCreateNestedManyWithoutUserInput;
+    likes?: Prisma.LikeUncheckedCreateNestedManyWithoutUserInput;
+    followers?: Prisma.FollowUncheckedCreateNestedManyWithoutFollowingInput;
+    following?: Prisma.FollowUncheckedCreateNestedManyWithoutFollowerInput;
+    recipientNotifications?: Prisma.NotificationUncheckedCreateNestedManyWithoutRecipientInput;
+    sentNotifications?: Prisma.NotificationUncheckedCreateNestedManyWithoutSenderInput;
+    snapAuthor?: Prisma.SavedSnapUncheckedCreateNestedManyWithoutAuthorInput;
+    savedBySnaps?: Prisma.SavedSnapUncheckedCreateNestedManyWithoutSavedUserInput;
+    conversationsOne?: Prisma.ConversationUncheckedCreateNestedManyWithoutUser1Input;
+    conversationsTwo?: Prisma.ConversationUncheckedCreateNestedManyWithoutUser2Input;
+    receivedMessages?: Prisma.MessageUncheckedCreateNestedManyWithoutReceiverInput;
+};
+export type UserCreateOrConnectWithoutSentMessagesInput = {
+    where: Prisma.UserWhereUniqueInput;
+    create: Prisma.XOR<Prisma.UserCreateWithoutSentMessagesInput, Prisma.UserUncheckedCreateWithoutSentMessagesInput>;
+};
+export type UserCreateWithoutReceivedMessagesInput = {
+    id?: string;
+    name: string;
+    email: string;
+    emailVerified: boolean;
+    bio?: string | null;
+    image?: string | null;
+    cover_image?: string | null;
+    status?: $Enums.UserStatus;
+    createdAt: Date | string;
+    updatedAt: Date | string;
+    sessions?: Prisma.SessionCreateNestedManyWithoutUserInput;
+    accounts?: Prisma.AccountCreateNestedManyWithoutUserInput;
+    posts?: Prisma.PostCreateNestedManyWithoutUserInput;
+    likes?: Prisma.LikeCreateNestedManyWithoutUserInput;
+    followers?: Prisma.FollowCreateNestedManyWithoutFollowingInput;
+    following?: Prisma.FollowCreateNestedManyWithoutFollowerInput;
+    recipientNotifications?: Prisma.NotificationCreateNestedManyWithoutRecipientInput;
+    sentNotifications?: Prisma.NotificationCreateNestedManyWithoutSenderInput;
+    snapAuthor?: Prisma.SavedSnapCreateNestedManyWithoutAuthorInput;
+    savedBySnaps?: Prisma.SavedSnapCreateNestedManyWithoutSavedUserInput;
+    conversationsOne?: Prisma.ConversationCreateNestedManyWithoutUser1Input;
+    conversationsTwo?: Prisma.ConversationCreateNestedManyWithoutUser2Input;
+    sentMessages?: Prisma.MessageCreateNestedManyWithoutSenderInput;
+};
+export type UserUncheckedCreateWithoutReceivedMessagesInput = {
+    id?: string;
+    name: string;
+    email: string;
+    emailVerified: boolean;
+    bio?: string | null;
+    image?: string | null;
+    cover_image?: string | null;
+    status?: $Enums.UserStatus;
+    createdAt: Date | string;
+    updatedAt: Date | string;
+    sessions?: Prisma.SessionUncheckedCreateNestedManyWithoutUserInput;
+    accounts?: Prisma.AccountUncheckedCreateNestedManyWithoutUserInput;
+    posts?: Prisma.PostUncheckedCreateNestedManyWithoutUserInput;
+    likes?: Prisma.LikeUncheckedCreateNestedManyWithoutUserInput;
+    followers?: Prisma.FollowUncheckedCreateNestedManyWithoutFollowingInput;
+    following?: Prisma.FollowUncheckedCreateNestedManyWithoutFollowerInput;
+    recipientNotifications?: Prisma.NotificationUncheckedCreateNestedManyWithoutRecipientInput;
+    sentNotifications?: Prisma.NotificationUncheckedCreateNestedManyWithoutSenderInput;
+    snapAuthor?: Prisma.SavedSnapUncheckedCreateNestedManyWithoutAuthorInput;
+    savedBySnaps?: Prisma.SavedSnapUncheckedCreateNestedManyWithoutSavedUserInput;
+    conversationsOne?: Prisma.ConversationUncheckedCreateNestedManyWithoutUser1Input;
+    conversationsTwo?: Prisma.ConversationUncheckedCreateNestedManyWithoutUser2Input;
+    sentMessages?: Prisma.MessageUncheckedCreateNestedManyWithoutSenderInput;
+};
+export type UserCreateOrConnectWithoutReceivedMessagesInput = {
+    where: Prisma.UserWhereUniqueInput;
+    create: Prisma.XOR<Prisma.UserCreateWithoutReceivedMessagesInput, Prisma.UserUncheckedCreateWithoutReceivedMessagesInput>;
+};
+export type UserUpsertWithoutSentMessagesInput = {
+    update: Prisma.XOR<Prisma.UserUpdateWithoutSentMessagesInput, Prisma.UserUncheckedUpdateWithoutSentMessagesInput>;
+    create: Prisma.XOR<Prisma.UserCreateWithoutSentMessagesInput, Prisma.UserUncheckedCreateWithoutSentMessagesInput>;
+    where?: Prisma.UserWhereInput;
+};
+export type UserUpdateToOneWithWhereWithoutSentMessagesInput = {
+    where?: Prisma.UserWhereInput;
+    data: Prisma.XOR<Prisma.UserUpdateWithoutSentMessagesInput, Prisma.UserUncheckedUpdateWithoutSentMessagesInput>;
+};
+export type UserUpdateWithoutSentMessagesInput = {
+    id?: Prisma.StringFieldUpdateOperationsInput | string;
+    name?: Prisma.StringFieldUpdateOperationsInput | string;
+    email?: Prisma.StringFieldUpdateOperationsInput | string;
+    emailVerified?: Prisma.BoolFieldUpdateOperationsInput | boolean;
+    bio?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
+    image?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
+    cover_image?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
+    status?: Prisma.EnumUserStatusFieldUpdateOperationsInput | $Enums.UserStatus;
+    createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
+    updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
+    sessions?: Prisma.SessionUpdateManyWithoutUserNestedInput;
+    accounts?: Prisma.AccountUpdateManyWithoutUserNestedInput;
+    posts?: Prisma.PostUpdateManyWithoutUserNestedInput;
+    likes?: Prisma.LikeUpdateManyWithoutUserNestedInput;
+    followers?: Prisma.FollowUpdateManyWithoutFollowingNestedInput;
+    following?: Prisma.FollowUpdateManyWithoutFollowerNestedInput;
+    recipientNotifications?: Prisma.NotificationUpdateManyWithoutRecipientNestedInput;
+    sentNotifications?: Prisma.NotificationUpdateManyWithoutSenderNestedInput;
+    snapAuthor?: Prisma.SavedSnapUpdateManyWithoutAuthorNestedInput;
+    savedBySnaps?: Prisma.SavedSnapUpdateManyWithoutSavedUserNestedInput;
+    conversationsOne?: Prisma.ConversationUpdateManyWithoutUser1NestedInput;
+    conversationsTwo?: Prisma.ConversationUpdateManyWithoutUser2NestedInput;
+    receivedMessages?: Prisma.MessageUpdateManyWithoutReceiverNestedInput;
+};
+export type UserUncheckedUpdateWithoutSentMessagesInput = {
+    id?: Prisma.StringFieldUpdateOperationsInput | string;
+    name?: Prisma.StringFieldUpdateOperationsInput | string;
+    email?: Prisma.StringFieldUpdateOperationsInput | string;
+    emailVerified?: Prisma.BoolFieldUpdateOperationsInput | boolean;
+    bio?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
+    image?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
+    cover_image?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
+    status?: Prisma.EnumUserStatusFieldUpdateOperationsInput | $Enums.UserStatus;
+    createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
+    updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
+    sessions?: Prisma.SessionUncheckedUpdateManyWithoutUserNestedInput;
+    accounts?: Prisma.AccountUncheckedUpdateManyWithoutUserNestedInput;
+    posts?: Prisma.PostUncheckedUpdateManyWithoutUserNestedInput;
+    likes?: Prisma.LikeUncheckedUpdateManyWithoutUserNestedInput;
+    followers?: Prisma.FollowUncheckedUpdateManyWithoutFollowingNestedInput;
+    following?: Prisma.FollowUncheckedUpdateManyWithoutFollowerNestedInput;
+    recipientNotifications?: Prisma.NotificationUncheckedUpdateManyWithoutRecipientNestedInput;
+    sentNotifications?: Prisma.NotificationUncheckedUpdateManyWithoutSenderNestedInput;
+    snapAuthor?: Prisma.SavedSnapUncheckedUpdateManyWithoutAuthorNestedInput;
+    savedBySnaps?: Prisma.SavedSnapUncheckedUpdateManyWithoutSavedUserNestedInput;
+    conversationsOne?: Prisma.ConversationUncheckedUpdateManyWithoutUser1NestedInput;
+    conversationsTwo?: Prisma.ConversationUncheckedUpdateManyWithoutUser2NestedInput;
+    receivedMessages?: Prisma.MessageUncheckedUpdateManyWithoutReceiverNestedInput;
+};
+export type UserUpsertWithoutReceivedMessagesInput = {
+    update: Prisma.XOR<Prisma.UserUpdateWithoutReceivedMessagesInput, Prisma.UserUncheckedUpdateWithoutReceivedMessagesInput>;
+    create: Prisma.XOR<Prisma.UserCreateWithoutReceivedMessagesInput, Prisma.UserUncheckedCreateWithoutReceivedMessagesInput>;
+    where?: Prisma.UserWhereInput;
+};
+export type UserUpdateToOneWithWhereWithoutReceivedMessagesInput = {
+    where?: Prisma.UserWhereInput;
+    data: Prisma.XOR<Prisma.UserUpdateWithoutReceivedMessagesInput, Prisma.UserUncheckedUpdateWithoutReceivedMessagesInput>;
+};
+export type UserUpdateWithoutReceivedMessagesInput = {
+    id?: Prisma.StringFieldUpdateOperationsInput | string;
+    name?: Prisma.StringFieldUpdateOperationsInput | string;
+    email?: Prisma.StringFieldUpdateOperationsInput | string;
+    emailVerified?: Prisma.BoolFieldUpdateOperationsInput | boolean;
+    bio?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
+    image?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
+    cover_image?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
+    status?: Prisma.EnumUserStatusFieldUpdateOperationsInput | $Enums.UserStatus;
+    createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
+    updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
+    sessions?: Prisma.SessionUpdateManyWithoutUserNestedInput;
+    accounts?: Prisma.AccountUpdateManyWithoutUserNestedInput;
+    posts?: Prisma.PostUpdateManyWithoutUserNestedInput;
+    likes?: Prisma.LikeUpdateManyWithoutUserNestedInput;
+    followers?: Prisma.FollowUpdateManyWithoutFollowingNestedInput;
+    following?: Prisma.FollowUpdateManyWithoutFollowerNestedInput;
+    recipientNotifications?: Prisma.NotificationUpdateManyWithoutRecipientNestedInput;
+    sentNotifications?: Prisma.NotificationUpdateManyWithoutSenderNestedInput;
+    snapAuthor?: Prisma.SavedSnapUpdateManyWithoutAuthorNestedInput;
+    savedBySnaps?: Prisma.SavedSnapUpdateManyWithoutSavedUserNestedInput;
+    conversationsOne?: Prisma.ConversationUpdateManyWithoutUser1NestedInput;
+    conversationsTwo?: Prisma.ConversationUpdateManyWithoutUser2NestedInput;
+    sentMessages?: Prisma.MessageUpdateManyWithoutSenderNestedInput;
+};
+export type UserUncheckedUpdateWithoutReceivedMessagesInput = {
+    id?: Prisma.StringFieldUpdateOperationsInput | string;
+    name?: Prisma.StringFieldUpdateOperationsInput | string;
+    email?: Prisma.StringFieldUpdateOperationsInput | string;
+    emailVerified?: Prisma.BoolFieldUpdateOperationsInput | boolean;
+    bio?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
+    image?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
+    cover_image?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
+    status?: Prisma.EnumUserStatusFieldUpdateOperationsInput | $Enums.UserStatus;
+    createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
+    updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
+    sessions?: Prisma.SessionUncheckedUpdateManyWithoutUserNestedInput;
+    accounts?: Prisma.AccountUncheckedUpdateManyWithoutUserNestedInput;
+    posts?: Prisma.PostUncheckedUpdateManyWithoutUserNestedInput;
+    likes?: Prisma.LikeUncheckedUpdateManyWithoutUserNestedInput;
+    followers?: Prisma.FollowUncheckedUpdateManyWithoutFollowingNestedInput;
+    following?: Prisma.FollowUncheckedUpdateManyWithoutFollowerNestedInput;
+    recipientNotifications?: Prisma.NotificationUncheckedUpdateManyWithoutRecipientNestedInput;
+    sentNotifications?: Prisma.NotificationUncheckedUpdateManyWithoutSenderNestedInput;
+    snapAuthor?: Prisma.SavedSnapUncheckedUpdateManyWithoutAuthorNestedInput;
+    savedBySnaps?: Prisma.SavedSnapUncheckedUpdateManyWithoutSavedUserNestedInput;
+    conversationsOne?: Prisma.ConversationUncheckedUpdateManyWithoutUser1NestedInput;
+    conversationsTwo?: Prisma.ConversationUncheckedUpdateManyWithoutUser2NestedInput;
+    sentMessages?: Prisma.MessageUncheckedUpdateManyWithoutSenderNestedInput;
 };
 /**
  * Count Type UserCountOutputType
@@ -1740,12 +2240,14 @@ export type UserCountOutputType = {
     likes: number;
     followers: number;
     following: number;
-    follows: number;
     recipientNotifications: number;
     sentNotifications: number;
-    notifications: number;
     snapAuthor: number;
     savedBySnaps: number;
+    conversationsOne: number;
+    conversationsTwo: number;
+    sentMessages: number;
+    receivedMessages: number;
 };
 export type UserCountOutputTypeSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
     sessions?: boolean | UserCountOutputTypeCountSessionsArgs;
@@ -1754,12 +2256,14 @@ export type UserCountOutputTypeSelect<ExtArgs extends runtime.Types.Extensions.I
     likes?: boolean | UserCountOutputTypeCountLikesArgs;
     followers?: boolean | UserCountOutputTypeCountFollowersArgs;
     following?: boolean | UserCountOutputTypeCountFollowingArgs;
-    follows?: boolean | UserCountOutputTypeCountFollowsArgs;
     recipientNotifications?: boolean | UserCountOutputTypeCountRecipientNotificationsArgs;
     sentNotifications?: boolean | UserCountOutputTypeCountSentNotificationsArgs;
-    notifications?: boolean | UserCountOutputTypeCountNotificationsArgs;
     snapAuthor?: boolean | UserCountOutputTypeCountSnapAuthorArgs;
     savedBySnaps?: boolean | UserCountOutputTypeCountSavedBySnapsArgs;
+    conversationsOne?: boolean | UserCountOutputTypeCountConversationsOneArgs;
+    conversationsTwo?: boolean | UserCountOutputTypeCountConversationsTwoArgs;
+    sentMessages?: boolean | UserCountOutputTypeCountSentMessagesArgs;
+    receivedMessages?: boolean | UserCountOutputTypeCountReceivedMessagesArgs;
 };
 /**
  * UserCountOutputType without action
@@ -1809,12 +2313,6 @@ export type UserCountOutputTypeCountFollowingArgs<ExtArgs extends runtime.Types.
 /**
  * UserCountOutputType without action
  */
-export type UserCountOutputTypeCountFollowsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
-    where?: Prisma.FollowWhereInput;
-};
-/**
- * UserCountOutputType without action
- */
 export type UserCountOutputTypeCountRecipientNotificationsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
     where?: Prisma.NotificationWhereInput;
 };
@@ -1822,12 +2320,6 @@ export type UserCountOutputTypeCountRecipientNotificationsArgs<ExtArgs extends r
  * UserCountOutputType without action
  */
 export type UserCountOutputTypeCountSentNotificationsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
-    where?: Prisma.NotificationWhereInput;
-};
-/**
- * UserCountOutputType without action
- */
-export type UserCountOutputTypeCountNotificationsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
     where?: Prisma.NotificationWhereInput;
 };
 /**
@@ -1842,6 +2334,30 @@ export type UserCountOutputTypeCountSnapAuthorArgs<ExtArgs extends runtime.Types
 export type UserCountOutputTypeCountSavedBySnapsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
     where?: Prisma.SavedSnapWhereInput;
 };
+/**
+ * UserCountOutputType without action
+ */
+export type UserCountOutputTypeCountConversationsOneArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+    where?: Prisma.ConversationWhereInput;
+};
+/**
+ * UserCountOutputType without action
+ */
+export type UserCountOutputTypeCountConversationsTwoArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+    where?: Prisma.ConversationWhereInput;
+};
+/**
+ * UserCountOutputType without action
+ */
+export type UserCountOutputTypeCountSentMessagesArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+    where?: Prisma.MessageWhereInput;
+};
+/**
+ * UserCountOutputType without action
+ */
+export type UserCountOutputTypeCountReceivedMessagesArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+    where?: Prisma.MessageWhereInput;
+};
 export type UserSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
     id?: boolean;
     name?: boolean;
@@ -1849,6 +2365,8 @@ export type UserSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = r
     emailVerified?: boolean;
     bio?: boolean;
     image?: boolean;
+    cover_image?: boolean;
+    status?: boolean;
     createdAt?: boolean;
     updatedAt?: boolean;
     sessions?: boolean | Prisma.User$sessionsArgs<ExtArgs>;
@@ -1857,12 +2375,14 @@ export type UserSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = r
     likes?: boolean | Prisma.User$likesArgs<ExtArgs>;
     followers?: boolean | Prisma.User$followersArgs<ExtArgs>;
     following?: boolean | Prisma.User$followingArgs<ExtArgs>;
-    follows?: boolean | Prisma.User$followsArgs<ExtArgs>;
     recipientNotifications?: boolean | Prisma.User$recipientNotificationsArgs<ExtArgs>;
     sentNotifications?: boolean | Prisma.User$sentNotificationsArgs<ExtArgs>;
-    notifications?: boolean | Prisma.User$notificationsArgs<ExtArgs>;
     snapAuthor?: boolean | Prisma.User$snapAuthorArgs<ExtArgs>;
     savedBySnaps?: boolean | Prisma.User$savedBySnapsArgs<ExtArgs>;
+    conversationsOne?: boolean | Prisma.User$conversationsOneArgs<ExtArgs>;
+    conversationsTwo?: boolean | Prisma.User$conversationsTwoArgs<ExtArgs>;
+    sentMessages?: boolean | Prisma.User$sentMessagesArgs<ExtArgs>;
+    receivedMessages?: boolean | Prisma.User$receivedMessagesArgs<ExtArgs>;
     _count?: boolean | Prisma.UserCountOutputTypeDefaultArgs<ExtArgs>;
 }, ExtArgs["result"]["user"]>;
 export type UserSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
@@ -1872,6 +2392,8 @@ export type UserSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Extensio
     emailVerified?: boolean;
     bio?: boolean;
     image?: boolean;
+    cover_image?: boolean;
+    status?: boolean;
     createdAt?: boolean;
     updatedAt?: boolean;
 }, ExtArgs["result"]["user"]>;
@@ -1882,6 +2404,8 @@ export type UserSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensio
     emailVerified?: boolean;
     bio?: boolean;
     image?: boolean;
+    cover_image?: boolean;
+    status?: boolean;
     createdAt?: boolean;
     updatedAt?: boolean;
 }, ExtArgs["result"]["user"]>;
@@ -1892,10 +2416,12 @@ export type UserSelectScalar = {
     emailVerified?: boolean;
     bio?: boolean;
     image?: boolean;
+    cover_image?: boolean;
+    status?: boolean;
     createdAt?: boolean;
     updatedAt?: boolean;
 };
-export type UserOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "name" | "email" | "emailVerified" | "bio" | "image" | "createdAt" | "updatedAt", ExtArgs["result"]["user"]>;
+export type UserOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "name" | "email" | "emailVerified" | "bio" | "image" | "cover_image" | "status" | "createdAt" | "updatedAt", ExtArgs["result"]["user"]>;
 export type UserInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
     sessions?: boolean | Prisma.User$sessionsArgs<ExtArgs>;
     accounts?: boolean | Prisma.User$accountsArgs<ExtArgs>;
@@ -1903,12 +2429,14 @@ export type UserInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = 
     likes?: boolean | Prisma.User$likesArgs<ExtArgs>;
     followers?: boolean | Prisma.User$followersArgs<ExtArgs>;
     following?: boolean | Prisma.User$followingArgs<ExtArgs>;
-    follows?: boolean | Prisma.User$followsArgs<ExtArgs>;
     recipientNotifications?: boolean | Prisma.User$recipientNotificationsArgs<ExtArgs>;
     sentNotifications?: boolean | Prisma.User$sentNotificationsArgs<ExtArgs>;
-    notifications?: boolean | Prisma.User$notificationsArgs<ExtArgs>;
     snapAuthor?: boolean | Prisma.User$snapAuthorArgs<ExtArgs>;
     savedBySnaps?: boolean | Prisma.User$savedBySnapsArgs<ExtArgs>;
+    conversationsOne?: boolean | Prisma.User$conversationsOneArgs<ExtArgs>;
+    conversationsTwo?: boolean | Prisma.User$conversationsTwoArgs<ExtArgs>;
+    sentMessages?: boolean | Prisma.User$sentMessagesArgs<ExtArgs>;
+    receivedMessages?: boolean | Prisma.User$receivedMessagesArgs<ExtArgs>;
     _count?: boolean | Prisma.UserCountOutputTypeDefaultArgs<ExtArgs>;
 };
 export type UserIncludeCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {};
@@ -1922,12 +2450,14 @@ export type $UserPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs =
         likes: Prisma.$LikePayload<ExtArgs>[];
         followers: Prisma.$FollowPayload<ExtArgs>[];
         following: Prisma.$FollowPayload<ExtArgs>[];
-        follows: Prisma.$FollowPayload<ExtArgs>[];
         recipientNotifications: Prisma.$NotificationPayload<ExtArgs>[];
         sentNotifications: Prisma.$NotificationPayload<ExtArgs>[];
-        notifications: Prisma.$NotificationPayload<ExtArgs>[];
         snapAuthor: Prisma.$SavedSnapPayload<ExtArgs>[];
         savedBySnaps: Prisma.$SavedSnapPayload<ExtArgs>[];
+        conversationsOne: Prisma.$ConversationPayload<ExtArgs>[];
+        conversationsTwo: Prisma.$ConversationPayload<ExtArgs>[];
+        sentMessages: Prisma.$MessagePayload<ExtArgs>[];
+        receivedMessages: Prisma.$MessagePayload<ExtArgs>[];
     };
     scalars: runtime.Types.Extensions.GetPayloadResult<{
         id: string;
@@ -1936,6 +2466,8 @@ export type $UserPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs =
         emailVerified: boolean;
         bio: string | null;
         image: string | null;
+        cover_image: string | null;
+        status: $Enums.UserStatus;
         createdAt: Date;
         updatedAt: Date;
     }, ExtArgs["result"]["user"]>;
@@ -2273,12 +2805,14 @@ export interface Prisma__UserClient<T, Null = never, ExtArgs extends runtime.Typ
     likes<T extends Prisma.User$likesArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$likesArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$LikePayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>;
     followers<T extends Prisma.User$followersArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$followersArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$FollowPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>;
     following<T extends Prisma.User$followingArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$followingArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$FollowPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>;
-    follows<T extends Prisma.User$followsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$followsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$FollowPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>;
     recipientNotifications<T extends Prisma.User$recipientNotificationsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$recipientNotificationsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$NotificationPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>;
     sentNotifications<T extends Prisma.User$sentNotificationsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$sentNotificationsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$NotificationPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>;
-    notifications<T extends Prisma.User$notificationsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$notificationsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$NotificationPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>;
     snapAuthor<T extends Prisma.User$snapAuthorArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$snapAuthorArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$SavedSnapPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>;
     savedBySnaps<T extends Prisma.User$savedBySnapsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$savedBySnapsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$SavedSnapPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>;
+    conversationsOne<T extends Prisma.User$conversationsOneArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$conversationsOneArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$ConversationPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>;
+    conversationsTwo<T extends Prisma.User$conversationsTwoArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$conversationsTwoArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$ConversationPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>;
+    sentMessages<T extends Prisma.User$sentMessagesArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$sentMessagesArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$MessagePayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>;
+    receivedMessages<T extends Prisma.User$receivedMessagesArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$receivedMessagesArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$MessagePayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>;
     /**
      * Attaches callbacks for the resolution and/or rejection of the Promise.
      * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -2310,6 +2844,8 @@ export interface UserFieldRefs {
     readonly emailVerified: Prisma.FieldRef<"User", 'Boolean'>;
     readonly bio: Prisma.FieldRef<"User", 'String'>;
     readonly image: Prisma.FieldRef<"User", 'String'>;
+    readonly cover_image: Prisma.FieldRef<"User", 'String'>;
+    readonly status: Prisma.FieldRef<"User", 'UserStatus'>;
     readonly createdAt: Prisma.FieldRef<"User", 'DateTime'>;
     readonly updatedAt: Prisma.FieldRef<"User", 'DateTime'>;
 }
@@ -2826,29 +3362,6 @@ export type User$followingArgs<ExtArgs extends runtime.Types.Extensions.Internal
     distinct?: Prisma.FollowScalarFieldEnum | Prisma.FollowScalarFieldEnum[];
 };
 /**
- * User.follows
- */
-export type User$followsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the Follow
-     */
-    select?: Prisma.FollowSelect<ExtArgs> | null;
-    /**
-     * Omit specific fields from the Follow
-     */
-    omit?: Prisma.FollowOmit<ExtArgs> | null;
-    /**
-     * Choose, which related nodes to fetch as well
-     */
-    include?: Prisma.FollowInclude<ExtArgs> | null;
-    where?: Prisma.FollowWhereInput;
-    orderBy?: Prisma.FollowOrderByWithRelationInput | Prisma.FollowOrderByWithRelationInput[];
-    cursor?: Prisma.FollowWhereUniqueInput;
-    take?: number;
-    skip?: number;
-    distinct?: Prisma.FollowScalarFieldEnum | Prisma.FollowScalarFieldEnum[];
-};
-/**
  * User.recipientNotifications
  */
 export type User$recipientNotificationsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
@@ -2875,29 +3388,6 @@ export type User$recipientNotificationsArgs<ExtArgs extends runtime.Types.Extens
  * User.sentNotifications
  */
 export type User$sentNotificationsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the Notification
-     */
-    select?: Prisma.NotificationSelect<ExtArgs> | null;
-    /**
-     * Omit specific fields from the Notification
-     */
-    omit?: Prisma.NotificationOmit<ExtArgs> | null;
-    /**
-     * Choose, which related nodes to fetch as well
-     */
-    include?: Prisma.NotificationInclude<ExtArgs> | null;
-    where?: Prisma.NotificationWhereInput;
-    orderBy?: Prisma.NotificationOrderByWithRelationInput | Prisma.NotificationOrderByWithRelationInput[];
-    cursor?: Prisma.NotificationWhereUniqueInput;
-    take?: number;
-    skip?: number;
-    distinct?: Prisma.NotificationScalarFieldEnum | Prisma.NotificationScalarFieldEnum[];
-};
-/**
- * User.notifications
- */
-export type User$notificationsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
     /**
      * Select specific fields to fetch from the Notification
      */
@@ -2962,6 +3452,98 @@ export type User$savedBySnapsArgs<ExtArgs extends runtime.Types.Extensions.Inter
     take?: number;
     skip?: number;
     distinct?: Prisma.SavedSnapScalarFieldEnum | Prisma.SavedSnapScalarFieldEnum[];
+};
+/**
+ * User.conversationsOne
+ */
+export type User$conversationsOneArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Conversation
+     */
+    select?: Prisma.ConversationSelect<ExtArgs> | null;
+    /**
+     * Omit specific fields from the Conversation
+     */
+    omit?: Prisma.ConversationOmit<ExtArgs> | null;
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: Prisma.ConversationInclude<ExtArgs> | null;
+    where?: Prisma.ConversationWhereInput;
+    orderBy?: Prisma.ConversationOrderByWithRelationInput | Prisma.ConversationOrderByWithRelationInput[];
+    cursor?: Prisma.ConversationWhereUniqueInput;
+    take?: number;
+    skip?: number;
+    distinct?: Prisma.ConversationScalarFieldEnum | Prisma.ConversationScalarFieldEnum[];
+};
+/**
+ * User.conversationsTwo
+ */
+export type User$conversationsTwoArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Conversation
+     */
+    select?: Prisma.ConversationSelect<ExtArgs> | null;
+    /**
+     * Omit specific fields from the Conversation
+     */
+    omit?: Prisma.ConversationOmit<ExtArgs> | null;
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: Prisma.ConversationInclude<ExtArgs> | null;
+    where?: Prisma.ConversationWhereInput;
+    orderBy?: Prisma.ConversationOrderByWithRelationInput | Prisma.ConversationOrderByWithRelationInput[];
+    cursor?: Prisma.ConversationWhereUniqueInput;
+    take?: number;
+    skip?: number;
+    distinct?: Prisma.ConversationScalarFieldEnum | Prisma.ConversationScalarFieldEnum[];
+};
+/**
+ * User.sentMessages
+ */
+export type User$sentMessagesArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Message
+     */
+    select?: Prisma.MessageSelect<ExtArgs> | null;
+    /**
+     * Omit specific fields from the Message
+     */
+    omit?: Prisma.MessageOmit<ExtArgs> | null;
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: Prisma.MessageInclude<ExtArgs> | null;
+    where?: Prisma.MessageWhereInput;
+    orderBy?: Prisma.MessageOrderByWithRelationInput | Prisma.MessageOrderByWithRelationInput[];
+    cursor?: Prisma.MessageWhereUniqueInput;
+    take?: number;
+    skip?: number;
+    distinct?: Prisma.MessageScalarFieldEnum | Prisma.MessageScalarFieldEnum[];
+};
+/**
+ * User.receivedMessages
+ */
+export type User$receivedMessagesArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Message
+     */
+    select?: Prisma.MessageSelect<ExtArgs> | null;
+    /**
+     * Omit specific fields from the Message
+     */
+    omit?: Prisma.MessageOmit<ExtArgs> | null;
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: Prisma.MessageInclude<ExtArgs> | null;
+    where?: Prisma.MessageWhereInput;
+    orderBy?: Prisma.MessageOrderByWithRelationInput | Prisma.MessageOrderByWithRelationInput[];
+    cursor?: Prisma.MessageWhereUniqueInput;
+    take?: number;
+    skip?: number;
+    distinct?: Prisma.MessageScalarFieldEnum | Prisma.MessageScalarFieldEnum[];
 };
 /**
  * User without action

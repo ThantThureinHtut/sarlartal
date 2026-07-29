@@ -276,7 +276,7 @@ export type AccountScalarWhereWithAggregatesInput = {
     updatedAt?: Prisma.DateTimeWithAggregatesFilter<"Account"> | Date | string;
 };
 export type AccountCreateInput = {
-    id: string;
+    id?: string;
     accountId: string;
     providerId: string;
     accessToken?: string | null;
@@ -291,7 +291,7 @@ export type AccountCreateInput = {
     user: Prisma.UserCreateNestedOneWithoutAccountsInput;
 };
 export type AccountUncheckedCreateInput = {
-    id: string;
+    id?: string;
     accountId: string;
     providerId: string;
     userId: string;
@@ -336,7 +336,7 @@ export type AccountUncheckedUpdateInput = {
     updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
 };
 export type AccountCreateManyInput = {
-    id: string;
+    id?: string;
     accountId: string;
     providerId: string;
     userId: string;
@@ -474,7 +474,7 @@ export type NullableDateTimeFieldUpdateOperationsInput = {
     set?: Date | string | null;
 };
 export type AccountCreateWithoutUserInput = {
-    id: string;
+    id?: string;
     accountId: string;
     providerId: string;
     accessToken?: string | null;
@@ -488,7 +488,7 @@ export type AccountCreateWithoutUserInput = {
     updatedAt: Date | string;
 };
 export type AccountUncheckedCreateWithoutUserInput = {
-    id: string;
+    id?: string;
     accountId: string;
     providerId: string;
     accessToken?: string | null;
@@ -541,7 +541,7 @@ export type AccountScalarWhereInput = {
     updatedAt?: Prisma.DateTimeFilter<"Account"> | Date | string;
 };
 export type AccountCreateManyUserInput = {
-    id: string;
+    id?: string;
     accountId: string;
     providerId: string;
     accessToken?: string | null;

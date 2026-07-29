@@ -7,5 +7,7 @@ export type * from './models/Like';
 export type * from './models/Follow';
 export type * from './models/Notification';
 export type * from './models/SavedSnap';
+export type * from './models/Conversation';
+export type * from './models/Message';
 export type * from './commonInputTypes';
 //# sourceMappingURL=models.d.ts.map

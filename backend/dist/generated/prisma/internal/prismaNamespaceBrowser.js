@@ -48,7 +48,7 @@ var __importStar = (this && this.__importStar) || (function () {
     };
 })();
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.NullsOrder = exports.QueryMode = exports.SortOrder = exports.SavedSnapScalarFieldEnum = exports.NotificationScalarFieldEnum = exports.FollowScalarFieldEnum = exports.LikeScalarFieldEnum = exports.PostScalarFieldEnum = exports.VerificationScalarFieldEnum = exports.AccountScalarFieldEnum = exports.SessionScalarFieldEnum = exports.UserScalarFieldEnum = exports.TransactionIsolationLevel = exports.ModelName = exports.AnyNull = exports.JsonNull = exports.DbNull = exports.NullTypes = exports.Decimal = void 0;
+exports.NullsOrder = exports.QueryMode = exports.SortOrder = exports.MessageScalarFieldEnum = exports.ConversationScalarFieldEnum = exports.SavedSnapScalarFieldEnum = exports.NotificationScalarFieldEnum = exports.FollowScalarFieldEnum = exports.LikeScalarFieldEnum = exports.PostScalarFieldEnum = exports.VerificationScalarFieldEnum = exports.AccountScalarFieldEnum = exports.SessionScalarFieldEnum = exports.UserScalarFieldEnum = exports.TransactionIsolationLevel = exports.ModelName = exports.AnyNull = exports.JsonNull = exports.DbNull = exports.NullTypes = exports.Decimal = void 0;
 const runtime = __importStar(require("@prisma/client/runtime/index-browser"));
 exports.Decimal = runtime.Decimal;
 exports.NullTypes = {
@@ -83,7 +83,9 @@ exports.ModelName = {
     Like: 'Like',
     Follow: 'Follow',
     Notification: 'Notification',
-    SavedSnap: 'SavedSnap'
+    SavedSnap: 'SavedSnap',
+    Conversation: 'Conversation',
+    Message: 'Message'
 };
 /*
  * Enums
@@ -101,6 +103,8 @@ exports.UserScalarFieldEnum = {
     emailVerified: 'emailVerified',
     bio: 'bio',
     image: 'image',
+    cover_image: 'cover_image',
+    status: 'status',
     createdAt: 'createdAt',
     updatedAt: 'updatedAt'
 };
@@ -142,6 +146,7 @@ exports.PostScalarFieldEnum = {
     image_url: 'image_url',
     title: 'title',
     userId: 'userId',
+    likeCount: 'likeCount',
     createdAt: 'createdAt',
     updatedAt: 'updatedAt'
 };
@@ -153,8 +158,7 @@ exports.LikeScalarFieldEnum = {
 exports.FollowScalarFieldEnum = {
     followerId: 'followerId',
     followingId: 'followingId',
-    createdAt: 'createdAt',
-    userId: 'userId'
+    createdAt: 'createdAt'
 };
 exports.NotificationScalarFieldEnum = {
     id: 'id',
@@ -163,14 +167,29 @@ exports.NotificationScalarFieldEnum = {
     senderId: 'senderId',
     recipientId: 'recipientId',
     postId: 'postId',
-    createdAt: 'createdAt',
-    userId: 'userId'
+    createdAt: 'createdAt'
 };
 exports.SavedSnapScalarFieldEnum = {
     id: 'id',
     authorId: 'authorId',
     postId: 'postId',
     savedUserId: 'savedUserId'
+};
+exports.ConversationScalarFieldEnum = {
+    id: 'id',
+    user1Id: 'user1Id',
+    user2Id: 'user2Id',
+    createdAt: 'createdAt',
+    updatedAt: 'updatedAt'
+};
+exports.MessageScalarFieldEnum = {
+    id: 'id',
+    conversationId: 'conversationId',
+    senderId: 'senderId',
+    receiverId: 'receiverId',
+    content: 'content',
+    read: 'read',
+    createdAt: 'createdAt'
 };
 exports.SortOrder = {
     asc: 'asc',

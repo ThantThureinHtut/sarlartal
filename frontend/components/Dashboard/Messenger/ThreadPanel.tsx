@@ -4,7 +4,11 @@ import { useEffect, useRef, useState } from "react";
 import ThreadHeader from "@/components/Dashboard/Messenger/ThreadHeader";
 import MessageBubble from "@/components/Dashboard/Messenger/MessageBubble";
 import MessageInput from "@/components/Dashboard/Messenger/MessageInput";
-import type { Conversation, Message } from "@/components/data/mock-conversations";
+import type {
+  Conversation,
+  Message,
+} from "@/components/data/mock-conversations";
+import { sendMessage } from "@/app/(action)/serveraction";
 
 type Props = {
   conversation: Conversation;
@@ -12,7 +16,11 @@ type Props = {
   onBack: () => void;
 };
 
-export default function ThreadPanel({ conversation, currentUserId, onBack }: Props) {
+export default function ThreadPanel({
+  conversation,
+  currentUserId,
+  onBack,
+}: Props) {
   const [messages, setMessages] = useState<Message[]>(conversation.messages);
   const bottomRef = useRef<HTMLDivElement>(null);
 
@@ -24,17 +32,21 @@ export default function ThreadPanel({ conversation, currentUserId, onBack }: Pro
     bottomRef.current?.scrollIntoView({ block: "end" });
   }, [messages]);
 
-  const handleSend = (body: string) => {
+  const handleSend = async (body: string) => {
     setMessages((prev) => [
       ...prev,
       {
         id: `${conversation.id}-local-${prev.length}`,
         conversationId: conversation.id,
         senderId: currentUserId,
-        body,
+        receiverId: conversation.participant.id,
+        content: body,
+        read: false,
         createdAt: new Date().toISOString(),
       },
     ]);
+
+    await sendMessage(conversation.id, conversation.participant.id, body);
   };
 
   return (

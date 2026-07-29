@@ -1,8 +1,13 @@
 "use server";
 
-import { cacheLife, cacheTag, refresh, revalidateTag, updateTag } from "next/cache";
+import {
+  cacheLife,
+  cacheTag,
+  refresh,
+  revalidateTag,
+  updateTag,
+} from "next/cache";
 import { headers } from "next/headers";
-
 
 async function getCookie() {
   const h = await headers();
@@ -10,8 +15,8 @@ async function getCookie() {
 }
 export async function getSnaps() {
   "use cache";
-   cacheLife("hours");
-   cacheTag("snaps");
+  cacheLife("hours");
+  cacheTag("snaps");
   try {
     const res = await fetch(`${process.env.API_URL}/api/snaps`, {
       method: "GET",
@@ -53,7 +58,8 @@ export async function getUserProfile(userId: string) {
       method: "GET",
       cache: "no-store",
     });
-    if (!res.ok) return { status: res.status, error: "Failed to fetch user profile" };
+    if (!res.ok)
+      return { status: res.status, error: "Failed to fetch user profile" };
     return await res.json();
   } catch (error) {
     return {
@@ -71,7 +77,8 @@ export async function getFollowingPosts() {
       method: "GET",
       cache: "no-store",
     });
-    if (!res.ok) return { status: res.status, error: "Failed to fetch following posts" };
+    if (!res.ok)
+      return { status: res.status, error: "Failed to fetch following posts" };
     return await res.json();
   } catch (error) {
     return {
@@ -89,7 +96,8 @@ export async function getSavedSnaps() {
       method: "GET",
       cache: "no-store",
     });
-    if (!res.ok) return { status: res.status, error: "Failed to fetch saved snaps" };
+    if (!res.ok)
+      return { status: res.status, error: "Failed to fetch saved snaps" };
     return await res.json();
   } catch (error) {
     return {
@@ -111,13 +119,19 @@ export async function followUser(followingId: string) {
 
     if (!res.ok) {
       const data = await res.json().catch(() => null);
-      return { success: false, error: data?.error ?? "Failed to update follow status" };
+      return {
+        success: false,
+        error: data?.error ?? "Failed to update follow status",
+      };
     }
 
     refresh(); // Force the client router to refetch RSC payloads (e.g. the target user's profile page) after a follow/unfollow
-    return { success: true }
+    return { success: true };
   } catch (error) {
-    return { success: false , error: error instanceof Error ? error.message : String(error) }
+    return {
+      success: false,
+      error: error instanceof Error ? error.message : String(error),
+    };
   }
 }
 
@@ -126,7 +140,7 @@ export async function sendSnap(formData: FormData) {
   try {
     const res = await fetch(`${process.env.API_URL}/api/snaps/create`, {
       method: "POST",
-    //   can't use the headers() function here because it have application/json content type by default and it will override the multipart/form-data content type which is required for file upload
+      //   can't use the headers() function here because it have application/json content type by default and it will override the multipart/form-data content type which is required for file upload
 
       headers: { cookie },
       body: formData,
@@ -139,12 +153,14 @@ export async function sendSnap(formData: FormData) {
 
     updateTag("snaps"); // Revalidate snaps cache after creating a new snap
     refresh(); // Force the client router to refetch the dashboard's RSC payload
-    return { success: true }
+    return { success: true };
   } catch (error) {
-    return { success: false , error: error instanceof Error ? error.message : String(error) }
+    return {
+      success: false,
+      error: error instanceof Error ? error.message : String(error),
+    };
   }
 }
-
 
 export async function likeSnap(snapId: string) {
   const cookie = await getCookie();
@@ -160,10 +176,13 @@ export async function likeSnap(snapId: string) {
       return { success: false, error: data?.error ?? "Failed to like snap" };
     }
 
-    revalidateTag("snaps" , "max"); // Revalidate snaps cache after liking a snap
-    return { success: true }
+    revalidateTag("snaps", "max"); // Revalidate snaps cache after liking a snap
+    return { success: true };
   } catch (error) {
-    return { success: false , error: error instanceof Error ? error.message : String(error) }
+    return {
+      success: false,
+      error: error instanceof Error ? error.message : String(error),
+    };
   }
 }
 
@@ -178,12 +197,86 @@ export async function bookmarkSnap(snapId: string) {
 
     if (!res.ok) {
       const data = await res.json().catch(() => null);
-      return { success: false, error: data?.error ?? "Failed to bookmark snap" };
+      return {
+        success: false,
+        error: data?.error ?? "Failed to bookmark snap",
+      };
     }
 
-    revalidateTag("snaps" , "max"); // Revalidate snaps cache after bookmarking a snap
-    return { success: true }
+    revalidateTag("snaps", "max"); // Revalidate snaps cache after bookmarking a snap
+    return { success: true };
   } catch (error) {
-    return { success: false , error: error instanceof Error ? error.message : String(error) }
+    return {
+      success: false,
+      error: error instanceof Error ? error.message : String(error),
+    };
+  }
+}
+
+// Conversation and messaging functions
+export async function getConversations() {
+  try {
+    const res = await fetch(
+      `${process.env.API_URL}/api/messenger/getFetchConversation`,
+      {
+        headers: await headers(),
+        method: "GET",
+        cache: "no-store",
+      },
+    );
+    if (!res.ok)
+      return { status: res.status, error: "Failed to fetch conversations" };
+    return await res.json();
+  } catch (error) {
+    return {
+      status: 500,
+      error: "Failed to fetch conversations",
+      details: error instanceof Error ? error.message : String(error),
+    };
+  }
+}
+
+export async function sendMessage(
+  conversationId: string,
+  receiverId: string,
+  content: string,
+) {
+  const cookie = await getCookie();
+
+  try {
+    const res = await fetch(
+      `${process.env.API_URL}/api/messenger/sendMessageRequest`,
+      {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          cookie,
+        },
+        body: JSON.stringify({
+          conversationId,
+          receiverId,
+          content,
+        }),
+      },
+    );
+
+    const data = await res.json().catch(() => null);
+
+    if (!res.ok) {
+      return {
+        success: false,
+        error: data?.error ?? "Failed to send message",
+      };
+    }
+
+    return {
+      success: true,
+      data: data?.data,
+    };
+  } catch (error) {
+    return {
+      success: false,
+      error: error instanceof Error ? error.message : String(error),
+    };
   }
 }

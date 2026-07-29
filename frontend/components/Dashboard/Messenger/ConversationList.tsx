@@ -22,7 +22,7 @@ export default function ConversationList({ conversations, activeConversationId, 
       const lastMessage = conversation.messages.at(-1);
       return (
         conversation.participant.name.toLowerCase().includes(query) ||
-        lastMessage?.body.toLowerCase().includes(query)
+        lastMessage?.content.toLowerCase().includes(query)
       );
     });
   }, [conversations, search]);

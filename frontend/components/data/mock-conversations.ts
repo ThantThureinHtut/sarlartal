@@ -11,7 +11,9 @@ export type Message = {
   id: string;
   conversationId: string;
   senderId: string;
-  body: string;
+  receiverId: string;
+  content: string;
+  read: boolean;
   createdAt: string;
 };
 
@@ -20,6 +22,8 @@ export type Conversation = {
   participant: Participant;
   messages: Message[];
   unreadCount: number;
+  createdAt: string;
+  updatedAt: string;
 };
 
 export const CURRENT_USER_ID = "mock-current-user";
@@ -32,17 +36,23 @@ function conversation(
   unreadCount: number,
   bodies: { from: "them" | "me"; body: string; hoursAgo: number }[],
 ): Conversation {
+  const messages: Message[] = bodies.map((m, i) => ({
+    id: `${id}-msg-${i}`,
+    conversationId: id,
+    senderId: m.from === "me" ? CURRENT_USER_ID : participant.id,
+    receiverId: m.from === "me" ? participant.id : CURRENT_USER_ID,
+    content: m.body,
+    read: m.from === "me",
+    createdAt: hoursAgo(m.hoursAgo),
+  }));
+
   return {
     id,
     participant,
     unreadCount,
-    messages: bodies.map((m, i) => ({
-      id: `${id}-msg-${i}`,
-      conversationId: id,
-      senderId: m.from === "me" ? CURRENT_USER_ID : participant.id,
-      body: m.body,
-      createdAt: hoursAgo(m.hoursAgo),
-    })),
+    messages,
+    createdAt: messages[0]?.createdAt ?? hoursAgo(0),
+    updatedAt: messages.at(-1)?.createdAt ?? hoursAgo(0),
   };
 }
 

@@ -14,7 +14,23 @@ exports.auth = (0, better_auth_1.betterAuth)({
     // enable email + password login
     emailAndPassword: {
         enabled: true,
-        autoSignIn: true, // auto sign in after register
+        autoSignIn: true,
+    },
+    user: {
+        additionalFields: {
+            status: {
+                type: "string",
+                defaultValue: "OFFLINE",
+            },
+            bio: {
+                type: "string",
+                required: false,
+            },
+            cover_image: {
+                type: "string",
+                required: false,
+            },
+        },
     },
 });
 //# sourceMappingURL=auth.js.map

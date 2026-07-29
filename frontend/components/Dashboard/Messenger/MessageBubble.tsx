@@ -17,7 +17,7 @@ export default function MessageBubble({ message, isOwn }: Props) {
           : "mr-auto rounded-bl-md bg-muted text-foreground ring-foreground/10",
       )}
     >
-      {message.body}
+      {message.content}
     </div>
   );
 }

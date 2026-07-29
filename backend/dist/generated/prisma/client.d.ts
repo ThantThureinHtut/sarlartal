@@ -66,4 +66,14 @@ export type Notification = Prisma.NotificationModel;
  *
  */
 export type SavedSnap = Prisma.SavedSnapModel;
+/**
+ * Model Conversation
+ *
+ */
+export type Conversation = Prisma.ConversationModel;
+/**
+ * Model Message
+ *
+ */
+export type Message = Prisma.MessageModel;
 //# sourceMappingURL=client.d.ts.map

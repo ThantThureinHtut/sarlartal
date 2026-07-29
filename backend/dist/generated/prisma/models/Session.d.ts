@@ -216,7 +216,7 @@ export type SessionScalarWhereWithAggregatesInput = {
     userId?: Prisma.StringWithAggregatesFilter<"Session"> | string;
 };
 export type SessionCreateInput = {
-    id: string;
+    id?: string;
     expiresAt: Date | string;
     token: string;
     createdAt: Date | string;
@@ -226,7 +226,7 @@ export type SessionCreateInput = {
     user: Prisma.UserCreateNestedOneWithoutSessionsInput;
 };
 export type SessionUncheckedCreateInput = {
-    id: string;
+    id?: string;
     expiresAt: Date | string;
     token: string;
     createdAt: Date | string;
@@ -256,7 +256,7 @@ export type SessionUncheckedUpdateInput = {
     userId?: Prisma.StringFieldUpdateOperationsInput | string;
 };
 export type SessionCreateManyInput = {
-    id: string;
+    id?: string;
     expiresAt: Date | string;
     token: string;
     createdAt: Date | string;
@@ -361,7 +361,7 @@ export type SessionUncheckedUpdateManyWithoutUserNestedInput = {
     deleteMany?: Prisma.SessionScalarWhereInput | Prisma.SessionScalarWhereInput[];
 };
 export type SessionCreateWithoutUserInput = {
-    id: string;
+    id?: string;
     expiresAt: Date | string;
     token: string;
     createdAt: Date | string;
@@ -370,7 +370,7 @@ export type SessionCreateWithoutUserInput = {
     userAgent?: string | null;
 };
 export type SessionUncheckedCreateWithoutUserInput = {
-    id: string;
+    id?: string;
     expiresAt: Date | string;
     token: string;
     createdAt: Date | string;
@@ -413,7 +413,7 @@ export type SessionScalarWhereInput = {
     userId?: Prisma.StringFilter<"Session"> | string;
 };
 export type SessionCreateManyUserInput = {
-    id: string;
+    id?: string;
     expiresAt: Date | string;
     token: string;
     createdAt: Date | string;

@@ -189,7 +189,7 @@ export type VerificationScalarWhereWithAggregatesInput = {
     updatedAt?: Prisma.DateTimeNullableWithAggregatesFilter<"Verification"> | Date | string | null;
 };
 export type VerificationCreateInput = {
-    id: string;
+    id?: string;
     identifier: string;
     value: string;
     expiresAt: Date | string;
@@ -197,7 +197,7 @@ export type VerificationCreateInput = {
     updatedAt?: Date | string | null;
 };
 export type VerificationUncheckedCreateInput = {
-    id: string;
+    id?: string;
     identifier: string;
     value: string;
     expiresAt: Date | string;
@@ -221,7 +221,7 @@ export type VerificationUncheckedUpdateInput = {
     updatedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null;
 };
 export type VerificationCreateManyInput = {
-    id: string;
+    id?: string;
     identifier: string;
     value: string;
     expiresAt: Date | string;

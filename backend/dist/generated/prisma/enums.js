@@ -9,7 +9,16 @@
 * 🟢 You can import this file directly.
 */
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.NotificationType = void 0;
+exports.NotificationType = exports.UserStatus = void 0;
+exports.UserStatus = {
+    ONLINE: 'ONLINE',
+    IDLE: 'IDLE',
+    DND: 'DND',
+    OFFLINE: 'OFFLINE',
+    AWAY: 'AWAY',
+    BUSY: 'BUSY',
+    SAD: 'SAD'
+};
 exports.NotificationType = {
     LIKE: 'LIKE',
     COMMENT: 'COMMENT',
